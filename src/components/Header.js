@@ -1,19 +1,32 @@
 import styled from "styled-components";
 import {FiChevronDown} from 'react-icons/fi';
 import {FiChevronUp} from 'react-icons/fi';
+import { useState } from "react";
 
 export default function Headers() {
+    const [isSelected, SetIsSelected] = useState(false);
+
+    const toggleMenu = () => {
+        SetIsSelected(() => !isSelected);
+    }
+
     return (
         <HeaderContainer>
             <h1>linkr</h1>
             <Menu>
-                <ArrowUp />
-                <img src="https://pm1.narvii.com/6434/36a290a925f1ae788e0e545f3e8bfbafcad7e4ff_hq.jpg" />
-                <ul>
-                    <li>My posts</li>
-                    <li>My likes</li>
-                    <li>Logout</li>
-                </ul>
+                {isSelected 
+                ? <ArrowUp onClick={toggleMenu} /> 
+                : <ArrowDown onClick={toggleMenu} />
+                }
+                <img onClick={toggleMenu} src="https://pm1.narvii.com/6434/36a290a925f1ae788e0e545f3e8bfbafcad7e4ff_hq.jpg" />
+                {isSelected 
+                ?   <ul>
+                        <li>My posts</li>
+                        <li>My likes</li>
+                        <li>Logout</li>
+                    </ul> 
+                : ""
+                }
             </Menu>
         </HeaderContainer>
     );
