@@ -38,7 +38,7 @@ export default function Headers() {
                 {isSelected 
                 ?   <ul>
                         <li onClick={() => goToPage('/my-posts')}>My posts</li>
-                        <li>My likes</li>
+                        <li onClick={() => goToPage('/my-likes')}>My likes</li>
                         <li>Logout</li>
                     </ul> 
                 : ""
