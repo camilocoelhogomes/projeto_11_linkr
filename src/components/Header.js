@@ -11,7 +11,7 @@ export default function Header() {
     
     const toggleMenu = (isBlur) => {
         if(isBlur) {
-            if (isSelected === true) {
+            if (isSelected) {
                 return setIsSelected(() => !isSelected);
             } else {
                 return;
@@ -54,7 +54,6 @@ const HeaderContainer = styled.header`
     width: 100%;
     height: 72px;
     position: fixed;
-    position: relative;
     top: 0;
     display: flex;
     justify-content: space-between;
