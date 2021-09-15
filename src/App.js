@@ -1,14 +1,18 @@
 import GlobalStyle from "./components/GlobalStyle";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import SignUp from "./pages/home/sign-up";
+
 
 function App() {
   return (
-    <>
-      <GlobalStyle />
-      <h1>Camilo</h1>
-      <h2>Camilo</h2>
-      <h3>Camilo</h3>
-      <p>Camilo</p>
-    </>
+    <Router>
+      <Switch>
+        <GlobalStyle />
+        <Route exat path="/sign-up" >
+          <SignUp />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
