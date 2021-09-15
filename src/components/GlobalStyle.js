@@ -55,21 +55,24 @@ const GlobalStyle = createGlobalStyle`
         color: #B7B7B7;
         font-size: 17px;
     }
-    li,h1,h2,h3 {
+    li,h1,h2,h3,h4 {
         color: #FFFFFF;
         font-size: 19px;
     }
     h1 {
         font-family: 'Passion One', cursive;
+        font-weight: 700;
         font-size: 50px;
     }
     h2 {
         font-family: 'Oswald', sans-serif;
         font-size: 44px;  
+        font-weight: 700;
     }
     h3 {
         font-family: 'Oswald', sans-serif;
         font-size: 27px;  
+        font-weight: 700;
     }
 
     @media (max-width: 600px){
