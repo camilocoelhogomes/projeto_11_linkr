@@ -1,13 +1,14 @@
-import styled from "styled-components";
-import {FiChevronDown} from 'react-icons/fi';
-import {FiChevronUp} from 'react-icons/fi';
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
+import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
+import styled from "styled-components";
+import UserContext from "../store/UserContext";
 
 export default function Headers() {
     const [isSelected, setIsSelected] = useState(false);
+    const { user, setUser } = useContext(UserContext);
     const history = useHistory();
-
+    
     const toggleMenu = (isBlur) => {
         if(isBlur) {
             if (isSelected === true) {
@@ -21,10 +22,11 @@ export default function Headers() {
 
     const goToPage = (page) => {
         setIsSelected(false);
-        console.log(page)
+        if (page === '/') {
+            setUser({});
+        }
         history.push(page);
     }
-
 
     return (
         <HeaderContainer>
@@ -34,12 +36,12 @@ export default function Headers() {
                 ? <ArrowUp onClick={() => toggleMenu(false)} /> 
                 : <ArrowDown onClick={() => toggleMenu(false)} />
                 }
-                <img onClick={() => toggleMenu(false)} src="https://pm1.narvii.com/6434/36a290a925f1ae788e0e545f3e8bfbafcad7e4ff_hq.jpg" />
+                <img onClick={() => toggleMenu(false)} src={user.user.avatar} />
                 {isSelected 
                 ?   <ul>
                         <li onClick={() => goToPage('/my-posts')}>My posts</li>
                         <li onClick={() => goToPage('/my-likes')}>My likes</li>
-                        <li>Logout</li>
+                        <li onClick={() => goToPage('/')}>Logout</li>
                     </ul> 
                 : ""
                 }
@@ -61,11 +63,10 @@ const HeaderContainer = styled.header`
     padding: 0 20px;
 
     h1 {
+        font-family: 'Passion One', cursive;
         font-size: 49px;
         color: #FFFFFF;
         letter-spacing: 0.05em;
-
-
     }
 `;
 
@@ -76,13 +77,11 @@ const Menu = styled.button`
     align-items: center;
     position: relative;
     
-
     img {
         width: 53px;
         height: 53px;
         border-radius: 27px;
         cursor: pointer;
-
     }
 
     ul {
