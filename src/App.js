@@ -1,13 +1,22 @@
 import GlobalStyle from "./components/GlobalStyle";
+import {
+  BrowserRouter,
+  Route,
+  Switch
+} from "react-router-dom";
+import Trending from "./components/Trending";
 
 function App() {
   return (
     <>
       <GlobalStyle />
-      <h1>Camilo</h1>
-      <h2>Camilo</h2>
-      <h3>Camilo</h3>
-      <p>Camilo</p>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/">
+            <Trending></Trending>
+          </Route>
+        </Switch>
+      </BrowserRouter>
     </>
   );
 }
