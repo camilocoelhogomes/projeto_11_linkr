@@ -40,7 +40,7 @@ export default function Trending () {
             <Hashtags>
 
                 {hashtagsList.map((hashtag, i) => 
-                    <HashtagLink to={`/hashtag/${hashtag.name}`} id={hashtag.id}>
+                    <HashtagLink to={`/hashtag/${hashtag.name}`} id={hashtag.id} key={i}>
                         <li># {hashtag.name}</li>
                     </HashtagLink>
                 )}

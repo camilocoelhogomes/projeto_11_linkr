@@ -3,91 +3,40 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import ReactTooltip from 'react-tooltip';
 import { sendLike, sendDislike } from "../services/api.service"
 import { useEffect, useState } from "react";
+import axios from "axios";
 
-export default function Likes () {
+export default function Likes ({ userInfo }) {
 
-    const userInfo = {
-        "token": "2532452342342345",
-        "user": {
-            "id": 1,
-            "email": "teste@teste.com",
-            "username": "Pedro Mafra",
-            "avatar": "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/1/avatar"
-        }
+    console.log(userInfo)
+    const [posts, setPosts] = useState(null);
+    console.log(posts);
+
+    const getPosts = () => axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts`, { headers: { Authorization: `Bearer ${userInfo.token}`}})
+
+
+    const renderPosts = () => {
+        getPosts().then(ans => {
+            setPosts(ans.data.posts);
+            console.log(ans.data.posts)
+        })
     }
 
-    const posts = [
-        {
-            "id": 1,
-            "text": "Never Gonna Give You Up #rickroll",
-            "link": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-            "linkTitle": "Rick Astley - Never Gonna Give You Up (Video)",
-            "linkDescription": "Rick Astley's official music video for “Never Gonna Give You Up” Listen to Rick Astley: https://RickAstley.lnk.to/_listenYDSubscribe to the official Rick Ast...",
-            "linkImage": "https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
-            "user": {
-                "id": 1,
-                "username": "teste",
-                "avatar": "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/1/avatar"
-            },
-            "likes": [
-                {
-                    "id": 1,
-                    "userId": 1,
-                    "postId": 1,
-                    "createdAt": "2021-05-24T18:55:37.544Z",
-                    "updatedAt": "2021-05-24T18:55:37.544Z",
-                    "user.id": 1,
-                    "user.username": "teste"
-                },
-                {
-                    "id": 2,
-                    "userId": 2,
-                    "postId": 1,
-                    "createdAt": "2021-05-24T18:55:37.544Z",
-                    "updatedAt": "2021-05-24T18:55:37.544Z",
-                    "user.id": 2,
-                    "user.username": "teste2"
-                }
-            ]
-        },
-        {
-            "id": 2,
-            "text": "Never Gonna Give You Up #rickroll",
-            "link": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-            "linkTitle": "Rick Astley - Never Gonna Give You Up (Video)",
-            "linkDescription": "Rick Astley's official music video for “Never Gonna Give You Up” Listen to Rick Astley: https://RickAstley.lnk.to/_listenYDSubscribe to the official Rick Ast...",
-            "linkImage": "https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
-            "user": {
-                "id": 1,
-                "username": "teste",
-                "avatar": "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/1/avatar"
-            },
-            "likes": [
-                {
-                    "id": 1,
-                    "userId": 2,
-                    "postId": 2,
-                    "createdAt": "2021-05-24T18:55:37.544Z",
-                    "updatedAt": "2021-05-24T18:55:37.544Z",
-                    "user.id": 2,
-                    "user.username": "teste"
-                },
-                {
-                    "id": 2,
-                    "userId": 3,
-                    "postId": 2,
-                    "createdAt": "2021-05-24T18:55:37.544Z",
-                    "updatedAt": "2021-05-24T18:55:37.544Z",
-                    "user.id": 3,
-                    "user.username": "teste2"
-                }
-            ]
-        }
-    ]
+    useEffect(() => {
+        renderPosts();
+    },[])
+
+    if (posts === null) {
+        return(
+            <>
+            </>
+        )
+    }
+
 
     const likePost = (postId) => {
         sendLike(postId, userInfo).then(ans => {
             console.log(ans.data);
+            renderPosts();
         }).catch(err => {
             console.log(err);
         })
@@ -96,21 +45,12 @@ export default function Likes () {
     const dislikePost = (postId) => {
         sendDislike(postId, userInfo).then(ans => {
             console.log(ans.data);
+            renderPosts();
         }).catch(err => {
             console.log(err);
         })
     }
 
-    const likes = [
-        {
-            "userId": 1,
-            "username": "Pedro Mafra"
-        },
-        {
-            "userId": 4,
-            "username": "lalalabanana"
-        }
-    ]
 
 
     return (
@@ -124,18 +64,28 @@ export default function Likes () {
                     effect="float"
                 />
                 <LikesBox>
-                    {post.likes.filter(like => like.userId === userInfo.user.id).length !== 0 ? (
+                    {post.likes.find(like => like.userId === userInfo.user.id) !== undefined ? (
                         <>
                             <AiFillHeart size='30px' color='#AC0000' onClick={() => dislikePost(post.id)}/>
-                            <LikesNumber data-text-color="#505050" data-tip={`${userInfo.user.username}, fulano, e outras ${post.likes.length + 1} pessoas`}>
+                            <LikesNumber data-text-color="#505050" data-tip={
+                                post.likes.length === 1 ? (`Curtido por ${userInfo.user.username}`) 
+                                : (post.likes.length === 2 ? (post.likes[1]["user.id"] === userInfo.user.id ? (`Curtido por ${post.likes[1]["user.username"]} e ${post.likes[0]["user.username"]}`) 
+                                : (`Curtido por ${post.likes[0]["user.username"]} e ${post.likes[1]["user.username"]}`)) 
+                                : (post.likes[post.likes.length - 1]["user.id"] === userInfo.user.id ? (`Curtido por ${userInfo.user.username}, ${post.likes[post.likes.length - 2]["user.username"]} e outras ${post.likes.length - 2} pessoa(s)`) 
+                                : (`Curtido por ${userInfo.user.username}, ${post.likes[post.likes.length - 1]["user.username"]} e outras ${post.likes.length - 2} pessoa(s)`)))}>
                                 {post.likes.length} likes
                             </LikesNumber>
                         </>
                     ) : (
                         <>
                             <AiOutlineHeart size='30px' color='#FFFFFF' onClick={() => likePost(post.id)}/>
-                            <LikesNumber data-text-color="#505050" data-tip={`fulano, beltrano, e outras ${post.likes.length} pessoas`}>
-                                    {post.likes.length} likes
+                            <LikesNumber data-text-color="#505050" data-tip={
+                                post.likes.length === 0 ? ("Ninguém curtiu esta publicação!") 
+                                : (post.likes.length === 1 ? (`Curtido por ${post.likes[0]["user.username"]}`) 
+                                : (post.likes.length === 2 ? (`Curtido por ${post.likes[0]["user.username"]} e ${post.likes[1]["user.username"]}`) 
+                                : (`Curtido por ${post.likes[post.likes.length - 1]["user.username"]}, ${post.likes[post.likes.length - 2]["user.username"]} e outras ${post.likes.length - 2} pessoa(s)`)))
+                                }>
+                                {post.likes.length} likes
                             </LikesNumber>
                         </>
                     )}
@@ -153,6 +103,8 @@ const SketchCard = styled.div`
     background-color: #171717;
     border-radius: 16px;
     margin-top: 30px;
+    display: flex;
+    justify-content: center;
 `
 const LikesBox = styled.div`
     width: fit-content;
