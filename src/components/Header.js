@@ -4,7 +4,7 @@ import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import styled from "styled-components";
 import UserContext from "../store/UserContext";
 
-export default function Headers() {
+export default function Header() {
     const [isSelected, setIsSelected] = useState(false);
     const { user, setUser } = useContext(UserContext);
     const history = useHistory();
