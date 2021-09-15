@@ -9,7 +9,7 @@ export default function Trending () {
     // const [hashtagsList, setHashtagsList] = useState(null);
 
     // useEffect(() => {
-    //     getTrendingHashtags().then(ans => {
+    //     getTrendingHashtags(token).then(ans => {
     //         setHashtagsList(ans.data.hashtags);
     //     }).catch(
     //         alert("Não foi possível obter as trending hashtags do servidor!")

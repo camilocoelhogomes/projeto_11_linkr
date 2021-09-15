@@ -5,6 +5,7 @@ import {
   Switch
 } from "react-router-dom";
 import Trending from "./components/Trending";
+import Likes from "./components/Likes";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Switch>
           <Route path="/">
             <Trending></Trending>
+            <Likes></Likes>
           </Route>
         </Switch>
       </BrowserRouter>
