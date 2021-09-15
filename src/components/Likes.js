@@ -7,12 +7,11 @@ import axios from "axios";
 
 export default function Likes ({ userInfo }) {
 
-    console.log(userInfo)
+    //Trocar a variável de estado posts pela já feita pelo Camilo para pegar os posts do servidor
+    //Apagar as funções repetidas de busca dos posts do servidor
     const [posts, setPosts] = useState(null);
-    console.log(posts);
 
     const getPosts = () => axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts`, { headers: { Authorization: `Bearer ${userInfo.token}`}})
-
 
     const renderPosts = () => {
         getPosts().then(ans => {
@@ -32,10 +31,8 @@ export default function Likes ({ userInfo }) {
         )
     }
 
-
     const likePost = (postId) => {
         sendLike(postId, userInfo).then(ans => {
-            console.log(ans.data);
             renderPosts();
         }).catch(err => {
             console.log(err);
@@ -44,7 +41,6 @@ export default function Likes ({ userInfo }) {
 
     const dislikePost = (postId) => {
         sendDislike(postId, userInfo).then(ans => {
-            console.log(ans.data);
             renderPosts();
         }).catch(err => {
             console.log(err);

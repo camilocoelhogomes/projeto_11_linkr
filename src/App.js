@@ -11,7 +11,7 @@ import axios from "axios";
 
 function App() {
 
-
+  //apagar essas funções e variáveis e trocar pela já criada pelo Leo
   const [userInfo, setUserInfo] = useState(null);
   console.log(userInfo);
 
@@ -31,7 +31,7 @@ function App() {
         <>
         </>
     )
-}
+  }
 
   return (
     <>
