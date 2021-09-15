@@ -13,9 +13,9 @@ export default function Trending ({userInfo}) {
     useEffect(() => {
         getTrendingHashtags(userInfo).then(ans => {
             setHashtagsList(ans.data.hashtags);
-        }).catch(
+        }).catch(err => {
             alert("Não foi possível obter as trending hashtags do servidor!")
-        )
+        })
     }, [])
 
     if (hashtagsList === null) {
@@ -32,9 +32,7 @@ export default function Trending ({userInfo}) {
                     trending
                 </h3>
             </TitleBox>
-
             <Hashtags>
-
                 {hashtagsList.map((hashtag, i) => 
                     <HashtagLink to={`/hashtag/${hashtag.name}`} id={hashtag.id} key={i}>
                         <li># {hashtag.name}</li>

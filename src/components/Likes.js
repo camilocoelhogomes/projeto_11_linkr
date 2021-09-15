@@ -8,7 +8,7 @@ import axios from "axios";
 export default function Likes ({ userInfo }) {
 
     //Trocar a variável de estado posts pela já feita pelo Camilo para pegar os posts do servidor
-    //Apagar as funções repetidas de busca dos posts do servidor
+    //E apagar essa função repetida de busca dos posts do servidor
     const [posts, setPosts] = useState(null);
 
     const getPosts = () => axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts`, { headers: { Authorization: `Bearer ${userInfo.token}`}})
@@ -62,7 +62,7 @@ export default function Likes ({ userInfo }) {
                 <LikesBox>
                     {post.likes.find(like => like.userId === userInfo.user.id) !== undefined ? (
                         <>
-                            <AiFillHeart size='30px' color='#AC0000' onClick={() => dislikePost(post.id)}/>
+                            <LikedHeart onClick={() => dislikePost(post.id)}/>
                             <LikesNumber data-text-color="#505050" data-tip={
                                 post.likes.length === 1 ? (`Curtido por ${userInfo.user.username}`) 
                                 : (post.likes.length === 2 ? (post.likes[1]["user.id"] === userInfo.user.id ? (`Curtido por ${post.likes[1]["user.username"]} e ${post.likes[0]["user.username"]}`) 
@@ -74,7 +74,7 @@ export default function Likes ({ userInfo }) {
                         </>
                     ) : (
                         <>
-                            <AiOutlineHeart size='30px' color='#FFFFFF' onClick={() => likePost(post.id)}/>
+                            <EmptyHeart onClick={() => likePost(post.id)}/>
                             <LikesNumber data-text-color="#505050" data-tip={
                                 post.likes.length === 0 ? ("Ninguém curtiu esta publicação!") 
                                 : (post.likes.length === 1 ? (`Curtido por ${post.likes[0]["user.username"]}`) 
@@ -109,6 +109,14 @@ const LikesBox = styled.div`
     align-items: center;
     justify-content: center;
     gap: 4px;
+`
+const LikedHeart = styled(AiFillHeart)`
+    font-size: 30px;
+    color: #AC0000;
+`
+const EmptyHeart = styled(AiOutlineHeart)`
+    font-size: 30px;
+    color: #FFFFFF;
 `
 const LikesNumber = styled.p`
     font-size: 11px;
