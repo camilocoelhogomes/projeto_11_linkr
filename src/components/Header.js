@@ -1,23 +1,30 @@
 import styled from "styled-components";
 import {FiChevronDown} from 'react-icons/fi';
 import {FiChevronUp} from 'react-icons/fi';
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 export default function Headers() {
-    const [isSelected, SetIsSelected] = useState(false);
-
- 
+    const [isSelected, setIsSelected] = useState(false);
+    const history = useHistory();
 
     const toggleMenu = (isBlur) => {
         if(isBlur) {
             if (isSelected === true) {
-                return SetIsSelected(() => !isSelected);
+                return setIsSelected(() => !isSelected);
             } else {
                 return;
             }
         }
-        SetIsSelected(() => !isSelected);
+        setIsSelected(() => !isSelected);
     }
+
+    const goToPage = (page) => {
+        setIsSelected(false);
+        console.log(page)
+        history.push(page);
+    }
+
 
     return (
         <HeaderContainer>
@@ -30,7 +37,7 @@ export default function Headers() {
                 <img onClick={() => toggleMenu(false)} src="https://pm1.narvii.com/6434/36a290a925f1ae788e0e545f3e8bfbafcad7e4ff_hq.jpg" />
                 {isSelected 
                 ?   <ul>
-                        <li>My posts</li>
+                        <li onClick={() => goToPage('/my-posts')}>My posts</li>
                         <li>My likes</li>
                         <li>Logout</li>
                     </ul> 
