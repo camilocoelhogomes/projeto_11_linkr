@@ -4,30 +4,26 @@ import { getTrendingHashtags } from "../services/api.service";
 import { useEffect, useState } from "react";
 
 
-export default function Trending () {
+export default function Trending ({userInfo}) {
 
-    // const [hashtagsList, setHashtagsList] = useState(null);
+    //trocar o userInfo pelo objeto ja existente de login do usuario
 
-    // useEffect(() => {
-    //     getTrendingHashtags(token).then(ans => {
-    //         setHashtagsList(ans.data.hashtags);
-    //     }).catch(
-    //         alert("Não foi possível obter as trending hashtags do servidor!")
-    //     )
-    // }, [])
+    const [hashtagsList, setHashtagsList] = useState(null);
 
-    const hashtagsList = [
-        {
-            "id": 2,
-            "name": "respondeai",
-            "numberOfMentions": 1
-        },
-        {
-            "id": 1,
-            "name": "rickroll",
-            "numberOfMentions": 1
-        }
-    ]
+    useEffect(() => {
+        getTrendingHashtags(userInfo).then(ans => {
+            setHashtagsList(ans.data.hashtags);
+        }).catch(
+            alert("Não foi possível obter as trending hashtags do servidor!")
+        )
+    }, [])
+
+    if (hashtagsList === null) {
+        return(
+            <>
+            </>
+        )
+      }
 
     return (
         <TrendingContainer>

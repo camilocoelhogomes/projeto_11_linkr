@@ -39,7 +39,7 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route path="/">
-            <Trending></Trending>
+            <Trending userInfo={userInfo}></Trending>
             <Likes userInfo={userInfo}></Likes>
           </Route>
         </Switch>
