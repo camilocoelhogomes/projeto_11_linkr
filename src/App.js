@@ -1,12 +1,23 @@
 import GlobalStyle from "./components/GlobalStyle";
-import TimeLine from "./pages/timeLine/TimeLine";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import SignUp from "./pages/home/sign-up/index";
+import React from "react";
+import TimeLine from './pages/timeLine';
 
 function App() {
   return (
-    <>
+    <Router>
       <GlobalStyle />
-      <TimeLine />
-    </>
+      <Switch>
+        <Route exact path="/sign-up" >
+          <SignUp />
+        </Route>
+
+        <Route exact path="/timeline" >
+          <TimeLine />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
