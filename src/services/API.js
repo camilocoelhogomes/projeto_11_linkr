@@ -5,11 +5,11 @@ const SIGNUP = "/sign-up"
 
 function signUpErrorAlert(error) {
     if (error.status === 400) {
-        alert("A url da imagem não é suportada, por favor escolha outra");
+        alert("Image url is not supported, please choose another one");
     } else if (error.status === 403) {
-        alert("O e-mail inserido já está em uso, por favor escolha outro");
+        alert("The email you entered is already in use, please choose another one");
     } else {
-        alert("Não foi possível realizar seu cadastro")
+        alert("Unable to register")
         alert(error.data);
     };
 }
