@@ -1,13 +1,12 @@
 import GlobalStyle from "./components/GlobalStyle";
-import {
-  BrowserRouter,
-  Route,
-  Switch
-} from "react-router-dom";
 import Trending from "./components/Trending";
 import Likes from "./components/Likes";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import SignUp from "./pages/home/sign-up/index";
+import React from "react";
+import TimeLine from './pages/timeLine';
 
 function App() {
 
@@ -34,17 +33,21 @@ function App() {
   }
 
   return (
-    <>
+    <Router>
       <GlobalStyle />
-      <BrowserRouter>
-        <Switch>
-          <Route path="/">
+      <Switch>
+        <Route exact path="/sign-up" >
+          <SignUp />
+        </Route>
+        <Route exact path="/timeline" >
+          <TimeLine />
+        </Route>
+        <Route path="/">
             <Trending userInfo={userInfo}></Trending>
             <Likes userInfo={userInfo}></Likes>
-          </Route>
-        </Switch>
-      </BrowserRouter>
-    </>
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
