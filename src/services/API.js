@@ -1,7 +1,16 @@
 import axios from "axios";
 
-const API_URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr";
-const SIGNUP = "/sign-up"
+const API_URL = "https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr";
+const SIGNUP = "/sign-up";
+const SIGNIN = "/sign-in";
+
+function logInErrorAlert(error) {
+    if (error.status === 403) {
+        alert("User not found. Invalid email or password");
+    } else {
+        alert("Unable to sign in")
+    };
+}
 
 function signUpErrorAlert(error) {
     if (error.status === 400) {
@@ -13,12 +22,23 @@ function signUpErrorAlert(error) {
     };
 }
 
+function logIn({ requestBody, history, setIsLoading }) {
+    setIsLoading(true);
+    const request = axios.post(API_URL + SIGNIN, requestBody);
+    request.catch(err => {
+        logInErrorAlert(err.response)
+        setIsLoading(false);
+    });
+    request.then(history.push("/timeline"));
+}
+
 function signUp({ requestBody, history, setIsLoading }) {
     setIsLoading(true);
     const request = axios.post(API_URL + SIGNUP, requestBody);
-    request.catch(err => {signUpErrorAlert(err.response)
+    request.catch(err => {
+        signUpErrorAlert(err.response)
         setIsLoading(false);
     });
-    request.then(res => history.push("/"));
+    request.then(history.push("/"));
 }
-export { signUp };
+export { signUp, logIn };
