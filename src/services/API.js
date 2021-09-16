@@ -29,7 +29,7 @@ function logIn({ requestBody, history, setIsLoading }) {
         logInErrorAlert(err.response)
         setIsLoading(false);
     });
-    request.then(history.push("/timeline"));
+    request.then(res => history.push("/timeline"));
 }
 
 function signUp({ requestBody, history, setIsLoading }) {
@@ -39,6 +39,6 @@ function signUp({ requestBody, history, setIsLoading }) {
         signUpErrorAlert(err.response)
         setIsLoading(false);
     });
-    request.then(history.push("/"));
+    request.then(res => history.push("/"));
 }
 export { signUp, logIn };
