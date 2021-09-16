@@ -55,6 +55,9 @@ const GlobalStyle = createGlobalStyle`
         color: #B7B7B7;
         font-size: 17px;
     }
+    strong {
+        font-weight: bold;
+    }
     li,h1,h2,h3 {
         color: #FFFFFF;
         font-size: 19px;
