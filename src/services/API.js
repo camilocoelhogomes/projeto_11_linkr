@@ -10,7 +10,6 @@ function signUpErrorAlert(error) {
         alert("The email you entered is already in use, please choose another one");
     } else {
         alert("Unable to register")
-        alert(error.data);
     };
 }
 
