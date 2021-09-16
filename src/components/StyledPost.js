@@ -6,7 +6,7 @@ const StyledPost = styled.div`
     border-radius: 16px;
     display: flex;
     padding: 18px;
-    height: 276px;
+    min-height: 276px;
     
     main {
         margin: 0 0 0 18px;
@@ -14,10 +14,16 @@ const StyledPost = styled.div`
         flex-direction: column;
         justify-content: space-between;
     }
+p{
+    margin: 7px 0;
+}
+    a{
+        text-decoration: none;
+    }
 
     .link-card{
         width: 503px;
-        height: 155px;
+        min-height: 155px;
         border: 1px solid #4D4D4D;
         box-sizing: border-box;
         border-radius: 11px;

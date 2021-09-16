@@ -41,31 +41,32 @@ const Post = ({ post }) => {
                 <p>{text}</p>
 
 
-                <a href={link} className='link-card' target="_blank">
-                    {
-                        isYouTube({ link: link }).service === 'youtube' ?
 
+                {
+                    isYouTube({ link: link }).service === 'youtube' ?
+                        <>
                             <iframe
-                                width="100%"
-                                height="100%"
+                                width="501"
+                                height="281"
                                 src={`https://www.youtube.com/embed/${isYouTube({ link: link }).id}`}
                                 title="YouTube video player"
                                 frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowfullscreen></iframe>
+                            <p>{link}</p>
+                        </>
+                        :
+                        <a href={link} className='link-card' target="_blank">
+                            <div className='link-text-info'>
+                                <p className='link-title'>{linkTitle}</p>
+                                <p className='link-description'>{linkDescription}</p>
+                                <p className='link'>{link}</p>
+                            </div>
+                            <img className='link-img' src={linkImage} />
+                        </a>
+                }
 
-                            :
-                            <>
-                                <div className='link-text-info'>
-                                    <p className='link-title'>{linkTitle}</p>
-                                    <p className='link-description'>{linkDescription}</p>
-                                    <p className='link'>{link}</p>
-                                </div>
-                                <img className='link-img' src={linkImage} />
-                            </>
-                    }
 
-                </a>
 
 
             </main>
