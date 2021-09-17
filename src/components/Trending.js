@@ -3,14 +3,13 @@ import { Link } from "react-router-dom";
 import { getTrendingHashtags } from "../services/API";
 import { useEffect, useState } from "react";
 
-export default function Trending ({userInfo}) {
-
-    //trocar o userInfo pelo objeto ja existente de login do usuario
+export default function Trending () {
 
     const [hashtagsList, setHashtagsList] = useState(null);
 
     useEffect(() => {
-        getTrendingHashtags(userInfo).then(ans => {
+        const userInfo = JSON.parse(localStorage.getItem("user"));
+        getTrendingHashtags(userInfo.token).then(ans => {
             setHashtagsList(ans.data.hashtags);
         }).catch(err => {
             alert("Não foi possível obter as trending hashtags do servidor!")
