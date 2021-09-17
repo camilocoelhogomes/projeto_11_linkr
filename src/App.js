@@ -13,7 +13,7 @@ function App() {
           <SignUp />
         </Route>
 
-        <Route exact path="/" >
+        <Route exact path="/timeline" >
           <TimeLine />
         </Route>
       </Switch>

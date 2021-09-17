@@ -7,6 +7,7 @@ import { getServerPosts } from '../../services/API';
 
 
 const TimeLine = () => {
+    debugger;
     const [posts, setPosts] = useState(null);
     debugger;
     const token = {
