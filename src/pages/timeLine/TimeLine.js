@@ -4,7 +4,7 @@ import StyledTimeLine from './StyledTimeLine';
 import Post from '../../components/Post';
 import { getServerPosts } from '../../services/API';
 import Alert from '../../components/Alert';
-
+import Treding from '../../components/Trending'
 
 
 
@@ -15,10 +15,8 @@ const TimeLine = () => {
 
 
     const getPosts = () => {
-        const token = {
-            "token": "09e49b91-c4c6-41eb-bb38-8d742259526f",
-        }
-        getServerPosts(token)
+        const token = JSON.parse(localStorage.getItem("user")).token;
+        getServerPosts({ token: token })
             .then((res) => { setErr(false); setPosts(res.data.posts) })
             .catch(() => setErr(true))
     }
@@ -40,10 +38,13 @@ const TimeLine = () => {
             <header>
                 <h2>timeline</h2>
             </header>
-            <div className='posts'>
-                {posts.length === 0 ? <h2>Nenhm post encontrado</h2> :
-                    posts.map(post => <Post key={post.id} post={post} />)
-                }
+            <div className='main-content'>
+                <div className='posts'>
+                    {posts.length === 0 ? <h2>Nenhm post encontrado</h2> :
+                        posts.map(post => <Post key={post.id} post={post} />)
+                    }
+                </div>
+                <Treding className='trending' />
             </div>
         </StyledTimeLine>
     )

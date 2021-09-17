@@ -114,7 +114,7 @@ const StyledPost = styled.div`
         color: #FFFFFF;
     }
 
-    @media(max-width: 600px){
+    @media(max-width: 900px){
         width: 100%;
         padding: 14px;
 
