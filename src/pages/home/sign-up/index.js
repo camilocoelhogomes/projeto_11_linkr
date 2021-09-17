@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { useHistory } from "react-router";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { signUp } from "../../../services/API"
 import {
     BodyContainer,

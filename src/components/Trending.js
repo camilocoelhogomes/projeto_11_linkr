@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { getTrendingHashtags } from "../services/API";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-export default function Trending () {
+export default function Trending() {
 
     const [hashtagsList, setHashtagsList] = useState(null);
 
@@ -17,11 +17,11 @@ export default function Trending () {
     }, [])
 
     if (hashtagsList === null) {
-        return(
+        return (
             <>
             </>
         )
-      }
+    }
 
     return (
         <TrendingContainer>
@@ -31,7 +31,7 @@ export default function Trending () {
                 </h3>
             </TitleBox>
             <Hashtags>
-                {hashtagsList.map((hashtag, i) => 
+                {hashtagsList.map((hashtag, i) =>
                     <HashtagLink to={`/hashtag/${hashtag.name}`} id={hashtag.id} key={i}>
                         <li># {hashtag.name}</li>
                     </HashtagLink>
@@ -45,6 +45,13 @@ const TrendingContainer = styled.div`
     width: 301px;
     background-color: #171717;
     border-radius: 16px;
+    height: fit-content;
+    position: sticky;
+    top: 50px;
+
+    @media(max-width:900px){
+        display: none;
+    }
 `
 const TitleBox = styled.div`
     height: 61px;

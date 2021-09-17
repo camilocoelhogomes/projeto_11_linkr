@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { useHistory } from "react-router";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { signIn } from "../../../services/API"
 import {
     BodyContainer,
@@ -14,14 +13,11 @@ import {
     Anchor
 } from "../style"
 export default function LogIn() {
-    const [email, setEmail] = useState("");
+    const [email, setEmail] = useState(null);
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const history = useHistory();
-    const requestBody = {
-        "email": email,
-        "password": password,
-    }
+
     function errorAlert(error) {
         if (error.status === 403) {
             alert("User not found. Invalid email or password");
@@ -30,6 +26,10 @@ export default function LogIn() {
         };
     }
     function requestSignIn(e) {
+        const requestBody = {
+            "email": email,
+            "password": password,
+        }
         e.preventDefault();
         setIsLoading(true);
         const request = signIn(requestBody);
