@@ -40,7 +40,11 @@ export default function SignUp() {
         e.preventDefault();
         setIsLoading(true);
         const request = signUp(requestBody);
-        request.then(() => history.push("/"));
+        request.then((res) => {
+            const user = JSON.stringify(res.data);
+            localStorage.setItem('user', user);
+            history.push("/timeline");
+        });
         request.catch(err => {
             errorAlert(err.response)
             setIsLoading(false);
