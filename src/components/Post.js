@@ -23,7 +23,7 @@ const Post = ({ post }) => {
         <StyledPost>
             <div className='img-like'>
                 <Link to={`/user/${id}`}>
-                    <img alt='user image' className='user-img' src={user.avatar} />
+                    <img alt='user' className='user-img' src={user.avatar} />
                 </Link>
 
                 <div className='likes' onClick={() => setLiked(!liked)}>
@@ -83,7 +83,7 @@ const Post = ({ post }) => {
 
 
                             </div>
-                            <img alt='link image' className='link-img' src={linkImage} />
+                            <img alt='link' className='link-img' src={linkImage} />
                         </a>
                 }
 
