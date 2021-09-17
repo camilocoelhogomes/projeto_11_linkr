@@ -3,21 +3,23 @@ import StyledTimeLine from './StyledTimeLine';
 
 import Post from '../../components/Post';
 import { getServerPosts } from '../../services/API';
+import Alert from '../../components/Alert';
+
 
 
 
 const TimeLine = () => {
-    debugger;
+
     const [posts, setPosts] = useState(null);
-    debugger;
+    const [err, setErr] = useState(null)
     const token = {
         "token": "09e49b91-c4c6-41eb-bb38-8d742259526f",
     }
 
     const getPosts = () => {
         getServerPosts(token)
-            .then((res) => { setPosts(res.data.posts) })
-            .catch(() => alert('Houve uma falha em obter os posts, por favor atualze a página'))
+            .then((res) => { setErr(false); setPosts(res.data.posts) })
+            .catch(() => setErr(true))
     }
 
     useEffect(getPosts, []);
@@ -26,6 +28,10 @@ const TimeLine = () => {
         <header>
             <h2>timeline</h2>
         </header>)
+
+    if (err) {
+        return <Alert message={'Não foi possível carregar os posts, por favor recarregue a página'} />
+    }
 
     return (
         <StyledTimeLine>
