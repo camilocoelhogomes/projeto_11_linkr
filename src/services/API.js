@@ -10,11 +10,7 @@ const signIn = ( body ) => axios.post(API_URL + "/sign-in", body);
 
 const signUp = ( body ) => axios.post(API_URL + "/sign-up", body);
 
-<<<<<<< HEAD
-const getTrendingHashtags = (token) => axios.get(`${API_URL}/hashtags/trending`, createHeaders(token));
-=======
-const getTrendingHashtags = ({ token }) => axios.get(`${API_URL}/hashtags/trending`, createHeaders(token));
->>>>>>> 8287d9c385c9a5238adee0da36436e51aa93815b
+const getTrendingHashtags = ( token ) => axios.get(`${API_URL}/hashtags/trending`, createHeaders(token));
 
 export { 
     signUp, 
