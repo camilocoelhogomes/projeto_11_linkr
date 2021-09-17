@@ -36,7 +36,7 @@ export default function Header() {
                 ? <ArrowUp onClick={() => toggleMenu(false)} /> 
                 : <ArrowDown onClick={() => toggleMenu(false)} />
                 }
-                <img onClick={() => toggleMenu(false)} src={user.user.avatar} />
+                <img onClick={() => toggleMenu(false)} src={user.user.avatar} alt="user-avatar" />
                 {isSelected 
                 ?   <ul>
                         <li onClick={() => goToPage('/my-posts')}>My posts</li>

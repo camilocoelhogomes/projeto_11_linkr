@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import isYouTube from '../services/isYouTube';
+import DeletePostModal from './DeletePostModal';
 import StyledPost from './StyledPost';
+
 
 const Post = ({ post }) => {
     const [liked, setLiked] = useState(false);
-
+    const [modalIsOpen, setModalIsOpen] = useState(false);
     const {
         id,
         user,
@@ -22,7 +24,7 @@ const Post = ({ post }) => {
         <StyledPost>
             <div clasName='img-like'>
 
-                <img className='user-img' src={user.avatar} />
+                <img className='user-img' src={user.avatar} alt="user-avatar" />
 
                 <div className='likes' onClick={() => setLiked(!liked)}>
                     {
@@ -56,13 +58,13 @@ const Post = ({ post }) => {
                             <p>{link}</p>
                         </>
                         :
-                        <a href={link} className='link-card' target="_blank">
+                        <a href={link} className='link-card' target="_blank" rel="noreferrer">
                             <div className='link-text-info'>
                                 <p className='link-title'>{linkTitle}</p>
                                 <p className='link-description'>{linkDescription}</p>
                                 <p className='link'>{link}</p>
                             </div>
-                            <img className='link-img' src={linkImage} />
+                            <img className='link-img' src={linkImage} alt="" />
                         </a>
                 }
 
@@ -70,7 +72,8 @@ const Post = ({ post }) => {
 
 
             </main>
-
+            <button onClick={() => setModalIsOpen(true)}>excluir</button>
+            <DeletePostModal state={{modalIsOpen,setModalIsOpen}} />
         </StyledPost>)
 }
 
