@@ -17,7 +17,6 @@ const Post = ({ post }) => {
         link,
     } = post;
 
-    console.log(post)
     return (
         <StyledPost>
             <div clasName='img-like'>

@@ -6,6 +6,11 @@ const StyledTimeLine = styled.div`
     header {
         margin: 53px 0 43px 0;
     }
+    .posts{
+        display: flex;
+        flex-direction: column;
+        gap: 16px; 
+    }
 `;
 
 export default StyledTimeLine;
