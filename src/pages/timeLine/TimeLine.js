@@ -22,7 +22,7 @@ const TimeLine = () => {
             .catch(() => setErr(true))
     }
 
-    useEffect(getPosts, []);
+    useEffect(getPosts, [token]);
 
     if (!posts) return (
         <header>
