@@ -2,7 +2,7 @@ import GlobalStyle from "./components/GlobalStyle";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import SignUp from "./pages/home/sign-up/index";
 import React from "react";
-import LogIn from "./pages/home/sign-in";
+import LogIn from "./pages/home/sign-in/index";
 import TimeLine from './pages/timeLine/TimeLine';
 
 function App() {
