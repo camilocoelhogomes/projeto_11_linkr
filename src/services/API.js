@@ -1,29 +1,10 @@
 import axios from "axios";
 
-const API_URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr";
-const SIGNUP = "/sign-up"
+const API_URL = "https://mock-api.bootcamp.respondeai.com.br/api/v3/linkr";
 
-function signUpErrorAlert(error) {
-    if (error.status === 400) {
-        alert("Image url is not supported, please choose another one");
-    } else if (error.status === 403) {
-        alert("The email you entered is already in use, please choose another one");
-    } else {
-        alert("Unable to register")
-    };
-}
-
-function signUp({ requestBody, history, setIsLoading }) {
-    setIsLoading(true);
-    const request = axios.post(API_URL + SIGNUP, requestBody);
-    request.catch(err => {signUpErrorAlert(err.response)
-        setIsLoading(false);
-    });
-    request.then(res => history.push("/"));
-}
 
 const createHeaders = (token) => {
-    return {headers: { Authorization: `Bearer ${token}`}};
+    return { headers: { Authorization: `Bearer ${token}` } };
 }
 
 const getUserPosts = ({ token, id }) => axios.get(`${API_URL}/users/${id}/posts`, createHeaders(token));
@@ -32,9 +13,21 @@ const getLikedPosts = ({ token }) => axios.get(`${API_URL}/posts/liked`, createH
 
 const getHashtagPosts = ({ token, hashtag }) => axios.get(`${API_URL}/hashtags/${hashtag}/posts`, createHeaders(token));
 
-export { 
+const getServerPosts = ({ token }) => axios.get(`${API_URL}/posts`, createHeaders(token));
+
+const signIn = (body) => axios.post(API_URL + "/sign-in", body);
+
+const signUp = (body) => axios.post(API_URL + "/sign-up", body);
+
+const getTrendingHashtags = (token) => axios.get(`${API_URL}/hashtags/trending`, createHeaders(token));
+
+export {
     signUp,
+    signIn,
+    getTrendingHashtags,
+    getServerPosts,
     getUserPosts,
     getLikedPosts,
     getHashtagPosts
 };
+

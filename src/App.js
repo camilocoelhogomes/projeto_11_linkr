@@ -2,17 +2,21 @@ import GlobalStyle from "./components/GlobalStyle";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import SignUp from "./pages/home/sign-up/index";
 import React from "react";
+import LogIn from "./pages/home/sign-in/index";
 import TimeLine from './pages/timeLine/TimeLine';
-import MyPosts from './pages/my-posts/MyPosts';
-import UserPosts from './pages/user-posts/UserPosts';
-import HashtagPosts from './pages/hashtag-posts/HashtagPosts';
-import LikedPosts from './pages/liked-posts/LikedPosts';
+import MyPosts from './pages/myPosts';
+import UserPosts from "./pages/userPosts/UserPosts";
+import HashtagPosts from "./pages/HashtagPosts/HashtagPosts";
+import LikedPosts from "./pages/likedPosts/LikedPosts";
 
 function App() {
   return (
     <Router>
       <GlobalStyle />
       <Switch>
+        <Route exact path="/" >
+          <LogIn />
+        </Route>
         <Route exact path="/sign-up" >
           <SignUp />
         </Route>
