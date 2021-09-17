@@ -12,11 +12,12 @@ const TimeLine = () => {
 
     const [posts, setPosts] = useState(null);
     const [err, setErr] = useState(null)
-    const token = {
-        "token": "09e49b91-c4c6-41eb-bb38-8d742259526f",
-    }
+
 
     const getPosts = () => {
+        const token = {
+            "token": "09e49b91-c4c6-41eb-bb38-8d742259526f",
+        }
         getServerPosts(token)
             .then((res) => { setErr(false); setPosts(res.data.posts) })
             .catch(() => setErr(true))
