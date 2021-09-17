@@ -3,6 +3,7 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import isYouTube from '../services/isYouTube';
 import StyledPost from './StyledPost';
 import { Link } from 'react-router-dom'
+import ReactHashtag from "react-hashtag";
 
 const Post = ({ post }) => {
     const [liked, setLiked] = useState(false);
@@ -43,25 +44,25 @@ const Post = ({ post }) => {
                 <h4>{user.username}</h4>
 
                 <div className='paragraph'>
-                    <p>{text}</p>
+                    <p>
+                        <ReactHashtag>
+                            {text}
+                        </ReactHashtag>
+                    </p>
                 </div>
-
-
-
-
 
                 {
                     isYouTube({ link: link }).service === 'youtube' ?
                         <>
-                            <div className='youtube-vide0'>
+                            <div className='youtube-video'>
                                 <iframe
                                     width="100%"
                                     height="100%"
                                     src={`https://www.youtube.com/embed/${isYouTube({ link: link }).id}`}
                                     title="YouTube video player"
-                                    frameborder="0"
+                                    frameBorder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen></iframe>
+                                    allowFullScreen></iframe>
                             </div>
                             <a href={link} target="_blank">{link}</a>
                         </>
@@ -85,9 +86,6 @@ const Post = ({ post }) => {
                             <img className='link-img' src={linkImage} />
                         </a>
                 }
-
-
-
 
             </main>
 

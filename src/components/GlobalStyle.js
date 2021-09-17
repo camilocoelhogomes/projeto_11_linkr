@@ -60,6 +60,12 @@ const GlobalStyle = createGlobalStyle`
         text-decoration: none;
         color: inherit;
     }
+
+    span{
+        color: #FFFFFF;
+        font-weight: bold;
+    }
+
     strong {
         font-weight: bold;
     }

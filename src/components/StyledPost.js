@@ -34,7 +34,7 @@ const StyledPost = styled.div`
     }
 
     .link-card{
-        width: 100%;
+        min-width: 100%;
         min-height: 155px;
         border: 1px solid #4D4D4D;
         box-sizing: border-box;
@@ -129,6 +129,12 @@ const StyledPost = styled.div`
     }
     main{
         margin: 0 0 0 14px;
+        max-width: calc(100% - 50px);
+    }
+
+    .youtube-video{
+        width:100%;
+        height:initial;
     }
 
     }
