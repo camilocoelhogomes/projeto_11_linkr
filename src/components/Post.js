@@ -3,7 +3,7 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import isYouTube from '../services/isYouTube';
 import StyledPost from './StyledPost';
 import { Link } from 'react-router-dom'
-
+import ReactHashtag from "react-hashtag";
 
 const Post = ({ post }) => {
     const [liked, setLiked] = useState(false);
@@ -45,9 +45,9 @@ const Post = ({ post }) => {
 
                 <div className='paragraph'>
                     <p>
-
+                        <ReactHashtag>
                             {text}
-
+                        </ReactHashtag>
                     </p>
                 </div>
 
