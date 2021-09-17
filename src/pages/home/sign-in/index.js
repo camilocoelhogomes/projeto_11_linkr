@@ -22,10 +22,22 @@ export default function LogIn() {
         "email": email,
         "password": password,
     }
+    function errorAlert(error) {
+        if (error.status === 403) {
+            alert("User not found. Invalid email or password");
+        } else {
+            alert("Unable to sign in")
+        };
+    }
     function requestSignIn(e) {
         e.preventDefault();
         setIsLoading(true);
-        logIn({ requestBody, history, setIsLoading });
+        const request = logIn(requestBody);
+        request.then(() => history.push("/timeline"));
+        request.catch(err => {
+            errorAlert(err.response)
+            setIsLoading(false);
+        });
     }
     return (
         <BodyContainer>

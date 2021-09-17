@@ -26,10 +26,25 @@ export default function SignUp() {
         "username": username,
         "pictureUrl": pictureUrl,
     }
+    function errorAlert(error) {
+        if (error.status === 403) {
+            alert("The email you entered is already in use, please choose another one");
+        } else if (error.status === 400) {
+            alert("Image url is not supported, please choose another one");
+        } else {
+            alert("Unable to register")
+        };
+
+    }
     function requestSignUp(e) {
         e.preventDefault();
         setIsLoading(true);
-        signUp({ requestBody, history, setIsLoading });
+        const request = signUp(requestBody);
+        request.then(() => history.push("/"));
+        request.catch(err => {
+            errorAlert(err.response)
+            setIsLoading(false);
+        });
     }
     return (
         <BodyContainer>
