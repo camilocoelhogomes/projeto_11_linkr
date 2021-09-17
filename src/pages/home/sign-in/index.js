@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
-import { logIn } from "../../../services/API"
+import { signIn } from "../../../services/API"
 import {
     BodyContainer,
     Banner,
@@ -32,8 +32,12 @@ export default function LogIn() {
     function requestSignIn(e) {
         e.preventDefault();
         setIsLoading(true);
-        const request = logIn(requestBody);
-        request.then(() => history.push("/timeline"));
+        const request = signIn(requestBody);
+        request.then((res) => {
+            const user = JSON.stringify(res.data);
+            localStorage.setItem('user', user);
+            history.push("/timeline");
+        });
         request.catch(err => {
             errorAlert(err.response)
             setIsLoading(false);
