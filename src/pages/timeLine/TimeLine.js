@@ -13,7 +13,9 @@ const TimeLine = () => {
     }
 
     const getPosts = () => {
-        getServerPosts(token).then((res) => setPosts(res.data.posts))
+        getServerPosts(token)
+            .then((res) => { console.log(res.data.posts); setPosts(res.data.posts) })
+            .catch(() => alert('Houve uma falha em obter os posts, por favor atualze a página'))
     }
 
     useEffect(getPosts, []);
@@ -26,7 +28,7 @@ const TimeLine = () => {
                 <h2>timeline</h2>
             </header>
             <div className='posts'>
-                {
+                {posts.length === 0 ? <h2>Nenhm post encontrado</h2> :
                     posts.map(post => <Post key={post.id} post={post} />)
                 }
             </div>
