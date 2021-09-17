@@ -11,7 +11,7 @@ export default function LikedPosts() {
 
     useEffect(() => {
         getLikedPosts({toke: user.token})
-            .then( res => setPosts(res.data.posts));
+            .then( res => setPosts(res.data.posts.filter(post => post.likes.includes({"id": user.id}))));
     }, []);
 
     return(
