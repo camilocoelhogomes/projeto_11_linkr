@@ -3,11 +3,12 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import SignUp from "./pages/home/sign-up/index";
 import React from "react";
 import LogIn from "./pages/home/sign-in";
+import TimeLine from './pages/timeLine';
 
 function App() {
   return (
     <Router>
-        <GlobalStyle />
+      <GlobalStyle />
       <Switch>
       <Route exact path="/" >
           <LogIn />
@@ -15,9 +16,14 @@ function App() {
         <Route exact path="/sign-up" >
           <SignUp />
         </Route>
+
+        <Route exact path="/timeline" >
+          <TimeLine />
+        </Route>
       </Switch>
     </Router>
   );
 }
 
 export default App;
+
