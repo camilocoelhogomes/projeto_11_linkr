@@ -23,7 +23,7 @@ const Post = ({ post }) => {
         <StyledPost>
             <div className='img-like'>
                 <Link to={`/user/${id}`}>
-                    <img className='user-img' src={user.avatar} />
+                    <img alt='user image' className='user-img' src={user.avatar} />
                 </Link>
 
                 <div className='likes' onClick={() => setLiked(!liked)}>
@@ -64,10 +64,10 @@ const Post = ({ post }) => {
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowFullScreen></iframe>
                             </div>
-                            <a href={link} target="_blank">{link}</a>
+                            <a href={link} target="_blank" rel="noreferrer">{link}</a>
                         </>
                         :
-                        <a href={link} className='link-card' target="_blank">
+                        <a href={link} className='link-card' target="_blank" rel="noreferrer">
                             <div className='link-text-info'>
                                 <div className='paragraph'>
                                     <p className='link-title'>{linkTitle}</p>
@@ -83,7 +83,7 @@ const Post = ({ post }) => {
 
 
                             </div>
-                            <img className='link-img' src={linkImage} />
+                            <img alt='link image' className='link-img' src={linkImage} />
                         </a>
                 }
 
