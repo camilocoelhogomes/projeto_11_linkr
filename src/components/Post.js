@@ -11,7 +11,6 @@ import styled from 'styled-components';
 
 const Post = ({ post, userInfo, getPosts }) => {
 
-    const [liked, setLiked] = useState(false);
     const {
         id,
         user,
@@ -22,25 +21,31 @@ const Post = ({ post, userInfo, getPosts }) => {
         linkTitle,
         link,
     } = post;
+    const [liked, setLiked] = useState(false);
+    const [numberOfLikes, setNumberOfLikes] = useState(likes.length);
 
     console.log(post);
     console.log(userInfo);
 
     const likePost = (postId) => {
         setLiked(true);
+        setNumberOfLikes(numberOfLikes + 1);
         sendLike(postId, userInfo.token).then(ans => {
             getPosts();
         }).catch(err => {
             setLiked(false);
+            setNumberOfLikes(numberOfLikes - 1);
         })
     }
 
     const dislikePost = (postId) => {
         setLiked(false);
+        setNumberOfLikes(numberOfLikes - 1);
         sendDislike(postId, userInfo.token).then(ans => {
             getPosts();
         }).catch(err => {
             setLiked(true);
+            setNumberOfLikes(numberOfLikes + 1);
         })
     }
 
@@ -75,7 +80,7 @@ const Post = ({ post, userInfo, getPosts }) => {
                                 : (`Curtido por ${likes[0]["user.username"]} e ${likes[1]["user.username"]}`)) 
                                 : (likes[likes.length - 1].userId === userInfo.user.id ? (`Curtido por ${userInfo.user.username}, ${likes[likes.length - 2]["user.username"]} e outras ${likes.length - 2} pessoa(s)`) 
                                 : (`Curtido por ${userInfo.user.username}, ${likes[likes.length - 1]["user.username"]} e outras ${likes.length - 2} pessoa(s)`))))}>
-                                {likes.length} likes
+                                {numberOfLikes} likes
                             </LikesNumber>
                         </>
                     ) : (
@@ -87,7 +92,7 @@ const Post = ({ post, userInfo, getPosts }) => {
                                 : (likes.length === 2 ? (`Curtido por ${likes[0]["user.username"]} e ${likes[1]["user.username"]}`) 
                                 : (`Curtido por ${likes[likes.length - 1]["user.username"]}, ${likes[likes.length - 2]["user.username"]} e outras ${likes.length - 2} pessoa(s)`)))
                                 }>
-                                {likes.length} likes
+                                {numberOfLikes} likes
                             </LikesNumber>
                         </>
                     )}
