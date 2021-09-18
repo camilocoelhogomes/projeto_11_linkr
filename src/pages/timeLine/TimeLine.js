@@ -5,6 +5,7 @@ import Post from '../../components/Post';
 import { getServerPosts } from '../../services/API';
 import Alert from '../../components/Alert';
 import Treding from '../../components/Trending';
+import Publish from './Publish';
 
 export default function TimeLine () {
 
@@ -38,6 +39,7 @@ export default function TimeLine () {
                 </header>
                 <div className='main-content'>
                     <div className='posts'>
+                        <Publish loadPosts={getPosts}/>
                         {posts.length === 0 ? <h2>Nenhm post encontrado</h2> :
                             posts.map(post => <Post key={post.id} post={post} userInfo={userInfo} getPosts={getPosts}/>)
                         }
