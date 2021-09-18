@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
+import { deletePost } from '../services/API';
 
 Modal.setAppElement(document.getElementById('root'));
-export default function DeletePostModal({ state }) {
+export default function DeletePostModal({ state, postId }) {
     const { modalIsOpen, setModalIsOpen } = state;
+    const [isLoading, setIsLoading] = useState(false);
 
     const customStyles = {
         overlay: { background: "rgba(255, 255, 255, 0.9)" },
@@ -23,12 +25,34 @@ export default function DeletePostModal({ state }) {
         },
     };
 
+    function errorAlert(error) {
+        setModalIsOpen(false);
+        if (error.status === 403) {
+            alert("This post belongs to another user! Can't continue.");
+        } else {
+            alert("Unable to delete!")
+        };
+        setIsLoading(false);
+    }
+
+    function requestDeletePost() {
+        setIsLoading(true);
+        const token = JSON.parse(localStorage.getItem("user")).token;
+        const request = deletePost({ token, postId });
+        request.then(res => window.location.reload());
+        request.catch(err => errorAlert(err.response));
+    }
+
     return (
         <Modal isOpen={modalIsOpen} style={customStyles} >
             <strong><Text>Tem certeza que deseja excluir essa publicação?</Text></strong>
             <Options>
-                <WhiteButton onClick={() => setModalIsOpen(false)}>Não, voltar</WhiteButton>
-                <BlueButton onClick={() => setModalIsOpen(false)}>Sim, excluir</BlueButton>
+                {isLoading ? <Text>Loading...</Text> :
+                    <>
+                        <WhiteButton onClick={() => setModalIsOpen(false)}>Não, voltar</WhiteButton>
+                        <BlueButton onClick={requestDeletePost}>Sim, excluir</BlueButton>
+                    </>
+                }
             </Options>
         </Modal>
     );

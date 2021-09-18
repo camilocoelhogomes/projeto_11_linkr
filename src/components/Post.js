@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import ReactHashtag from "react-hashtag";
 
 
-const Post = ({ post }) => {
+const Post = ({ post, postId }) => {
     const [liked, setLiked] = useState(false);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const {
@@ -91,7 +91,7 @@ const Post = ({ post }) => {
 
             </main>
             <button onClick={() => setModalIsOpen(true)}>excluir</button>
-            <DeletePostModal state={{modalIsOpen,setModalIsOpen}} />
+            <DeletePostModal state={{ modalIsOpen, setModalIsOpen }} postId={postId}/>
         </StyledPost>)
 }
 

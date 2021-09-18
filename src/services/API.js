@@ -7,6 +7,8 @@ const createHeaders = (token) => {
     return { headers: { Authorization: `Bearer ${token}` } };
 }
 
+const deletePost = ({ token, postId }) => axios.delete(`${API_URL}/posts/${postId}`, createHeaders(token));
+
 const getServerPosts = ({ token }) => axios.get(`${API_URL}/posts`, createHeaders(token));
 
 const signIn = (body) => axios.post(API_URL + "/sign-in", body);
@@ -20,5 +22,6 @@ export {
     signIn,
     getTrendingHashtags,
     getServerPosts,
+    deletePost,
 };
 
