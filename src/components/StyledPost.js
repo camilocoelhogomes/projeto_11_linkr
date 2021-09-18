@@ -112,6 +112,9 @@ const StyledPost = styled.div`
         position:absolute;
         top:10px;
         right:10px;
+        :hover{
+            cursor: pointer;
+        }
     }
     @media(max-width: 900px){
         width: 100%;
