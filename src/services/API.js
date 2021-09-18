@@ -21,6 +21,8 @@ const signUp = (body) => axios.post(API_URL + "/sign-up", body);
 
 const getTrendingHashtags = (token) => axios.get(`${API_URL}/hashtags/trending`, createHeaders(token));
 
+const publishPost = ({ token, body }) => axios.post(`${API_URL}/posts`, body, createHeaders(token));
+
 export {
     signUp,
     signIn,
@@ -29,5 +31,6 @@ export {
     getUserPosts,
     getLikedPosts,
     getHashtagPosts,
+    publishPost,
 };
 
