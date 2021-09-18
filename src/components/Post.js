@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { FaTrash } from "react-icons/fa";
 import isYouTube from '../services/isYouTube';
 import DeletePostModal from './DeletePostModal';
 import StyledPost from './StyledPost';
@@ -90,7 +91,7 @@ const Post = ({ post, postId }) => {
                 }
 
             </main>
-            <button onClick={() => setModalIsOpen(true)}>excluir</button>
+            <button className='trashButton' onClick={() => setModalIsOpen(true)}><FaTrash size='16px' color='white' /></button>
             <DeletePostModal state={{ modalIsOpen, setModalIsOpen }} postId={postId}/>
         </StyledPost>)
 }

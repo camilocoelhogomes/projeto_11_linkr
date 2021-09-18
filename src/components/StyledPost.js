@@ -113,7 +113,11 @@ const StyledPost = styled.div`
         line-height: 13px;
         color: #FFFFFF;
     }
-
+    .trashButton{
+        background:none;
+        height:fit-content;
+        border:none;
+    }
     @media(max-width: 900px){
         width: 100%;
         padding: 14px;
