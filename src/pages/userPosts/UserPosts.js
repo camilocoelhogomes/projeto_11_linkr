@@ -14,11 +14,11 @@ export default function UserPosts() {
     const userInfo = JSON.parse(localStorage.getItem("user"));
     const history = useHistory();
 
-    if (Number(id) === userInfo.user.id) {
-        history.push('/my-posts');
-    }
-
-    const getPosts = () => {      
+    const getPosts = () => { 
+        const isUser = (Number(id) === userInfo.user.id);
+        if (isUser) {
+            history.push('/my-posts');
+        }     
         getUserPosts({token: userInfo.token, id})
             .then( res => setPosts(res.data.posts))
             .catch(() => setErr(true));
