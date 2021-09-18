@@ -41,7 +41,7 @@ const TimeLine = () => {
             <div className='main-content'>
                 <div className='posts'>
                     {posts.length === 0 ? <h2>Nenhm post encontrado</h2> :
-                        posts.map((post,index) => <Post key={index} post={post} postId={post.id} />)
+                        posts.map((post) => <Post key={post.id} post={post} />)
                     }
                 </div>
                 <Treding className='trending' />

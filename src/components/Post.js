@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import ReactHashtag from "react-hashtag";
 
 
-const Post = ({ post, postId }) => {
+const Post = ({ post }) => {
     const [liked, setLiked] = useState(false);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const {
@@ -92,7 +92,7 @@ const Post = ({ post, postId }) => {
 
             </main>
             <button className='trashButton' onClick={() => setModalIsOpen(true)}><FaTrash size='16px' color='white' /></button>
-            <DeletePostModal state={{ modalIsOpen, setModalIsOpen }} postId={postId}/>
+            <DeletePostModal state={{ modalIsOpen, setModalIsOpen }} postId={id} />
         </StyledPost>)
 }
 
