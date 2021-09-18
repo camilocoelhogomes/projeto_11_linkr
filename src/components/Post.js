@@ -22,9 +22,6 @@ export default function Post ({ post, userInfo, getPosts }) {
     const [numberOfLikes, setNumberOfLikes] = useState(likes.length);
     const [errorMessage, setErrorMessage] = useState("");
 
-    console.log(post);
-    console.log(userInfo);
-
     const likePost = (postId) => {
         setLiked(true);
         const actualLikesNumber = numberOfLikes;
@@ -82,11 +79,11 @@ export default function Post ({ post, userInfo, getPosts }) {
                             <LikedHeart onClick={() => dislikePost(id)}/>
                             <LikesNumber data-text-color="#505050" data-tip={
                                 likes.length === 0 ? ("Ninguém curtiu esta publicação!") 
-                                : (likes.length === 1 ? (`Curtido por ${userInfo.user.username}`) 
-                                : (likes.length === 2 ? (likes[1].userId === userInfo.user.id ? (`Curtido por ${likes[1]["user.username"]} e ${likes[0]["user.username"]}`) 
-                                : (`Curtido por ${likes[0]["user.username"]} e ${likes[1]["user.username"]}`)) 
-                                : (likes[likes.length - 1].userId === userInfo.user.id ? (`Curtido por ${userInfo.user.username}, ${likes[likes.length - 2]["user.username"]} e outras ${likes.length - 2} pessoa(s)`) 
-                                : (`Curtido por ${userInfo.user.username}, ${likes[likes.length - 1]["user.username"]} e outras ${likes.length - 2} pessoa(s)`))))}>
+                                : (likes.length === 1 ? (`Curtido por você`) 
+                                : (likes.length === 2 ? (likes[1].userId === userInfo.user.id ? (`Curtido por você e ${likes[0]["user.username"]}`) 
+                                : (`Curtido por você e ${likes[1]["user.username"]}`)) 
+                                : (likes[likes.length - 1].userId === userInfo.user.id ? (`Curtido por você, ${likes[likes.length - 2]["user.username"]} e outras ${likes.length - 2} pessoa(s)`) 
+                                : (`Curtido por você, ${likes[likes.length - 1]["user.username"]} e outras ${likes.length - 2} pessoa(s)`))))}>
                                 {numberOfLikes} likes
                             </LikesNumber>
                         </>
