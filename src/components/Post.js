@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import isYouTube from '../services/isYouTube';
 import { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage } from './StyledPost';
+import { FaTrash } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { sendLike, sendDislike } from '../services/API';
 import ReactTooltip from 'react-tooltip';
 import { useHistory } from 'react-router-dom';
 import ReactHashtag from 'react-hashtag';
-
+import DeletePostModal from './DeletePostModal';
 export default function Post({ post, userInfo, getPosts }) {
 
     const history = useHistory();
-
     const {
         id,
         user,
@@ -21,9 +21,11 @@ export default function Post({ post, userInfo, getPosts }) {
         linkTitle,
         link,
     } = post;
+    const isCurrentUser = Boolean(userInfo.user.id === user.id);
     const [liked, setLiked] = useState(false);
     const [numberOfLikes, setNumberOfLikes] = useState(likes.length);
     const [errorMessage, setErrorMessage] = useState("");
+    const [modalIsOpen, setModalIsOpen] = useState(false);
 
     const likePost = (postId) => {
 
@@ -151,6 +153,11 @@ export default function Post({ post, userInfo, getPosts }) {
                         </a>
                 }
             </main>
-        </StyledPost>
-    )
+            {isCurrentUser ?
+                <button className='trashButton' onClick={() => setModalIsOpen(true)}><FaTrash size='16px' color='white' /></button>
+                :
+                ""
+            }
+            <DeletePostModal state={{ modalIsOpen, setModalIsOpen }} postId={id} getPosts={getPosts} />
+        </StyledPost>)
 }

@@ -106,6 +106,22 @@ const StyledPost = styled.div`
         border-radius: 50%;
     }
 
+    .like-text{
+        font-size: 11px;
+        line-height: 13px;
+        color: #FFFFFF;
+    }
+    .trashButton{
+        background:none;
+        height:fit-content;
+        border:none;
+        position:absolute;
+        top:10px;
+        right:10px;
+        :hover{
+            cursor: pointer;
+        }
+    }
     @media(max-width: 900px){
         width: 100%;
         padding: 14px;
