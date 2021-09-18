@@ -35,7 +35,7 @@ export default function HashtagPosts() {
                 <div className='main-content'>
                     <div className='posts'>
                         {posts.length === 0 ? <h2>Nenhm post encontrado</h2> :
-                            posts.map(post => <Post key={post.id} post={post} />)
+                            posts.map(post => <Post key={post.id} post={post} userInfo={userInfo} getPosts={getPosts} />)
                         }
                     </div>
                     <Trending className='trending' />
