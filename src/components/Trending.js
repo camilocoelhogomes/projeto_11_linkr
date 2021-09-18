@@ -47,7 +47,7 @@ const TrendingContainer = styled.div`
     border-radius: 16px;
     height: fit-content;
     position: sticky;
-    top: 50px;
+    top: 160px;
 
     @media(max-width:900px){
         display: none;

@@ -7,6 +7,12 @@ const createHeaders = (token) => {
     return { headers: { Authorization: `Bearer ${token}` } };
 }
 
+const getUserPosts = ({ token, id }) => axios.get(`${API_URL}/users/${id}/posts`, createHeaders(token));
+
+const getLikedPosts = ({ token }) => axios.get(`${API_URL}/posts/liked`, createHeaders(token));
+
+const getHashtagPosts = ({ token, hashtag }) => axios.get(`${API_URL}/hashtags/${hashtag}/posts`, createHeaders(token));
+
 const getServerPosts = ({ token }) => axios.get(`${API_URL}/posts`, createHeaders(token));
 
 const signIn = (body) => axios.post(API_URL + "/sign-in", body);
@@ -20,5 +26,8 @@ export {
     signIn,
     getTrendingHashtags,
     getServerPosts,
+    getUserPosts,
+    getLikedPosts,
+    getHashtagPosts,
 };
 
