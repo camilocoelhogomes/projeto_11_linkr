@@ -5,12 +5,13 @@ import StyledPost from './StyledPost';
 import { Link } from 'react-router-dom'
 import ReactHashtag from "react-hashtag";
 import { sendLike, sendDislike } from '../services/API';
+import ReactTooltip from 'react-tooltip';
 
 import styled from 'styled-components';
 
 const Post = ({ post, userInfo, getPosts }) => {
-    const [liked, setLiked] = useState(false);
 
+    const [liked, setLiked] = useState(false);
     const {
         id,
         user,
@@ -57,12 +58,22 @@ const Post = ({ post, userInfo, getPosts }) => {
                 <Link to={`/user/${user.id}`}>
                     <img alt='user' className='user-img' src={user.avatar} />
                 </Link>
-
+                <ReactTooltip
+                    data-event="hover" 
+                    backgroundColor="#ffffff" 
+                    place="bottom"
+                    effect="float"
+                />
                 <LikesBox>
                     {liked ? (
                         <>
                             <LikedHeart onClick={() => dislikePost(id)}/>
-                            <LikesNumber data-text-color="#505050" data-tip={"oi"}>
+                            <LikesNumber data-text-color="#505050" data-tip={
+                                post.likes.length === 1 ? (`Curtido por ${userInfo.user.username}`) 
+                                : (likes.length === 2 ? (likes[1]["user.id"] === userInfo.user.id ? (`Curtido por ${likes[1]["user.username"]} e ${likes[0]["user.username"]}`) 
+                                : (`Curtido por ${likes[0]["user.username"]} e ${likes[1]["user.username"]}`)) 
+                                : (likes[likes.length - 1]["user.id"] === userInfo.user.id ? (`Curtido por ${userInfo.user.username}, ${likes[likes.length - 2]["user.username"]} e outras ${likes.length - 2} pessoa(s)`) 
+                                : (`Curtido por ${userInfo.user.username}, ${likes[likes.length - 1]["user.username"]} e outras ${likes.length - 2} pessoa(s)`)))}>
                                 {likes.length} likes
                             </LikesNumber>
                         </>
