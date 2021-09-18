@@ -1,37 +1,72 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { getUserPosts } from "../../services/API";
-import UserContext from "../../store/UserContext";
 import Post from '../../components/Post';
 import styled from "styled-components";
 import Header from '../../components/Header';
 import { useParams } from "react-router-dom";
+import Trending from "../../components/Trending";
+import Alert from '../../components/Alert';
 
 export default function UserPosts() {
     const [posts, setPosts] = useState([]);
-    const {user} = useContext(UserContext);
+    const [err, setErr] = useState(null);
     const id = useParams();
+    const userInfo = JSON.parse(localStorage.getItem("user"));
 
-    useEffect(() => {
-        getUserPosts({toke: user.token, id})
-            .then( res => setPosts(res.data.posts));
-    }, []);
+    const getPosts = () => {
+        getUserPosts({toke: userInfo.token, id})
+            .then( res => setPosts(res.data.posts))
+            .catch(() => setErr(true));
+    }
 
-    return(
-        <PageContainer>
-            <header>
-                <h2>{posts[0].user.username}'s posts</h2>
-            </header>
-            {
-                posts.map(post => <Post key={post.id} post={post} />)
-            }
-        </PageContainer>
+    useEffect(getPosts, []);
+
+    if (err) {
+        return <Alert message={'Não foi possível carregar os posts, por favor recarregue a página'} />
+    }
+
+    return (
+        <>
+            <Header />
+            <PageContainer>
+                <header>
+                    <h2>{posts[0].user.username}'s posts</h2>
+                </header>
+                <div className='main-content'>
+                    <div className='posts'>
+                        {posts.length === 0 ? <h2>Nenhm post encontrado</h2> :
+                            posts.map(post => <Post key={post.id} post={post} />)
+                        }
+                    </div>
+                    <Trending className='trending' />
+                </div>
+            </PageContainer>
+        </>
     );
 }
 
 const PageContainer = styled.div`
     margin: 0 auto;
     max-width: 1042px;
+    position: relative;
     header {
-        margin: 53px 0 43px 0;
+        margin: 125px 0 43px 0;
+    }
+    .posts{
+        display: flex;
+        flex-direction: column;
+        gap: 16px; 
+    }
+
+    .main-content{
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    @media(max-width: 900px){
+        .posts{
+            width: 100%;
+        }
     }
 `;

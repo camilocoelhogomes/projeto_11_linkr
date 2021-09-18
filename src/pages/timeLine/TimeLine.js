@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import StyledTimeLine from './StyledTimeLine';
-
+import Header from '../../components/Header';
 import Post from '../../components/Post';
 import { getServerPosts } from '../../services/API';
 import Alert from '../../components/Alert';
@@ -33,21 +33,23 @@ const TimeLine = () => {
     }
 
     return (
-        <StyledTimeLine>
-
-            <header>
-                <h2>timeline</h2>
-            </header>
-            <div className='main-content'>
-                <div className='posts'>
-                    {posts.length === 0 ? <h2>Nenhm post encontrado</h2> :
-                        posts.map(post => <Post key={post.id} post={post} />)
-                    }
+        <>
+            <Header />
+            <StyledTimeLine>
+                <header>
+                    <h2>timeline</h2>
+                </header>
+                <div className='main-content'>
+                    <div className='posts'>
+                        {posts.length === 0 ? <h2>Nenhm post encontrado</h2> :
+                            posts.map(post => <Post key={post.id} post={post} />)
+                        }
+                    </div>
+                    <Treding className='trending' />
                 </div>
-                <Treding className='trending' />
-            </div>
-        </StyledTimeLine>
-    )
+            </StyledTimeLine>
+        </>
+    );
 }
 
 export default TimeLine;

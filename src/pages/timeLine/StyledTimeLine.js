@@ -5,7 +5,7 @@ const StyledTimeLine = styled.div`
     max-width: 1042px;
     position: relative;
     header {
-        margin: 53px 0 43px 0;
+        margin: 125px 0 43px 0;
     }
     .posts{
         display: flex;
