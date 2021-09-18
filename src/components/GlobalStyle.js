@@ -55,6 +55,17 @@ const GlobalStyle = createGlobalStyle`
         color: #B7B7B7;
         font-size: 17px;
     }
+
+    a{
+        text-decoration: none;
+        color: inherit;
+    }
+
+    span{
+        color: #FFFFFF;
+        font-weight: bold;
+    }
+
     strong {
         font-weight: bold;
     }

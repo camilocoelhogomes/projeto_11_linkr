@@ -3,6 +3,8 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import isYouTube from '../services/isYouTube';
 import DeletePostModal from './DeletePostModal';
 import StyledPost from './StyledPost';
+import { Link } from 'react-router-dom'
+import ReactHashtag from "react-hashtag";
 
 
 const Post = ({ post }) => {
@@ -19,12 +21,12 @@ const Post = ({ post }) => {
         link,
     } = post;
 
-    console.log(post)
     return (
         <StyledPost>
-            <div clasName='img-like'>
-
-                <img className='user-img' src={user.avatar} alt="user-avatar" />
+            <div className='img-like'>
+                <Link to={`/user/${id}`}>
+                    <img alt='user' className='user-img' src={user.avatar} />
+                </Link>
 
                 <div className='likes' onClick={() => setLiked(!liked)}>
                     {
@@ -32,7 +34,9 @@ const Post = ({ post }) => {
                             <AiFillHeart size='20px' color='#AC0000' /> :
                             <AiOutlineHeart size='20px' color='#FFFFFF' />
                     }
+
                     <p className='like-text'>{likes.length} likes</p>
+
 
                 </div>
 
@@ -40,36 +44,50 @@ const Post = ({ post }) => {
 
             <main>
                 <h4>{user.username}</h4>
-                <p>{text}</p>
 
-
+                <div className='paragraph'>
+                    <p>
+                        <ReactHashtag>
+                            {text}
+                        </ReactHashtag>
+                    </p>
+                </div>
 
                 {
                     isYouTube({ link: link }).service === 'youtube' ?
                         <>
-                            <iframe
-                                width="501"
-                                height="281"
-                                src={`https://www.youtube.com/embed/${isYouTube({ link: link }).id}`}
-                                title="YouTube video player"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen></iframe>
-                            <p>{link}</p>
+                            <div className='youtube-video'>
+                                <iframe
+                                    width="100%"
+                                    height="100%"
+                                    src={`https://www.youtube.com/embed/${isYouTube({ link: link }).id}`}
+                                    title="YouTube video player"
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen></iframe>
+                            </div>
+                            <a href={link} target="_blank" rel="noreferrer">{link}</a>
                         </>
                         :
                         <a href={link} className='link-card' target="_blank" rel="noreferrer">
                             <div className='link-text-info'>
-                                <p className='link-title'>{linkTitle}</p>
-                                <p className='link-description'>{linkDescription}</p>
-                                <p className='link'>{link}</p>
+                                <div className='paragraph'>
+                                    <p className='link-title'>{linkTitle}</p>
+                                </div>
+
+                                <div className='paragraph'>
+                                    <p className='link-description'>{linkDescription}</p>
+                                </div>
+
+                                <div className='paragraph'>
+                                    <p className='link'>{link}</p>
+                                </div>
+
+
                             </div>
-                            <img className='link-img' src={linkImage} alt="" />
+                            <img alt='link' className='link-img' src={linkImage} />
                         </a>
                 }
-
-
-
 
             </main>
             <button onClick={() => setModalIsOpen(true)}>excluir</button>

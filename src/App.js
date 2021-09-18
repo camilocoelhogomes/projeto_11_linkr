@@ -10,7 +10,7 @@ function App() {
     <Router>
       <GlobalStyle />
       <Switch>
-      <Route exact path="/" >
+        <Route exact path="/" >
           <LogIn />
         </Route>
         <Route exact path="/sign-up" >

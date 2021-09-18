@@ -1,3 +1,4 @@
+import React from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 
@@ -18,7 +19,7 @@ export default function DeletePostModal({ state }) {
             height: "262px",
             background: "#333333",
             borderRadius: "50px",
-            padding: "0"
+            padding: "0",
         },
     };
 
