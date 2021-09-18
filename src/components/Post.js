@@ -69,18 +69,24 @@ const Post = ({ post, userInfo, getPosts }) => {
                         <>
                             <LikedHeart onClick={() => dislikePost(id)}/>
                             <LikesNumber data-text-color="#505050" data-tip={
-                                post.likes.length === 1 ? (`Curtido por ${userInfo.user.username}`) 
-                                : (likes.length === 2 ? (likes[1]["user.id"] === userInfo.user.id ? (`Curtido por ${likes[1]["user.username"]} e ${likes[0]["user.username"]}`) 
+                                likes.length === 0 ? ("Ninguém curtiu esta publicação!") 
+                                : (likes.length === 1 ? (`Curtido por ${userInfo.user.username}`) 
+                                : (likes.length === 2 ? (likes[1].userId === userInfo.user.id ? (`Curtido por ${likes[1]["user.username"]} e ${likes[0]["user.username"]}`) 
                                 : (`Curtido por ${likes[0]["user.username"]} e ${likes[1]["user.username"]}`)) 
-                                : (likes[likes.length - 1]["user.id"] === userInfo.user.id ? (`Curtido por ${userInfo.user.username}, ${likes[likes.length - 2]["user.username"]} e outras ${likes.length - 2} pessoa(s)`) 
-                                : (`Curtido por ${userInfo.user.username}, ${likes[likes.length - 1]["user.username"]} e outras ${likes.length - 2} pessoa(s)`)))}>
+                                : (likes[likes.length - 1].userId === userInfo.user.id ? (`Curtido por ${userInfo.user.username}, ${likes[likes.length - 2]["user.username"]} e outras ${likes.length - 2} pessoa(s)`) 
+                                : (`Curtido por ${userInfo.user.username}, ${likes[likes.length - 1]["user.username"]} e outras ${likes.length - 2} pessoa(s)`))))}>
                                 {likes.length} likes
                             </LikesNumber>
                         </>
                     ) : (
                         <>
                             <EmptyHeart onClick={() => likePost(id)}/>
-                            <LikesNumber data-text-color="#505050" data-tip={"oi"}>
+                            <LikesNumber data-text-color="#505050" data-tip={
+                                likes.length === 0 ? ("Ninguém curtiu esta publicação!") 
+                                : (likes.length === 1 ? (`Curtido por ${likes[0]["user.username"]}`) 
+                                : (likes.length === 2 ? (`Curtido por ${likes[0]["user.username"]} e ${likes[1]["user.username"]}`) 
+                                : (`Curtido por ${likes[likes.length - 1]["user.username"]}, ${likes[likes.length - 2]["user.username"]} e outras ${likes.length - 2} pessoa(s)`)))
+                                }>
                                 {likes.length} likes
                             </LikesNumber>
                         </>
