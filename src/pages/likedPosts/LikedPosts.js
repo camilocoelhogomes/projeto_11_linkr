@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getLikedPosts } from "../../services/API";
-import Post from '../../components/Post';
 import styled from "styled-components";
+import Post from '../../components/Post';
 import Header from '../../components/Header';
 import Trending from "../../components/Trending";
 import Alert from "../../components/Alert";
@@ -13,7 +13,7 @@ export default function LikedPosts() {
 
     const getPosts = () => {
         getLikedPosts({token: userInfo.token})
-            .then( res => setPosts(res.data.posts.filter(post => post.likes.includes({"id": userInfo.id}))))
+            .then( res => setPosts(res.data.posts))
             .catch(() => setErr(true));
     }
 

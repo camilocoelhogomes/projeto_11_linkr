@@ -1,19 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getUserPosts } from "../../services/API";
-import Post from '../../components/Post';
-import styled from "styled-components";
-import Header from '../../components/Header';
 import { useParams } from "react-router-dom";
+import styled from "styled-components";
+import Post from '../../components/Post';
+import Header from '../../components/Header';
 import Trending from "../../components/Trending";
 import Alert from '../../components/Alert';
 
 export default function UserPosts() {
     const [posts, setPosts] = useState([]);
     const [err, setErr] = useState(null);
-    const id = useParams();
+    const { id } = useParams();
     const userInfo = JSON.parse(localStorage.getItem("user"));
 
     const getPosts = () => {
+        console.log(userInfo.token, id)
         getUserPosts({token: userInfo.token, id})
             .then( res => setPosts(res.data.posts))
             .catch(() => setErr(true));
@@ -30,7 +31,7 @@ export default function UserPosts() {
             <Header />
             <PageContainer>
                 <header>
-                    <h2>{posts[0].user.username}'s posts</h2>
+                    <h2>{posts.length > 0 ? posts[0].user.username : ""}'s posts</h2>
                 </header>
                 <div className='main-content'>
                     <div className='posts'>

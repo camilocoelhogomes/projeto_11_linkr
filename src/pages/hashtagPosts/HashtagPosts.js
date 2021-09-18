@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getHashtagPosts } from "../../services/API";
-import Post from '../../components/Post';
-import styled from "styled-components";
-import Header from '../../components/Header';
 import { useParams } from "react-router-dom";
+import styled from "styled-components";
+import Post from '../../components/Post';
+import Header from '../../components/Header';
 import Trending from "../../components/Trending";
 import Alert from "../../components/Alert";
 

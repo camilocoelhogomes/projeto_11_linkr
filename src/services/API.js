@@ -28,6 +28,6 @@ export {
     getServerPosts,
     getUserPosts,
     getLikedPosts,
-    getHashtagPosts
+    getHashtagPosts,
 };
 
