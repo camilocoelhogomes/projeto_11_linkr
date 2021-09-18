@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import isYouTube from '../services/isYouTube';
 import StyledPost from './StyledPost';
 import { Link } from 'react-router-dom'
 import ReactHashtag from "react-hashtag";
+import { sendLike, sendDislike } from '../services/API';
 
-const Post = ({ post }) => {
+import styled from 'styled-components';
+
+const Post = ({ post, userInfo, getPosts }) => {
     const [liked, setLiked] = useState(false);
 
     const {
@@ -19,6 +22,35 @@ const Post = ({ post }) => {
         link,
     } = post;
 
+    console.log(post);
+    console.log(userInfo);
+
+    const likePost = (postId) => {
+        setLiked(true);
+        sendLike(postId, userInfo.token).then(ans => {
+            getPosts();
+        }).catch(err => {
+            setLiked(false);
+        })
+    }
+
+    const dislikePost = (postId) => {
+        setLiked(false);
+        sendDislike(postId, userInfo.token).then(ans => {
+            getPosts();
+        }).catch(err => {
+            setLiked(true);
+        })
+    }
+
+    const isPostAlreadyLiked = () => {
+        if (likes.find(like => like.userId === userInfo.user.id) !== undefined) {
+            setLiked(true);
+        } 
+    }
+
+    useEffect(isPostAlreadyLiked, [])
+
     return (
         <StyledPost>
             <div className='img-like'>
@@ -26,17 +58,23 @@ const Post = ({ post }) => {
                     <img alt='user' className='user-img' src={user.avatar} />
                 </Link>
 
-                <div className='likes' onClick={() => setLiked(!liked)}>
-                    {
-                        liked ?
-                            <AiFillHeart size='20px' color='#AC0000' /> :
-                            <AiOutlineHeart size='20px' color='#FFFFFF' />
-                    }
-
-                    <p className='like-text'>{likes.length} likes</p>
-
-
-                </div>
+                <LikesBox>
+                    {liked ? (
+                        <>
+                            <LikedHeart onClick={() => dislikePost(id)}/>
+                            <LikesNumber data-text-color="#505050" data-tip={"oi"}>
+                                {likes.length} likes
+                            </LikesNumber>
+                        </>
+                    ) : (
+                        <>
+                            <EmptyHeart onClick={() => likePost(id)}/>
+                            <LikesNumber data-text-color="#505050" data-tip={"oi"}>
+                                {likes.length} likes
+                            </LikesNumber>
+                        </>
+                    )}
+                </LikesBox>
 
             </div>
 
@@ -94,3 +132,22 @@ const Post = ({ post }) => {
 
 export default Post;
 
+const LikesBox = styled.div`
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+`
+const LikedHeart = styled(AiFillHeart)`
+    font-size: 30px;
+    color: #AC0000;
+`
+const EmptyHeart = styled(AiOutlineHeart)`
+    font-size: 30px;
+    color: #FFFFFF;
+`
+const LikesNumber = styled.p`
+    font-size: 11px;
+`
