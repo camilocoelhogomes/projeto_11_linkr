@@ -1,13 +1,12 @@
-import { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import styled from "styled-components";
-import UserContext from "../store/UserContext";
 
 export default function Header() {
     const [isSelected, setIsSelected] = useState(false);
-    const { user, setUser } = useContext(UserContext);
     const history = useHistory();
+    const userInfo = JSON.parse(localStorage.getItem("user"));
     
     const toggleMenu = (isBlur) => {
         if(isBlur) {
@@ -23,7 +22,7 @@ export default function Header() {
     const goToPage = (page) => {
         setIsSelected(false);
         if (page === '/') {
-            setUser({});
+            localStorage.removeItem("user");
         }
         history.push(page);
     }
@@ -36,7 +35,7 @@ export default function Header() {
                 ? <ArrowUp onClick={() => toggleMenu(false)} /> 
                 : <ArrowDown onClick={() => toggleMenu(false)} />
                 }
-                <img onClick={() => toggleMenu(false)} src={user.user.avatar} alt="user-avatar" />
+                <img onClick={() => toggleMenu(false)} src={userInfo.user.avatar} alt="avatar"/>
                 {isSelected 
                 ?   <ul>
                         <li onClick={() => goToPage('/my-posts')}>My posts</li>
@@ -60,6 +59,8 @@ const HeaderContainer = styled.header`
     align-items: center;
     background-color: #151515;
     padding: 0 20px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    z-index: 3;
 
     h1 {
         font-family: 'Passion One', cursive;

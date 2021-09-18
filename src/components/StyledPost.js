@@ -25,12 +25,11 @@ const StyledPost = styled.div`
     }
 
     .paragraph{
-        max-height: 40px;   
         width: 100%;
         overflow: clip;
         white-space: pre-wrap;
         text-overflow: ellipsis;    
-        margin: 7px 0;
+        margin: 10px 0;
     }
 
     .link-card{
