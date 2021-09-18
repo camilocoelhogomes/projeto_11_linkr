@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import isYouTube from '../services/isYouTube';
-import {StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage} from './StyledPost';
+import { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage } from './StyledPost';
 import { Link } from 'react-router-dom'
-import ReactHashtag from "react-hashtag";
 import { sendLike, sendDislike } from '../services/API';
 import ReactTooltip from 'react-tooltip';
+import { useHistory } from 'react-router-dom';
+import ReactHashtag from 'react-hashtag';
 
-export default function Post ({ post, userInfo, getPosts }) {
+export default function Post({ post, userInfo, getPosts }) {
+
+    const history = useHistory();
 
     const {
         id,
@@ -23,6 +26,7 @@ export default function Post ({ post, userInfo, getPosts }) {
     const [errorMessage, setErrorMessage] = useState("");
 
     const likePost = (postId) => {
+
         setLiked(true);
         const actualLikesNumber = numberOfLikes;
         setNumberOfLikes(numberOfLikes + 1);
@@ -53,7 +57,7 @@ export default function Post ({ post, userInfo, getPosts }) {
     const isPostAlreadyLiked = () => {
         if (likes.find(like => like.userId === userInfo.user.id) !== undefined) {
             setLiked(true);
-        } 
+        }
     }
 
     useEffect(isPostAlreadyLiked, [])
@@ -69,33 +73,33 @@ export default function Post ({ post, userInfo, getPosts }) {
                 </Link>
                 <ReactTooltip
                     data-event="hover"
-                    backgroundColor="#ffffff" 
+                    backgroundColor="#ffffff"
                     place="bottom"
                     effect="float"
                 />
                 <LikesBox>
                     {liked ? (
                         <>
-                            <LikedHeart onClick={() => dislikePost(id)}/>
+                            <LikedHeart onClick={() => dislikePost(id)} />
                             <LikesNumber data-text-color="#505050" data-tip={
-                                likes.length === 0 ? ("Ninguém curtiu esta publicação!") 
-                                : (likes.length === 1 ? (`Curtido por você`) 
-                                : (likes.length === 2 ? (likes[1].userId === userInfo.user.id ? (`Curtido por você e ${likes[0]["user.username"]}`) 
-                                : (`Curtido por você e ${likes[1]["user.username"]}`)) 
-                                : (likes[likes.length - 1].userId === userInfo.user.id ? (`Curtido por você, ${likes[likes.length - 2]["user.username"]} e outras ${likes.length - 2} pessoa(s)`) 
-                                : (`Curtido por você, ${likes[likes.length - 1]["user.username"]} e outras ${likes.length - 2} pessoa(s)`))))}>
+                                likes.length === 0 ? ("Ninguém curtiu esta publicação!")
+                                    : (likes.length === 1 ? (`Curtido por você`)
+                                        : (likes.length === 2 ? (likes[1].userId === userInfo.user.id ? (`Curtido por você e ${likes[0]["user.username"]}`)
+                                            : (`Curtido por você e ${likes[1]["user.username"]}`))
+                                            : (likes[likes.length - 1].userId === userInfo.user.id ? (`Curtido por você, ${likes[likes.length - 2]["user.username"]} e outras ${likes.length - 2} pessoa(s)`)
+                                                : (`Curtido por você, ${likes[likes.length - 1]["user.username"]} e outras ${likes.length - 2} pessoa(s)`))))}>
                                 {numberOfLikes} likes
                             </LikesNumber>
                         </>
                     ) : (
                         <>
-                            <EmptyHeart onClick={() => likePost(id)}/>
+                            <EmptyHeart onClick={() => likePost(id)} />
                             <LikesNumber data-text-color="#505050" data-tip={
-                                likes.length === 0 ? ("Ninguém curtiu esta publicação!") 
-                                : (likes.length === 1 ? (`Curtido por ${likes[0]["user.username"]}`) 
-                                : (likes.length === 2 ? (`Curtido por ${likes[0]["user.username"]} e ${likes[1]["user.username"]}`) 
-                                : (`Curtido por ${likes[likes.length - 1]["user.username"]}, ${likes[likes.length - 2]["user.username"]} e outras ${likes.length - 2} pessoa(s)`)))
-                                }>
+                                likes.length === 0 ? ("Ninguém curtiu esta publicação!")
+                                    : (likes.length === 1 ? (`Curtido por ${likes[0]["user.username"]}`)
+                                        : (likes.length === 2 ? (`Curtido por ${likes[0]["user.username"]} e ${likes[1]["user.username"]}`)
+                                            : (`Curtido por ${likes[likes.length - 1]["user.username"]}, ${likes[likes.length - 2]["user.username"]} e outras ${likes.length - 2} pessoa(s)`)))
+                            }>
                                 {numberOfLikes} likes
                             </LikesNumber>
                         </>
@@ -106,7 +110,7 @@ export default function Post ({ post, userInfo, getPosts }) {
                 <h4>{user.username}</h4>
                 <div className='paragraph'>
                     <p>
-                        <ReactHashtag>
+                        <ReactHashtag onHashtagClick={hashTag => history.push(`/hashtag/${hashTag.replace(/#/g, "")}`)}>
                             {text}
                         </ReactHashtag>
                     </p>

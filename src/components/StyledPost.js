@@ -3,6 +3,12 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 const StyledPost = styled.div`
 
+    span {
+        :hover{
+            cursor: pointer;
+        }
+    }
+
     background-color: #171717;
     border-radius: 16px;
     width: 611px;
@@ -162,4 +168,4 @@ const ErrorMessage = styled.span`
     }
 `
 
-export {StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage} ;
+export { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage };
