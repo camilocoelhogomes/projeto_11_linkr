@@ -9,8 +9,7 @@ import Treding from '../../components/Trending';
 const TimeLine = () => {
 
     const [posts, setPosts] = useState(null);
-    const [err, setErr] = useState(null)
-
+    const [err, setErr] = useState(null);
 
     const getPosts = () => {
         const token = JSON.parse(localStorage.getItem("user")).token;
