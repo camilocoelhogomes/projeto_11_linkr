@@ -22,7 +22,7 @@ const Post = ({ post }) => {
     return (
         <StyledPost>
             <div className='img-like'>
-                <Link to={`/user/${id}`}>
+                <Link to={`/user/${user.id}`}>
                     <img alt='user' className='user-img' src={user.avatar} />
                 </Link>
 
