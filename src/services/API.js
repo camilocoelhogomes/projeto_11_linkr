@@ -6,6 +6,8 @@ const createHeaders = (token) => {
     return { headers: { Authorization: `Bearer ${token}` } };
 }
 
+const deletePost = ({ token, postId }) => axios.delete(`${API_URL}/posts/${postId}`, createHeaders(token));
+
 const getUserPosts = ({ token, id }) => axios.get(`${API_URL}/users/${id}/posts`, createHeaders(token));
 const getLikedPosts = ({ token }) => axios.get(`${API_URL}/posts/liked`, createHeaders(token));
 const getHashtagPosts = ({ token, hashtag }) => axios.get(`${API_URL}/hashtags/${hashtag}/posts`, createHeaders(token));
@@ -22,6 +24,7 @@ export {
     signIn,
     getTrendingHashtags,
     getServerPosts,
+    deletePost,
     getUserPosts,
     getLikedPosts,
     getHashtagPosts,
