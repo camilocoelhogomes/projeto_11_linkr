@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getUserPosts } from "../../services/API";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Post from '../../components/Post';
 import Header from '../../components/Header';
@@ -12,8 +12,13 @@ export default function UserPosts() {
     const [err, setErr] = useState(null);
     const { id } = useParams();
     const userInfo = JSON.parse(localStorage.getItem("user"));
+    const history = useHistory();
 
-    const getPosts = () => {
+    if (Number(id) === userInfo.user.id) {
+        history.push('/my-posts');
+    }
+
+    const getPosts = () => {      
         getUserPosts({token: userInfo.token, id})
             .then( res => setPosts(res.data.posts))
             .catch(() => setErr(true));
