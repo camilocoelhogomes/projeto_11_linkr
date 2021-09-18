@@ -24,14 +24,16 @@ export default function Trending() {
     }
 
     return (
-
-        <TrendingContainer className="movingDiv">
-            <TitleBox>
+        <Testing>
+        <input type="checkbox" id="btnControl"/>
+        <label class="btn" for="btnControl">
+        <TrendingContainer>
+            <TitleBox className="testingtitle">
                 <h3>
                     trending
                 </h3>
             </TitleBox>
-            <Hashtags>
+            <Hashtags className="hiddenDiv">
                 {hashtagsList.map((hashtag, i) =>
                     <HashtagLink to={`/hashtag/${hashtag.name}`} id={hashtag.id} key={i}>
                         <li># {hashtag.name}</li>
@@ -39,9 +41,67 @@ export default function Trending() {
                 )}
             </Hashtags>
         </TrendingContainer>
+        </label>
+        {/* <Details>
+            <summary>trending</summary>
+            <Hashtags>
+                {hashtagsList.map((hashtag, i) =>
+                    <HashtagLink to={`/hashtag/${hashtag.name}`} id={hashtag.id} key={i}>
+                        <li># {hashtag.name}</li>
+                    </HashtagLink>
+                )}
+            </Hashtags>
+        </Details> */}
+        </Testing>
     )
 }
 
+// const Details = styled.details`
+//     display: none;
+
+//     @media(max-width:900px){
+//         display: initial;
+//         position: fixed;
+//         top: 80px;
+//         background-color: #000000;
+//         border-radius: 10px;
+//         width: 301px;
+//         transition: height 0.5s ease-out;
+//         &:not([open]) { height: 40px; }
+//         &[open] { 
+//             height: fit-content;
+//         }
+//         summary {
+//             color: #ffffff;
+//             font-size: 25px;
+//             font-weight: bold;
+//             padding: 6px 15px;
+//         }
+//     }
+// `
+
+const Testing = styled.div`
+
+    @media(max-width:900px){
+            position: fixed;
+            top: 60px;
+            width: fit-content;
+
+            #btnControl {
+                display: none;
+            }
+            #btnControl:not(:checked) + label > div {
+                .testingtitle {
+                    border: none;
+                }
+                .hiddenDiv {
+                    transition: 1s ease-in;
+                    transform: translateX(-300px);
+                    height: -10px;
+                }
+            }
+        }    
+`
 const TrendingContainer = styled.div`
     width: 301px;
     background-color: #171717;
@@ -49,19 +109,6 @@ const TrendingContainer = styled.div`
     height: fit-content;
     position: sticky;
     top: 160px;
-
-    @media(max-width:900px){
-        display: flex;
-        flex-direction: column-reverse;
-        top: -300px;
-        position: fixed;
-        
-        :hover {
-            transform: translateY(300px);
-            flex-direction: column;
-            transition: 0.5s ease-out;
-        }
-    }
 `
 const TitleBox = styled.div`
     height: 61px;
