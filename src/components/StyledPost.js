@@ -111,15 +111,45 @@ const StyledPost = styled.div`
         line-height: 13px;
         color: #FFFFFF;
     }
-    .trashButton{
-        background:none;
+
+    .buttons-trash-edit{
         height:fit-content;
-        border:none;
         position:absolute;
         top:10px;
         right:10px;
+        gap:8px;
+    }
+    .trashButton{
+        border:none;
+        background:none;
         :hover{
             cursor: pointer;
+        }
+    }
+
+    textarea {
+        resize: none;
+        display: block;
+        width: 100%;
+        min-height: 66px;
+        background-color: #EFEFEF;
+        border-radius: 5px;
+        border: none;
+        margin-top: 5px;
+        padding-left: 12px;
+        padding-top: 8px;
+        font-family: 'Lato', sans-serif;
+        color: #666666;
+        pointer-events: ${({ loading }) => loading ? 'none' : 'all'};
+        opacity: ${({ loading }) => loading ? 0.7 : 1};
+        
+        ::placeholder {
+            font-weight: 300;
+            color: #949494;
+        }
+
+        :focus {
+            outline: none;
         }
     }
     @media(max-width: 900px){

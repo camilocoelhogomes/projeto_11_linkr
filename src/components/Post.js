@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import isYouTube from '../services/isYouTube';
 import { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage } from './StyledPost';
 import { FaTrash } from 'react-icons/fa'
@@ -8,8 +8,10 @@ import ReactTooltip from 'react-tooltip';
 import { useHistory } from 'react-router-dom';
 import ReactHashtag from 'react-hashtag';
 import DeletePostModal from './DeletePostModal';
-export default function Post({ post, userInfo, getPosts }) {
+import { Edit } from 'grommet-icons';
 
+export default function Post({ post, userInfo, getPosts }) {
+    const textRef = useRef();
     const history = useHistory();
     const {
         id,
@@ -21,11 +23,14 @@ export default function Post({ post, userInfo, getPosts }) {
         linkTitle,
         link,
     } = post;
+
     const isCurrentUser = Boolean(userInfo.user.id === user.id);
     const [liked, setLiked] = useState(false);
     const [numberOfLikes, setNumberOfLikes] = useState(likes.length);
     const [errorMessage, setErrorMessage] = useState("");
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [isEditPost, setIsEditPost] = useState(false);
+    const [postText, setPostText] = useState(text);
 
     const likePost = (postId) => {
 
@@ -62,8 +67,18 @@ export default function Post({ post, userInfo, getPosts }) {
         }
     }
 
-    useEffect(isPostAlreadyLiked, [])
+    const handleEditText = (e) => {
+        e.preventDefault();
+        alert('deu submit');
+    }
 
+    useEffect(isPostAlreadyLiked, [])
+    useEffect(() => {
+        if (isEditPost) {
+
+            textRef.current.focus()
+        }
+    }, [isEditPost])
     return (
         <StyledPost>
             {errorMessage !== "" ? (
@@ -110,13 +125,19 @@ export default function Post({ post, userInfo, getPosts }) {
             </div>
             <main>
                 <h4>{user.username}</h4>
-                <div className='paragraph'>
-                    <p>
-                        <ReactHashtag onHashtagClick={hashTag => history.push(`/hashtag/${hashTag.replace(/#/g, "")}`)}>
-                            {text}
-                        </ReactHashtag>
-                    </p>
-                </div>
+                {
+                    isEditPost ?
+                        <form className='paragraph' onSubmit={handleEditText}>
+                            <textarea ref={textRef} onChange={(e) => setPostText(e.target.value)} value={postText} />
+                        </form> :
+                        <div className='paragraph'>
+                            <p>
+                                <ReactHashtag onHashtagClick={hashTag => history.push(`/hashtag/${hashTag.replace(/#/g, "")}`)}>
+                                    {postText}
+                                </ReactHashtag>
+                            </p>
+                        </div>
+                }
                 {
                     isYouTube({ link: link }).service === 'youtube' ?
                         <>
@@ -154,7 +175,10 @@ export default function Post({ post, userInfo, getPosts }) {
                 }
             </main>
             {isCurrentUser ?
-                <button className='trashButton' onClick={() => setModalIsOpen(true)}><FaTrash size='16px' color='white' /></button>
+                <div className='buttons-trash-edit'>
+                    <button className='trashButton' onClick={() => setIsEditPost(!isEditPost)}><Edit size='16px' color='#FFFFFF' /></button>
+                    <button className='trashButton' onClick={() => setModalIsOpen(true)}><FaTrash size='16px' color='white' /></button>
+                </div>
                 :
                 ""
             }

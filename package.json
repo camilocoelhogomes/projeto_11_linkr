@@ -8,6 +8,8 @@
     "@testing-library/user-event": "12.8.3",
     "axios": "0.21.4",
     "get-video-id": "3.4.1",
+    "grommet-icons": "^4.6.2",
+    "grommet-styles": "^0.2.0",
     "react": "16.8.0",
     "react-dom": "16.8.0",
     "react-hashtag": "2.1.2",
