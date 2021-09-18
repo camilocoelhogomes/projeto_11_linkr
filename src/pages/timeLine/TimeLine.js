@@ -7,15 +7,14 @@ import Alert from '../../components/Alert';
 import Treding from '../../components/Trending';
 import Publish from './Publish';
 
-const TimeLine = () => {
+export default function TimeLine () {
 
     const [posts, setPosts] = useState(null);
-    const [err, setErr] = useState(null)
-
+    const [err, setErr] = useState(null);
+    const userInfo = JSON.parse(localStorage.getItem("user"));
 
     const getPosts = () => {
-        const token = JSON.parse(localStorage.getItem("user")).token;
-        getServerPosts({ token: token })
+        getServerPosts({ token: userInfo.token })
             .then((res) => { setErr(false); setPosts(res.data.posts) })
             .catch(() => setErr(true))
     }
@@ -42,7 +41,7 @@ const TimeLine = () => {
                     <div className='posts'>
                         <Publish loadPosts={getPosts}/>
                         {posts.length === 0 ? <h2>Nenhm post encontrado</h2> :
-                            posts.map(post => <Post key={post.id} post={post} />)
+                            posts.map(post => <Post key={post.id} post={post} userInfo={userInfo} getPosts={getPosts}/>)
                         }
                     </div>
                     <Treding className='trending' />
@@ -51,5 +50,3 @@ const TimeLine = () => {
         </>
     );
 }
-
-export default TimeLine;
