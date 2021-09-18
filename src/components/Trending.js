@@ -24,7 +24,8 @@ export default function Trending() {
     }
 
     return (
-        <TrendingContainer>
+
+        <TrendingContainer className="movingDiv">
             <TitleBox>
                 <h3>
                     trending
@@ -50,7 +51,16 @@ const TrendingContainer = styled.div`
     top: 160px;
 
     @media(max-width:900px){
-        display: none;
+        display: flex;
+        flex-direction: column-reverse;
+        top: -300px;
+        position: fixed;
+        
+        :hover {
+            transform: translateY(300px);
+            flex-direction: column;
+            transition: 0.5s ease-out;
+        }
     }
 `
 const TitleBox = styled.div`
