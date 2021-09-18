@@ -18,6 +18,7 @@ export default function LogIn() {
     const [isLoading, setIsLoading] = useState(false);
     const history = useHistory();
 
+    if (Boolean(JSON.parse(localStorage.getItem("user")))) history.push("/timeline");
     function errorAlert(error) {
         if (error.status === 403) {
             alert("User not found. Invalid email or password");
