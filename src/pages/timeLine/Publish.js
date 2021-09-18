@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { publishPost } from "../../services/API";
 
-export default function Publish({loadPosts}) {
+export default function Publish({ loadPosts }) {
     const [text, setText] = useState("");
     const [link, setLink] = useState("");
     const [loading, setLoading] = useState(false);
@@ -23,43 +23,43 @@ export default function Publish({loadPosts}) {
         e.preventDefault();
         setLoading(true);
         const newText = hashtagsToLowerCase();
-        const body = {"text": newText, "link": link};
-        publishPost({token: userInfo.token, body})
-             .then(() => {
-                 setLoading(false);
-                 setText("");
-                 setLink("");
-                 loadPosts();
-             })
-             .catch(() => {
-                 setLoading(false);
-                 alert("Houve um erro ao publicar seu link");
-             });
+        const body = { "text": newText, "link": link };
+        publishPost({ token: userInfo.token, body })
+            .then(() => {
+                setLoading(false);
+                setText("");
+                setLink("");
+                loadPosts();
+            })
+            .catch(() => {
+                setLoading(false);
+                alert("Houve um erro ao publicar seu link");
+            });
     }
 
-    return(
+    return (
         <PublishContainer>
-            <img src={userInfo.user.avatar} alt="avatar"/>
+            <img src={userInfo.user.avatar} alt="avatar" />
             <MessageBox loading={loading}>
                 <h2>O que você tem pra favoritar hoje?</h2>
                 <form onSubmit={publish}>
-                    <input 
-                        type="url" 
+                    <input
+                        type="url"
                         placeholder="http://..."
                         value={link}
                         onChange={e => setLink(e.target.value)}
                         required
                     >
                     </input>
-                    <textarea 
+                    <textarea
                         placeholder="Muito irado esse link falando de #javascript"
                         value={text}
                         onChange={e => setText(e.target.value)}
                     >
                     </textarea>
                     <button type="submit">
-                        {loading 
-                            ? "Publishing..." 
+                        {loading
+                            ? "Publishing..."
                             : "Publish"
                         }
                     </button>
@@ -70,6 +70,7 @@ export default function Publish({loadPosts}) {
 }
 
 const PublishContainer = styled.div`
+    position: relative;
     width: 611px;
     min-height: 209px;
     background-color: #FFFFFF;
@@ -122,8 +123,8 @@ const MessageBox = styled.div`
         padding-left: 12px;
         font-family: 'Lato', sans-serif;
         color: #666666;
-        pointer-events: ${({loading}) => loading ? 'none' : 'all'};
-        opacity: ${({loading}) => loading ? 0.7 : 1};
+        pointer-events: ${({ loading }) => loading ? 'none' : 'all'};
+        opacity: ${({ loading }) => loading ? 0.7 : 1};
         
 
         ::placeholder {
@@ -149,8 +150,8 @@ const MessageBox = styled.div`
         padding-top: 8px;
         font-family: 'Lato', sans-serif;
         color: #666666;
-        pointer-events: ${({loading}) => loading ? 'none' : 'all'};
-        opacity: ${({loading}) => loading ? 0.7 : 1};
+        pointer-events: ${({ loading }) => loading ? 'none' : 'all'};
+        opacity: ${({ loading }) => loading ? 0.7 : 1};
         
         ::placeholder {
             font-weight: 300;
@@ -175,8 +176,8 @@ const MessageBox = styled.div`
         font-weight: 700;
         margin-top: 5px;
         cursor: pointer;
-        opacity: ${({loading}) => loading ? 0.7 : 1};
-        pointer-events: ${({loading}) => loading ? 'none' : 'all'};
+        opacity: ${({ loading }) => loading ? 0.7 : 1};
+        pointer-events: ${({ loading }) => loading ? 'none' : 'all'};
     }
 
     @media(max-width: 900px) {

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { deletePost } from '../services/API';
 
 Modal.setAppElement(document.getElementById('root'));
-export default function DeletePostModal({ state, postId }) {
+export default function DeletePostModal({ state, postId, getPosts }) {
     const { modalIsOpen, setModalIsOpen } = state;
     const [isLoading, setIsLoading] = useState(false);
 
@@ -39,7 +39,11 @@ export default function DeletePostModal({ state, postId }) {
         setIsLoading(true);
         const token = JSON.parse(localStorage.getItem("user")).token;
         const request = deletePost({ token, postId });
-        request.then(res => window.location.reload());
+        request.then(res => {
+            setModalIsOpen(false);
+            setIsLoading(false);
+            getPosts();
+        });
         request.catch(err => errorAlert(err.response));
     }
 
@@ -47,7 +51,7 @@ export default function DeletePostModal({ state, postId }) {
         <Modal isOpen={modalIsOpen} style={customStyles} >
             <strong><Text>Tem certeza que deseja excluir essa publicação?</Text></strong>
             <Options>
-                {isLoading ? <Text>Loading...</Text> :
+                {isLoading ? <StyledLoadingText>Loading...</StyledLoadingText> :
                     <>
                         <WhiteButton onClick={() => setModalIsOpen(false)}>Não, voltar</WhiteButton>
                         <BlueButton onClick={requestDeletePost}>Sim, excluir</BlueButton>
@@ -60,12 +64,19 @@ export default function DeletePostModal({ state, postId }) {
 
 const Text = styled.h1`
     font-family: "Lato",sans-serif;
-    font-size: 34px;
+    font-size: 32px;
     line-height: 41px;
     width: 358px;
     height: 82px;
     color: #FFFFFF;
     margin: 40px auto;
+`
+const StyledLoadingText = styled.h1`
+    font-family: "Lato",sans-serif;
+    font-size: 32px;
+    width: 358px;
+    color: #FFFFFF;
+    margin: 0 auto;
 `
 const Options = styled.div`
 display:flex;

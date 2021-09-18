@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 const StyledPost = styled.div`
 
@@ -10,6 +11,7 @@ const StyledPost = styled.div`
     display: flex;
     white-space: pre-wrap;
     overflow: clip;
+    position: relative;
 
     h4{
         width: 100%;
@@ -87,15 +89,6 @@ const StyledPost = styled.div`
         flex-direction: column;
     }
 
-    .likes{
-        width:100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 19px 0 0 0;
-        flex-direction: column;
-    }
-
     .youtube-video{
         width:501px;
         height:281px;
@@ -116,6 +109,9 @@ const StyledPost = styled.div`
         background:none;
         height:fit-content;
         border:none;
+        position:absolute;
+        top:10px;
+        right:10px;
     }
     @media(max-width: 900px){
         width: 100%;
@@ -141,6 +137,42 @@ const StyledPost = styled.div`
     }
 
     }
-`;
+`
+const LikesBox = styled.div`
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+`
+const LikedHeart = styled(AiFillHeart)`
+    font-size: 30px;
+    color: #AC0000;
+`
+const EmptyHeart = styled(AiOutlineHeart)`
+    font-size: 30px;
+    color: #FFFFFF;
+`
+const LikesNumber = styled.p`
+    font-size: 11px;
+`
+const ErrorMessage = styled.span`
+    position: absolute;
+    height: 30px;
+    background-color: #000000;
+    border-radius: 5px;
+    border: 1px solid #ffffff;
+    left: 5px;
+    top: 110px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+    span {
+        color: #f97a7a;
+        font-size: 14px;
+    }
+`
 
-export default StyledPost;
+export { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage };
