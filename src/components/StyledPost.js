@@ -11,6 +11,7 @@ const StyledPost = styled.div`
     display: flex;
     white-space: pre-wrap;
     overflow: clip;
+    position: relative;
 
     h4{
         width: 100%;
@@ -143,5 +144,22 @@ const EmptyHeart = styled(AiOutlineHeart)`
 const LikesNumber = styled.p`
     font-size: 11px;
 `
+const ErrorMessage = styled.span`
+    position: absolute;
+    height: 30px;
+    background-color: #000000;
+    border-radius: 5px;
+    border: 1px solid #ffffff;
+    left: 5px;
+    top: 110px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+    span {
+        color: #f97a7a;
+        font-size: 14px;
+    }
+`
 
-export {StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber} ;
+export {StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage} ;

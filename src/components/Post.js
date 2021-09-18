@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import isYouTube from '../services/isYouTube';
-import {StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber} from './StyledPost';
+import {StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage} from './StyledPost';
 import { Link } from 'react-router-dom'
 import ReactHashtag from "react-hashtag";
 import { sendLike, sendDislike } from '../services/API';
@@ -20,29 +20,36 @@ export default function Post ({ post, userInfo, getPosts }) {
     } = post;
     const [liked, setLiked] = useState(false);
     const [numberOfLikes, setNumberOfLikes] = useState(likes.length);
+    const [errorMessage, setErrorMessage] = useState("");
 
     console.log(post);
     console.log(userInfo);
 
     const likePost = (postId) => {
         setLiked(true);
+        const actualLikesNumber = numberOfLikes;
         setNumberOfLikes(numberOfLikes + 1);
         sendLike(postId, userInfo.token).then(ans => {
             getPosts();
         }).catch(err => {
             setLiked(false);
-            setNumberOfLikes(numberOfLikes - 1);
+            setNumberOfLikes(actualLikesNumber);
+            setErrorMessage("Não foi possível curtir esta publicação!");
+            setTimeout(() => setErrorMessage(""), 2000);
         })
     }
 
     const dislikePost = (postId) => {
         setLiked(false);
+        const actualLikesNumber = numberOfLikes;
         setNumberOfLikes(numberOfLikes - 1);
         sendDislike(postId, userInfo.token).then(ans => {
             getPosts();
         }).catch(err => {
             setLiked(true);
-            setNumberOfLikes(numberOfLikes + 1);
+            setNumberOfLikes(actualLikesNumber);
+            setErrorMessage("Não foi possível descurtir esta publicação!");
+            setTimeout(() => setErrorMessage(""), 2000);
         })
     }
 
@@ -56,12 +63,15 @@ export default function Post ({ post, userInfo, getPosts }) {
 
     return (
         <StyledPost>
+            {errorMessage !== "" ? (
+                <ErrorMessage><span>{errorMessage}</span></ErrorMessage>
+            ) : (<></>)}
             <div className='img-like'>
                 <Link to={`/user/${user.id}`}>
                     <img alt='user' className='user-img' src={user.avatar} />
                 </Link>
                 <ReactTooltip
-                    data-event="hover" 
+                    data-event="hover"
                     backgroundColor="#ffffff" 
                     place="bottom"
                     effect="float"
@@ -94,12 +104,9 @@ export default function Post ({ post, userInfo, getPosts }) {
                         </>
                     )}
                 </LikesBox>
-
             </div>
-
             <main>
                 <h4>{user.username}</h4>
-
                 <div className='paragraph'>
                     <p>
                         <ReactHashtag>
@@ -107,7 +114,6 @@ export default function Post ({ post, userInfo, getPosts }) {
                         </ReactHashtag>
                     </p>
                 </div>
-
                 {
                     isYouTube({ link: link }).service === 'youtube' ?
                         <>
@@ -143,8 +149,7 @@ export default function Post ({ post, userInfo, getPosts }) {
                             <img alt='link' className='link-img' src={linkImage} />
                         </a>
                 }
-
             </main>
-
-        </StyledPost>)
+        </StyledPost>
+    )
 }
