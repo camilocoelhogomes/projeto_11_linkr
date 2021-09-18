@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 const StyledPost = styled.div`
 
@@ -87,15 +88,6 @@ const StyledPost = styled.div`
         flex-direction: column;
     }
 
-    .likes{
-        width:100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 19px 0 0 0;
-        flex-direction: column;
-    }
-
     .youtube-video{
         width:501px;
         height:281px;
@@ -105,12 +97,6 @@ const StyledPost = styled.div`
         width: 50px;
         height: 50px;
         border-radius: 50%;
-    }
-
-    .like-text{
-        font-size: 11px;
-        line-height: 13px;
-        color: #FFFFFF;
     }
 
     @media(max-width: 900px){
@@ -137,6 +123,25 @@ const StyledPost = styled.div`
     }
 
     }
-`;
+`
+const LikesBox = styled.div`
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+`
+const LikedHeart = styled(AiFillHeart)`
+    font-size: 30px;
+    color: #AC0000;
+`
+const EmptyHeart = styled(AiOutlineHeart)`
+    font-size: 30px;
+    color: #FFFFFF;
+`
+const LikesNumber = styled.p`
+    font-size: 11px;
+`
 
-export default StyledPost;
+export {StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber} ;

@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import isYouTube from '../services/isYouTube';
-import StyledPost from './StyledPost';
+import {StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber} from './StyledPost';
 import { Link } from 'react-router-dom'
 import ReactHashtag from "react-hashtag";
 import { sendLike, sendDislike } from '../services/API';
 import ReactTooltip from 'react-tooltip';
 
-import styled from 'styled-components';
-
-const Post = ({ post, userInfo, getPosts }) => {
+export default function Post ({ post, userInfo, getPosts }) {
 
     const {
         id,
@@ -151,25 +148,3 @@ const Post = ({ post, userInfo, getPosts }) => {
 
         </StyledPost>)
 }
-
-export default Post;
-
-const LikesBox = styled.div`
-    width: fit-content;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-`
-const LikedHeart = styled(AiFillHeart)`
-    font-size: 30px;
-    color: #AC0000;
-`
-const EmptyHeart = styled(AiOutlineHeart)`
-    font-size: 30px;
-    color: #FFFFFF;
-`
-const LikesNumber = styled.p`
-    font-size: 11px;
-`

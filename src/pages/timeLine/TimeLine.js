@@ -6,7 +6,7 @@ import { getServerPosts } from '../../services/API';
 import Alert from '../../components/Alert';
 import Treding from '../../components/Trending';
 
-const TimeLine = () => {
+export default function TimeLine () {
 
     const [posts, setPosts] = useState(null);
     const [err, setErr] = useState(null);
@@ -48,5 +48,3 @@ const TimeLine = () => {
         </>
     );
 }
-
-export default TimeLine;
