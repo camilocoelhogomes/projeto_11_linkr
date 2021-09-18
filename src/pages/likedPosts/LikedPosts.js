@@ -12,7 +12,7 @@ export default function LikedPosts() {
     const userInfo = JSON.parse(localStorage.getItem("user"));
 
     const getPosts = () => {
-        getLikedPosts({toke: userInfo.token})
+        getLikedPosts({token: userInfo.token})
             .then( res => setPosts(res.data.posts.filter(post => post.likes.includes({"id": userInfo.id}))))
             .catch(() => setErr(true));
     }

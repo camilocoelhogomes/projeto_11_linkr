@@ -4,9 +4,7 @@ import Header from '../../components/Header';
 import Post from '../../components/Post';
 import { getServerPosts } from '../../services/API';
 import Alert from '../../components/Alert';
-import Treding from '../../components/Trending'
-
-
+import Treding from '../../components/Trending';
 
 const TimeLine = () => {
 

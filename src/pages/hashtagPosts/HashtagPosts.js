@@ -19,7 +19,7 @@ export default function HashtagPosts() {
             .catch(() => setErr(true));
     }
 
-    useEffect(getPosts, []);
+    useEffect(getPosts, [hashtag]);
 
     if (err) {
         return <Alert message={'Não foi possível carregar os posts, por favor recarregue a página'} />

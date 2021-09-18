@@ -14,7 +14,7 @@ export default function UserPosts() {
     const userInfo = JSON.parse(localStorage.getItem("user"));
 
     const getPosts = () => {
-        getUserPosts({toke: userInfo.token, id})
+        getUserPosts({token: userInfo.token, id})
             .then( res => setPosts(res.data.posts))
             .catch(() => setErr(true));
     }
