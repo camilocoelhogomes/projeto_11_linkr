@@ -24,26 +24,13 @@ export default function Trending() {
     }
 
     return (
-        <Testing>
-        <input type="checkbox" id="btnControl"/>
-        <label class="btn" for="btnControl">
+        <>
         <TrendingContainer>
-            <TitleBox className="testingtitle">
+            <TitleBox>
                 <h3>
                     trending
                 </h3>
             </TitleBox>
-            <Hashtags className="hiddenDiv">
-                {hashtagsList.map((hashtag, i) =>
-                    <HashtagLink to={`/hashtag/${hashtag.name}`} id={hashtag.id} key={i}>
-                        <li># {hashtag.name}</li>
-                    </HashtagLink>
-                )}
-            </Hashtags>
-        </TrendingContainer>
-        </label>
-        {/* <Details>
-            <summary>trending</summary>
             <Hashtags>
                 {hashtagsList.map((hashtag, i) =>
                     <HashtagLink to={`/hashtag/${hashtag.name}`} id={hashtag.id} key={i}>
@@ -51,56 +38,60 @@ export default function Trending() {
                     </HashtagLink>
                 )}
             </Hashtags>
-        </Details> */}
-        </Testing>
+        </TrendingContainer>
+        <Details>
+            <summary>trending</summary>
+            <Hashtags className="details-content">
+                {hashtagsList.map((hashtag, i) =>
+                    <HashtagLink to={`/hashtag/${hashtag.name}`} id={hashtag.id} key={i}>
+                        <li># {hashtag.name}</li>
+                    </HashtagLink>
+                )}
+            </Hashtags>
+        </Details>
+        </>
     )
 }
 
-// const Details = styled.details`
-//     display: none;
-
-//     @media(max-width:900px){
-//         display: initial;
-//         position: fixed;
-//         top: 80px;
-//         background-color: #000000;
-//         border-radius: 10px;
-//         width: 301px;
-//         transition: height 0.5s ease-out;
-//         &:not([open]) { height: 40px; }
-//         &[open] { 
-//             height: fit-content;
-//         }
-//         summary {
-//             color: #ffffff;
-//             font-size: 25px;
-//             font-weight: bold;
-//             padding: 6px 15px;
-//         }
-//     }
-// `
-
-const Testing = styled.div`
+const Details = styled.details`
+    display: none;
 
     @media(max-width:900px){
-            position: fixed;
-            top: 60px;
-            width: fit-content;
+        display: initial;
+        position: fixed;
+        top: 65px;
+        background-color: #171717;
+        border-radius: 10px;
+        width: 230px;
 
-            #btnControl {
-                display: none;
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateX(-10em);
             }
-            #btnControl:not(:checked) + label > div {
-                .testingtitle {
-                    border: none;
-                }
-                .hiddenDiv {
-                    transition: 1s ease-in;
-                    transform: translateX(-300px);
-                    height: -10px;
-                }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
             }
-        }    
+        }
+        &:not([open]) { 
+            height: 40px; 
+        }
+        &[open] { 
+            animation-name: fadeInDown;
+            animation-duration: 0.7s;
+        }
+        &[open] li{ 
+            animation-name: fadeInDown;
+            animation-duration: 0.75s;
+        }
+        summary {
+            color: #ffffff;
+            font-size: 25px;
+            font-weight: bold;
+            padding: 6px 15px;
+        }
+    }
 `
 const TrendingContainer = styled.div`
     width: 301px;
@@ -108,7 +99,11 @@ const TrendingContainer = styled.div`
     border-radius: 16px;
     height: fit-content;
     position: sticky;
-    top: 160px;
+    top: 160px; 
+    
+    @media(max-width:900px){
+        display: none;
+    }
 `
 const TitleBox = styled.div`
     height: 61px;
