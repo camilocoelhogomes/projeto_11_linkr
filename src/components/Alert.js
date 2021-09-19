@@ -30,7 +30,6 @@ const StyledAlert = styled.div`
         height: 262px;
         background: #333333;
         border-radius: 50px;
-        align-items: center;
         align-self: center;
         padding: 18px;
     }

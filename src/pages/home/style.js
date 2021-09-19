@@ -89,4 +89,54 @@ const Anchor = styled.h4`
     margin-top:14px;
     text-align: center;
 `
-export { BodyContainer, Banner, AppName, AppCopy, Container, StyledInput, BlueButton, StyledForm, Anchor }
+const StyledDirectLogin = styled.button`
+    width: 100px;
+    height: 50px;
+    background-color: green;
+    border-radius: 10px;
+    border: none;
+    color: #ffffff;
+    font-size: 18px;
+`
+const StyledCancel = styled.button`
+    width: 100px;
+    height: 50px;
+    background-color: red;
+    border-radius: 10px;
+    border: none;
+    color: #ffffff;
+    font-size: 18px;
+`
+const StyledButtonOptions = styled.div`
+    display: flex;
+    gap: 30px;
+`
+const StyledConfirm = styled.div`
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(255,255,255,0.9);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .alert-box{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 597px;
+        height: 262px;
+        background: #333333;
+        border-radius: 50px;
+        align-self: center;
+        padding: 30px;
+        gap: 30px;
+        p {
+            font-weight: 400;
+            font-size: 23px;
+        }
+    }
+`;
+export { BodyContainer, Banner, AppName, AppCopy, Container, StyledInput, BlueButton, StyledForm, Anchor, StyledDirectLogin, StyledCancel, StyledConfirm, StyledButtonOptions }

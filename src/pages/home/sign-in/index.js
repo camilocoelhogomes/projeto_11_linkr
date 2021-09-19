@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import Alert from "../../../components/Alert";
 import { signIn } from "../../../services/API"
 import {
     BodyContainer,
@@ -10,15 +11,26 @@ import {
     StyledInput,
     BlueButton,
     StyledForm,
-    Anchor
+    Anchor,
+    StyledDirectLogin,
+    StyledCancel,
+    StyledConfirm,
+    StyledButtonOptions
 } from "../style"
 export default function LogIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [lastLogin, setLastLogin] = useState("");
     const history = useHistory();
 
-    if (Boolean(JSON.parse(localStorage.getItem("user")))) history.push("/timeline");
+    const askForDirectLogin = () => {
+        if (localStorage.getItem("user") !== null) {
+            setLastLogin(JSON.parse(localStorage.getItem("user")));
+        }
+    }
+    window.onload = askForDirectLogin;
+
     function errorAlert(error) {
         if (error.status === 403) {
             alert("User not found. Invalid email or password");
@@ -45,7 +57,21 @@ export default function LogIn() {
         });
     }
     return (
-        <BodyContainer>
+        <>
+        {localStorage.getItem("user") !== null && lastLogin !== "" ? (
+            <StyledConfirm>
+                <div className='alert-box'>
+                    <p>{`Você deseja logar diretamente com a seguinte conta? \n
+                    Nome: ${lastLogin.user.username} \n
+                    Email: ${lastLogin.user.email}`}</p>
+                    <StyledButtonOptions>
+                        <StyledDirectLogin onClick={() => history.push("/timeline")}>Logar</StyledDirectLogin>
+                        <StyledCancel onClick={() => false}>Cancelar</StyledCancel>   
+                    </StyledButtonOptions>
+                </div>
+            </StyledConfirm>
+        ) : (
+            <BodyContainer>
             <Banner>
                 <strong>
                     <AppName>linkr</AppName>
@@ -68,5 +94,7 @@ export default function LogIn() {
                 </Anchor>
             </Container>
         </BodyContainer>
+        )}
+        </>
     );
 }
