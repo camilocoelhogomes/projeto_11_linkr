@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import styled from "styled-components";
 
@@ -7,9 +7,9 @@ export default function Header() {
     const [isSelected, setIsSelected] = useState(false);
     const history = useHistory();
     const userInfo = JSON.parse(localStorage.getItem("user"));
-    
+
     const toggleMenu = (isBlur) => {
-        if(isBlur) {
+        if (isBlur) {
             if (isSelected) {
                 return setIsSelected(() => !isSelected);
             } else {
@@ -29,20 +29,22 @@ export default function Header() {
 
     return (
         <HeaderContainer>
-            <h1>linkr</h1>
+            <Link to='/timeline'>
+                <h1>linkr</h1>
+            </Link>
             <Menu onBlur={() => toggleMenu(true)}>
-                {isSelected 
-                ? <ArrowUp onClick={() => toggleMenu(false)} /> 
-                : <ArrowDown onClick={() => toggleMenu(false)} />
+                {isSelected
+                    ? <ArrowUp onClick={() => toggleMenu(false)} />
+                    : <ArrowDown onClick={() => toggleMenu(false)} />
                 }
-                <img onClick={() => toggleMenu(false)} src={userInfo.user.avatar} alt="avatar"/>
-                {isSelected 
-                ?   <ul>
+                <img onClick={() => toggleMenu(false)} src={userInfo.user.avatar} alt="avatar" />
+                {isSelected
+                    ? <ul>
                         <li onClick={() => goToPage('/my-posts')}>My posts</li>
                         <li onClick={() => goToPage('/my-likes')}>My likes</li>
                         <li onClick={() => goToPage('/')}>Logout</li>
-                    </ul> 
-                : ""
+                    </ul>
+                    : ""
                 }
             </Menu>
         </HeaderContainer>
