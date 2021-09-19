@@ -3,7 +3,7 @@ import isYouTube from '../services/isYouTube';
 import { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage } from './StyledPost';
 import { FaTrash } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
-import { sendLike, sendDislike } from '../services/API';
+import { sendLike, sendDislike, editServerPost } from '../services/API';
 import ReactTooltip from 'react-tooltip';
 import { useHistory } from 'react-router-dom';
 import ReactHashtag from 'react-hashtag';
@@ -32,6 +32,7 @@ export default function Post({ post, userInfo, getPosts }) {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [isEditPost, setIsEditPost] = useState(false);
     const [postText, setPostText] = useState(text);
+    const [disableEditPost, setDisableEditPost] = useState(false);
 
     const likePost = (postId) => {
 
@@ -48,7 +49,26 @@ export default function Post({ post, userInfo, getPosts }) {
         })
     }
 
-    useKeypress("Enter", () => isEditPost ? alert('Enter') : '');
+    useKeypress("Enter", () => {
+        if (isEditPost) {
+            setDisableEditPost(true);
+            const data = { 'text': postText };
+            editServerPost({
+                token: userInfo.token,
+                id: id,
+                data: data,
+            }).then(res => {
+                setDisableEditPost(false);
+                setIsEditPost(false);
+            }).catch(() => {
+                setDisableEditPost(false);
+                setErrorMessage("Não foi possível editar esse post!");
+                textRef.current.focus()
+                setTimeout(() => setErrorMessage(""), 2000);
+            })
+        }
+    });
+
     useKeypress("Escape", () => {
         if (isEditPost) {
             setPostText(text);
@@ -76,15 +96,10 @@ export default function Post({ post, userInfo, getPosts }) {
         }
     }
 
-    const handleEditText = (e) => {
-        e.preventDefault();
-        alert('deu submit');
-    }
 
     useEffect(isPostAlreadyLiked, [])
     useEffect(() => {
         if (isEditPost) {
-
             textRef.current.focus()
         }
     }, [isEditPost])
@@ -136,8 +151,8 @@ export default function Post({ post, userInfo, getPosts }) {
                 <h4>{user.username}</h4>
                 {
                     isEditPost ?
-                        <form className='paragraph' onSubmit={handleEditText}>
-                            <textarea ref={textRef} onChange={(e) => setPostText(e.target.value)} value={postText} />
+                        <form className='paragraph'>
+                            <textarea disabled={disableEditPost} ref={textRef} onChange={(e) => setPostText(e.target.value)} value={postText} />
                         </form> :
                         <div className='paragraph'>
                             <p>
