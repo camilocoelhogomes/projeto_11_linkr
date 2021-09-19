@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import ReactHashtag from 'react-hashtag';
 import DeletePostModal from './DeletePostModal';
 import { Edit } from 'grommet-icons';
+import useKeypress from 'react-use-keypress';
 
 export default function Post({ post, userInfo, getPosts }) {
     const textRef = useRef();
@@ -46,6 +47,14 @@ export default function Post({ post, userInfo, getPosts }) {
             setTimeout(() => setErrorMessage(""), 2000);
         })
     }
+
+    useKeypress("Enter", () => isEditPost ? alert('Enter') : '');
+    useKeypress("Escape", () => {
+        if (isEditPost) {
+            setPostText(text);
+            setIsEditPost(false);
+        }
+    });
 
     const dislikePost = (postId) => {
         setLiked(false);
