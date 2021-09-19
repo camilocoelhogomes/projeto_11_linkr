@@ -89,6 +89,12 @@ const Anchor = styled.h4`
     margin-top:14px;
     text-align: center;
 `
+const StyledButtonOptions = styled.div`
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+`
 const StyledDirectLogin = styled.button`
     width: 100px;
     height: 50px;
@@ -107,10 +113,6 @@ const StyledCancel = styled.button`
     color: #ffffff;
     font-size: 18px;
 `
-const StyledButtonOptions = styled.div`
-    display: flex;
-    gap: 30px;
-`
 const StyledConfirm = styled.div`
     height: 100vh;
     width: 100vw;
@@ -121,22 +123,20 @@ const StyledConfirm = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    .alert-box{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 597px;
-        height: 262px;
-        background: #333333;
-        border-radius: 50px;
-        align-self: center;
-        padding: 30px;
-        gap: 30px;
-        p {
-            font-weight: 400;
-            font-size: 23px;
-        }
+`
+const StyledConfirmBox = styled.div`
+    width: 597px;
+    background: #333333;
+    border-radius: 50px;
+    padding: 30px 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    p {
+        font-weight: 400;
+        font-size: 23px;
+        color: #ffffff;
     }
-`;
-export { BodyContainer, Banner, AppName, AppCopy, Container, StyledInput, BlueButton, StyledForm, Anchor, StyledDirectLogin, StyledCancel, StyledConfirm, StyledButtonOptions }
+`
+export { BodyContainer, Banner, AppName, AppCopy, Container, StyledInput, BlueButton, StyledForm, Anchor, StyledDirectLogin, StyledCancel, StyledConfirm, StyledButtonOptions, StyledConfirmBox }

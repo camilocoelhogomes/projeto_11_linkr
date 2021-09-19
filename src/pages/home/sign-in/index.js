@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import Alert from "../../../components/Alert";
 import { signIn } from "../../../services/API"
 import {
     BodyContainer,
@@ -15,21 +14,22 @@ import {
     StyledDirectLogin,
     StyledCancel,
     StyledConfirm,
-    StyledButtonOptions
+    StyledButtonOptions,
+    StyledConfirmBox
 } from "../style"
 export default function LogIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [lastLogin, setLastLogin] = useState("");
+    const [directLogin, setDirectLogin] = useState(true);
     const history = useHistory();
 
-    const askForDirectLogin = () => {
+    useEffect(() => {
         if (localStorage.getItem("user") !== null) {
             setLastLogin(JSON.parse(localStorage.getItem("user")));
         }
-    }
-    window.onload = askForDirectLogin;
+    }, [])
 
     function errorAlert(error) {
         if (error.status === 403) {
@@ -58,19 +58,19 @@ export default function LogIn() {
     }
     return (
         <>
-        {localStorage.getItem("user") !== null && lastLogin !== "" ? (
+        {directLogin && lastLogin !== "" ? (
             <StyledConfirm>
-                <div className='alert-box'>
-                    <p>{`Você deseja logar diretamente com a seguinte conta? \n
-                    Nome: ${lastLogin.user.username} \n
-                    Email: ${lastLogin.user.email}`}</p>
+                <StyledConfirmBox>
+                    <p>Você deseja logar diretamente com a seguinte conta?</p>
+                    <p>Nome: {lastLogin.user.username}</p>
+                    <p>Email: {lastLogin.user.email}</p>
                     <StyledButtonOptions>
                         <StyledDirectLogin onClick={() => history.push("/timeline")}>Logar</StyledDirectLogin>
-                        <StyledCancel onClick={() => false}>Cancelar</StyledCancel>   
+                        <StyledCancel onClick={() => setDirectLogin(false)}>Cancelar</StyledCancel>   
                     </StyledButtonOptions>
-                </div>
+                </StyledConfirmBox>
             </StyledConfirm>
-        ) : (
+        ) : (<></>)}
             <BodyContainer>
             <Banner>
                 <strong>
@@ -94,7 +94,6 @@ export default function LogIn() {
                 </Anchor>
             </Container>
         </BodyContainer>
-        )}
         </>
     );
 }
