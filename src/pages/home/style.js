@@ -89,4 +89,46 @@ const Anchor = styled.h4`
     margin-top:14px;
     text-align: center;
 `
-export { BodyContainer, Banner, AppName, AppCopy, Container, StyledInput, BlueButton, StyledForm, Anchor }
+const StyledButtonOptions = styled.div`
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+`
+const StyledOption = styled.button`
+    width: 100px;
+    height: 50px;
+    background-color: ${props => props.buttonColor};
+    border-radius: 10px;
+    border: none;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: bold;
+`
+const StyledConfirm = styled.div`
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(255,255,255,0.9);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+const StyledConfirmBox = styled.div`
+    width: 597px;
+    background: #333333;
+    border-radius: 50px;
+    padding: 30px 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    p {
+        font-weight: 400;
+        font-size: 23px;
+        color: #ffffff;
+    }
+`
+export { BodyContainer, Banner, AppName, AppCopy, Container, StyledInput, BlueButton, StyledForm, Anchor, StyledOption, StyledConfirm, StyledButtonOptions, StyledConfirmBox }
