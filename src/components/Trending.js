@@ -41,7 +41,7 @@ export default function Trending() {
         </TrendingContainer>
         <Details>
             <summary>trending</summary>
-            <Hashtags className="details-content">
+            <Hashtags>
                 {hashtagsList.map((hashtag, i) =>
                     <HashtagLink to={`/hashtag/${hashtag.name}`} id={hashtag.id} key={i}>
                         <li># {hashtag.name}</li>
