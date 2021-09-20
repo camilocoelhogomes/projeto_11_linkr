@@ -11,8 +11,7 @@ import {
     BlueButton,
     StyledForm,
     Anchor,
-    StyledDirectLogin,
-    StyledCancel,
+    StyledOption,
     StyledConfirm,
     StyledButtonOptions,
     StyledConfirmBox
@@ -62,11 +61,11 @@ export default function LogIn() {
             <StyledConfirm>
                 <StyledConfirmBox>
                     <p>Você deseja logar diretamente com a seguinte conta?</p>
-                    <p>Nome: {lastLogin.user.username}</p>
-                    <p>Email: {lastLogin.user.email}</p>
+                    <p>Nome: <strong>{lastLogin.user.username}</strong></p>
+                    <p>Email: <strong>{lastLogin.user.email}</strong></p>
                     <StyledButtonOptions>
-                        <StyledDirectLogin onClick={() => history.push("/timeline")}>Logar</StyledDirectLogin>
-                        <StyledCancel onClick={() => setDirectLogin(false)}>Cancelar</StyledCancel>   
+                        <StyledOption onClick={() => history.push("/timeline")} buttonColor="#0ab51e">Logar</StyledOption>
+                        <StyledOption onClick={() => setDirectLogin(false)} buttonColor="#ff0000">Cancelar</StyledOption>   
                     </StyledButtonOptions>
                 </StyledConfirmBox>
             </StyledConfirm>

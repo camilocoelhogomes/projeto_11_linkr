@@ -95,23 +95,15 @@ const StyledButtonOptions = styled.div`
     gap: 30px;
     margin-top: 20px;
 `
-const StyledDirectLogin = styled.button`
+const StyledOption = styled.button`
     width: 100px;
     height: 50px;
-    background-color: green;
+    background-color: ${props => props.buttonColor};
     border-radius: 10px;
     border: none;
     color: #ffffff;
     font-size: 18px;
-`
-const StyledCancel = styled.button`
-    width: 100px;
-    height: 50px;
-    background-color: red;
-    border-radius: 10px;
-    border: none;
-    color: #ffffff;
-    font-size: 18px;
+    font-weight: bold;
 `
 const StyledConfirm = styled.div`
     height: 100vh;
@@ -139,4 +131,4 @@ const StyledConfirmBox = styled.div`
         color: #ffffff;
     }
 `
-export { BodyContainer, Banner, AppName, AppCopy, Container, StyledInput, BlueButton, StyledForm, Anchor, StyledDirectLogin, StyledCancel, StyledConfirm, StyledButtonOptions, StyledConfirmBox }
+export { BodyContainer, Banner, AppName, AppCopy, Container, StyledInput, BlueButton, StyledForm, Anchor, StyledOption, StyledConfirm, StyledButtonOptions, StyledConfirmBox }
