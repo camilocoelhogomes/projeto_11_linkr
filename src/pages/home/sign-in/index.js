@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { signIn } from "../../../services/API"
 import {
@@ -10,15 +10,26 @@ import {
     StyledInput,
     BlueButton,
     StyledForm,
-    Anchor
+    Anchor,
+    StyledOption,
+    StyledConfirm,
+    StyledButtonOptions,
+    StyledConfirmBox
 } from "../style"
 export default function LogIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [lastLogin, setLastLogin] = useState("");
+    const [directLogin, setDirectLogin] = useState(true);
     const history = useHistory();
 
-    if (Boolean(JSON.parse(localStorage.getItem("user")))) history.push("/timeline");
+    useEffect(() => {
+        if (localStorage.getItem("user") !== null) {
+            setLastLogin(JSON.parse(localStorage.getItem("user")));
+        }
+    }, [])
+
     function errorAlert(error) {
         if (error.status === 403) {
             alert("User not found. Invalid email or password");
@@ -45,7 +56,21 @@ export default function LogIn() {
         });
     }
     return (
-        <BodyContainer>
+        <>
+        {directLogin && lastLogin !== "" ? (
+            <StyledConfirm>
+                <StyledConfirmBox>
+                    <p>Você deseja logar diretamente com a seguinte conta?</p>
+                    <p>Nome: <strong>{lastLogin.user.username}</strong></p>
+                    <p>Email: <strong>{lastLogin.user.email}</strong></p>
+                    <StyledButtonOptions>
+                        <StyledOption onClick={() => history.push("/timeline")} buttonColor="#0ab51e">Logar</StyledOption>
+                        <StyledOption onClick={() => setDirectLogin(false)} buttonColor="#ff0000">Cancelar</StyledOption>   
+                    </StyledButtonOptions>
+                </StyledConfirmBox>
+            </StyledConfirm>
+        ) : (<></>)}
+            <BodyContainer>
             <Banner>
                 <strong>
                     <AppName>linkr</AppName>
@@ -68,5 +93,6 @@ export default function LogIn() {
                 </Anchor>
             </Container>
         </BodyContainer>
+        </>
     );
 }

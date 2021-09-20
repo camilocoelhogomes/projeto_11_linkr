@@ -24,6 +24,7 @@ export default function Trending() {
     }
 
     return (
+        <>
         <TrendingContainer>
             <TitleBox>
                 <h3>
@@ -38,17 +39,68 @@ export default function Trending() {
                 )}
             </Hashtags>
         </TrendingContainer>
+        <Details>
+            <summary>trending</summary>
+            <Hashtags>
+                {hashtagsList.map((hashtag, i) =>
+                    <HashtagLink to={`/hashtag/${hashtag.name}`} id={hashtag.id} key={i}>
+                        <li># {hashtag.name}</li>
+                    </HashtagLink>
+                )}
+            </Hashtags>
+        </Details>
+        </>
     )
 }
 
+const Details = styled.details`
+    display: none;
+
+    @media(max-width:900px){
+        display: initial;
+        position: fixed;
+        top: 65px;
+        background-color: #171717;
+        border-radius: 10px;
+        width: 230px;
+
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateX(-10em);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        &:not([open]) { 
+            height: 40px; 
+        }
+        &[open] { 
+            animation-name: fadeInDown;
+            animation-duration: 0.7s;
+        }
+        &[open] li{ 
+            animation-name: fadeInDown;
+            animation-duration: 0.75s;
+        }
+        summary {
+            color: #ffffff;
+            font-size: 25px;
+            font-weight: bold;
+            padding: 6px 15px;
+        }
+    }
+`
 const TrendingContainer = styled.div`
     width: 301px;
     background-color: #171717;
     border-radius: 16px;
     height: fit-content;
     position: sticky;
-    top: 160px;
-
+    top: 160px; 
+    
     @media(max-width:900px){
         display: none;
     }
