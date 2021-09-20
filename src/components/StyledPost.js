@@ -153,6 +153,7 @@ const StyledPost = styled.div`
         }
     }
     @media(max-width: 900px){
+        border-radius: 0px;
         width: 100%;
         padding: 14px;
 

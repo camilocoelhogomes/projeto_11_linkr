@@ -22,9 +22,15 @@ export default function TimeLine() {
     useEffect(getPosts, []);
 
     if (!posts) return (
-        <header>
-            <h2>timeline</h2>
-        </header>)
+        <>
+        <Header />
+        <StyledTimeLine>
+            <header>
+                <h2>timeline</h2>
+            </header>
+        </StyledTimeLine>
+        </>
+        )
 
     if (err) {
         return <Alert message={'Não foi possível carregar os posts, por favor recarregue a página'} />
