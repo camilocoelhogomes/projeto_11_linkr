@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import isYouTube from '../services/isYouTube';
+import { isYouTube, isImg } from '../services/validations';
 import { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage } from './StyledPost';
 import { FaTrash } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
@@ -195,7 +195,9 @@ export default function Post({ post, userInfo, getPosts }) {
 
 
                             </div>
-                            <img alt='link' className='link-img' src={linkImage} />
+                            <div className={isImg({ img: linkImage }) ? 'link-img-container' : 'link-img-container background-img'}>
+                                <img alt='link' className='link-img' src={linkImage} />
+                            </div>
                         </a>
                 }
             </main>
