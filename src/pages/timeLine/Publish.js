@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { publishPost } from "../../services/API";
+import hashtagsToLowerCase from "../../services/hashtagsMask";
 
 export default function Publish({ loadPosts }) {
     const [text, setText] = useState("");
@@ -8,21 +9,10 @@ export default function Publish({ loadPosts }) {
     const [loading, setLoading] = useState(false);
     const userInfo = JSON.parse(localStorage.getItem("user"));
 
-    const hashtagsToLowerCase = () => {
-        const rule = /([#|＃][^\s]+)/g;
-        const newText = text.split(rule).map(chunk => {
-            if (chunk.match(rule)) {
-                return chunk.toLowerCase();
-            }
-            return chunk;
-        });
-        return newText.join("");
-    }
-
     const publish = (e) => {
         e.preventDefault();
         setLoading(true);
-        const newText = hashtagsToLowerCase();
+        const newText = hashtagsToLowerCase(text);
         const body = { "text": newText, "link": link };
         publishPost({ token: userInfo.token, body })
             .then(() => {

@@ -10,6 +10,7 @@ import ReactHashtag from 'react-hashtag';
 import DeletePostModal from './DeletePostModal';
 import { Edit } from 'grommet-icons';
 import useKeypress from 'react-use-keypress';
+import hashtagsToLowerCase from '../services/hashtagsMask';
 
 export default function Post({ post, userInfo, getPosts }) {
     const textRef = useRef();
@@ -52,7 +53,7 @@ export default function Post({ post, userInfo, getPosts }) {
     useKeypress("Enter", () => {
         if (isEditPost) {
             setDisableEditPost(true);
-            const data = { 'text': postText };
+            const data = { 'text': hashtagsToLowerCase(postText) };
             editServerPost({
                 token: userInfo.token,
                 id: id,
