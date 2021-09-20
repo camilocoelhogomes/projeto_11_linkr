@@ -1,28 +1,47 @@
 import styled from 'styled-components';
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 const StyledPost = styled.div`
-    max-width: 611px;
+
+    span {
+        :hover{
+            cursor: pointer;
+        }
+    }
+
     background-color: #171717;
     border-radius: 16px;
-    display: flex;
+    width: 611px;
+    box-sizing: border-box;
     padding: 18px;
-    min-height: 276px;
-    
+    display: flex;
+    white-space: pre-wrap;
+    overflow: clip;
+    position: relative;
+
+    h4{
+        width: 100%;
+    }
+
     main {
         margin: 0 0 0 18px;
+        max-width: calc(100% - 71px);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        box-sizing: border-box;
     }
-p{
-    margin: 7px 0;
-}
-    a{
-        text-decoration: none;
+
+    .paragraph{
+        width: 100%;
+        overflow: clip;
+        white-space: pre-wrap;
+        text-overflow: ellipsis;    
+        margin: 10px 0;
     }
 
     .link-card{
-        width: 503px;
+        min-width: 100%;
         min-height: 155px;
         border: 1px solid #4D4D4D;
         box-sizing: border-box;
@@ -30,12 +49,14 @@ p{
         display: flex;
         justify-content: space-between;
         text-decoration: none;
-        overflow: hidden;
+        overflow: clip;
+        text-decoration: none;
+        box-sizing: border-box;
     }
 
     .link-text-info{
-        width: 100%;
-        padding: 20px 24px;
+        max-width: 70%;
+        padding: 7px 11px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -63,23 +84,21 @@ p{
     .link-img{
         border-radius: 0px 12px 13px 0px;
         height: 100%;
-        width: 153.44px;
-        
+        width: 30%;        
     }
 
     .img-like{
-        width: 71px;  
-    }
-
-    .likes{
-        width:100%;
-        display: flex;
+        width: 71px; 
+        display: flex ;
+        justify-content: flex-start;
         align-items: center;
-        justify-content: center;
-        margin: 19px 0 0 0;
         flex-direction: column;
     }
 
+    .youtube-video{
+        width:501px;
+        height:281px;
+    }
 
     .user-img{
         width: 50px;
@@ -92,6 +111,107 @@ p{
         line-height: 13px;
         color: #FFFFFF;
     }
-`;
 
-export default StyledPost;
+    .buttons-trash-edit{
+        height:fit-content;
+        position:absolute;
+        top:10px;
+        right:10px;
+        gap:8px;
+    }
+    .trashButton{
+        border:none;
+        background:none;
+        :hover{
+            cursor: pointer;
+        }
+    }
+
+    textarea {
+        resize: none;
+        display: block;
+        width: 100%;
+        min-height: 66px;
+        background-color: #EFEFEF;
+        border-radius: 5px;
+        border: none;
+        margin-top: 5px;
+        padding-left: 12px;
+        padding-top: 8px;
+        font-family: 'Lato', sans-serif;
+        color: #666666;
+        pointer-events: ${({ loading }) => loading ? 'none' : 'all'};
+        opacity: ${({ loading }) => loading ? 0.7 : 1};
+        
+        ::placeholder {
+            font-weight: 300;
+            color: #949494;
+        }
+
+        :focus {
+            outline: none;
+        }
+    }
+    @media(max-width: 900px){
+        width: 100%;
+        padding: 14px;
+
+    .img-like{
+        width: 50px;  
+    }
+    
+    .user-img{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+    main{
+        margin: 0 0 0 14px;
+        max-width: calc(100% - 50px);
+    }
+
+    .youtube-video{
+        width:100%;
+        height:initial;
+    }
+
+    }
+`
+const LikesBox = styled.div`
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+`
+const LikedHeart = styled(AiFillHeart)`
+    font-size: 30px;
+    color: #AC0000;
+`
+const EmptyHeart = styled(AiOutlineHeart)`
+    font-size: 30px;
+    color: #FFFFFF;
+`
+const LikesNumber = styled.p`
+    font-size: 11px;
+`
+const ErrorMessage = styled.span`
+    position: absolute;
+    height: 30px;
+    background-color: #000000;
+    border-radius: 5px;
+    border: 1px solid #ffffff;
+    left: 5px;
+    top: 110px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+    span {
+        color: #f97a7a;
+        font-size: 14px;
+    }
+`
+
+export { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage };

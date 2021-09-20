@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
-    @import url('https://fonts.googleapis.com/css2?family=Lato&family=Oswald&family=Passion+One&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Oswald&family=Passion+One&display=swap');
     
     html, body, div, span, applet, object, iframe,
     h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -55,6 +55,17 @@ const GlobalStyle = createGlobalStyle`
         color: #B7B7B7;
         font-size: 17px;
     }
+
+    a{
+        text-decoration: none;
+        color: inherit;
+    }
+
+    span{
+        color: #FFFFFF;
+        font-weight: bold;
+    }
+
     strong {
         font-weight: bold;
     }

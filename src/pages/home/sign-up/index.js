@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { useHistory } from "react-router";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { signUp } from "../../../services/API"
 import {
     BodyContainer,
@@ -40,7 +39,11 @@ export default function SignUp() {
         e.preventDefault();
         setIsLoading(true);
         const request = signUp(requestBody);
-        request.then(() => history.push("/"));
+        request.then((res) => {
+            const user = JSON.stringify(res.data);
+            localStorage.setItem('user', user);
+            history.push("/timeline");
+        });
         request.catch(err => {
             errorAlert(err.response)
             setIsLoading(false);

@@ -1,49 +1,52 @@
-import React from 'react';
-
-import Post from '../../components/Post';
+import React, { useEffect, useState } from 'react';
 import StyledTimeLine from './StyledTimeLine';
+import Header from '../../components/Header';
+import Post from '../../components/Post';
+import { getServerPosts } from '../../services/API';
+import Alert from '../../components/Alert';
+import Treding from '../../components/Trending';
+import Publish from './Publish';
 
-const TimeLine = () => {
-    const posts = serverPosts.posts;
+export default function TimeLine() {
+
+    const [posts, setPosts] = useState(null);
+    const [err, setErr] = useState(null);
+    const userInfo = JSON.parse(localStorage.getItem("user"));
+
+    const getPosts = () => {
+        getServerPosts({ token: userInfo.token })
+            .then((res) => { setErr(false); setPosts(res.data.posts) })
+            .catch(() => setErr(true))
+    }
+
+    useEffect(getPosts, []);
+
+    if (!posts) return (
+        <header>
+            <h2>timeline</h2>
+        </header>)
+
+    if (err) {
+        return <Alert message={'Não foi possível carregar os posts, por favor recarregue a página'} />
+    }
+
     return (
-        <StyledTimeLine>
-            <header>
-                <h2>timeline</h2>
-            </header>
-            {
-                posts.map(post => <Post key={post.id} post={post} />)
-            }
-        </StyledTimeLine>
-    )
-}
-
-export default TimeLine;
-
-const serverPosts = {
-    "posts": [
-        {
-            "id": 2,
-            "text": "Never Gonna Give You Up #rickroll",
-            "link": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-            "linkTitle": "Rick Astley - Never Gonna Give You Up (Video)",
-            "linkDescription": "Rick Astley's official music video for “Never Gonna Give You Up” Listen to Rick Astley: https://RickAstley.lnk.to/_listenYDSubscribe to the official Rick Ast...",
-            "linkImage": "https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
-            "user": {
-                "id": 1,
-                "username": "teste",
-                "avatar": "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/1/avatar"
-            },
-            "likes": [
-                {
-                    "id": 1,
-                    "userId": 1,
-                    "postId": 2,
-                    "createdAt": "2021-05-24T18:55:37.544Z",
-                    "updatedAt": "2021-05-24T18:55:37.544Z",
-                    "user.id": 1,
-                    "user.username": "teste"
-                }
-            ]
-        }
-    ]
+        <>
+            <Header />
+            <StyledTimeLine>
+                <header>
+                    <h2>timeline</h2>
+                </header>
+                <div className='main-content'>
+                    <div className='posts'>
+                        <Publish loadPosts={getPosts} />
+                        {posts.length === 0 ? <h2>Nenhm post encontrado</h2> :
+                            posts.map(post => <Post key={post.id} post={post} userInfo={userInfo} getPosts={getPosts} />)
+                        }
+                    </div>
+                    <Treding className='trending' />
+                </div>
+            </StyledTimeLine>
+        </>
+    );
 }
