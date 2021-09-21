@@ -7,6 +7,7 @@ import Alert from '../../components/Alert';
 import Treding from '../../components/Trending';
 import Publish from './Publish';
 
+
 export default function TimeLine() {
 
     const [posts, setPosts] = useState(null);
@@ -23,14 +24,14 @@ export default function TimeLine() {
 
     if (!posts) return (
         <>
-        <Header />
-        <StyledTimeLine>
-            <header>
-                <h2>timeline</h2>
-            </header>
-        </StyledTimeLine>
+            <Header />
+            <StyledTimeLine>
+                <header>
+                    <h2>timeline</h2>
+                </header>
+            </StyledTimeLine>
         </>
-        )
+    )
 
     if (err) {
         return <Alert message={'Não foi possível carregar os posts, por favor recarregue a página'} />

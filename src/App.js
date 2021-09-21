@@ -8,11 +8,13 @@ import MyPosts from './pages/myPosts/MyPosts';
 import UserPosts from "./pages/userPosts/UserPosts";
 import HashtagPosts from "./pages/hashtagPosts/HashtagPosts";
 import LikedPosts from "./pages/likedPosts/LikedPosts";
+import LinkPreview from "./components/LinkPreview";
 
 function App() {
   return (
     <Router>
       <GlobalStyle />
+      <LinkPreview href={'https://onepieceex.net/'} />
       <Switch>
         <Route exact path="/" >
           <LogIn />
