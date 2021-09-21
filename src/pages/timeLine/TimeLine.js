@@ -19,7 +19,13 @@ export default function TimeLine() {
             .catch(() => setErr(true))
     }
 
-    useEffect(getPosts, []);
+    useEffect(() => {
+        getPosts();
+        const intervalId =  setInterval(getPosts, 15000);
+        return () => {
+            clearInterval(intervalId);
+        }
+    }, []);
 
     if (!posts) return (
         <>

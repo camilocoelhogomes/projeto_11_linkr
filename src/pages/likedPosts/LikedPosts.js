@@ -17,7 +17,13 @@ export default function LikedPosts() {
             .catch(() => setErr(true));
     }
 
-    useEffect(getPosts, []);
+    useEffect(() => {
+        getPosts();
+        const intervalId =  setInterval(getPosts, 15000);
+        return () => {
+            clearInterval(intervalId);
+        }
+    }, []);
 
     if (err) {
         return <Alert message={'Não foi possível carregar os posts, por favor recarregue a página'} />
