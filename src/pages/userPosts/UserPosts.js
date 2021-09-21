@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getUserPosts } from "../../services/API";
+import { getUserPosts, getFollowedUsers, followUser, unfollowUser } from "../../services/API";
 import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Post from '../../components/Post';
@@ -11,7 +11,7 @@ export default function UserPosts() {
     const [posts, setPosts] = useState([]);
     const [err, setErr] = useState(null);
     const { id } = useParams();
-    const [isEnabled, setIsEnabled] = useState(false);
+    const [followedUsers, setFollowedUsers] = useState([]);
     const userInfo = JSON.parse(localStorage.getItem("user"));
     const history = useHistory();
 
@@ -23,19 +23,44 @@ export default function UserPosts() {
             getUserPosts({token: userInfo.token, id})
             .then(res => {
                 setPosts(res.data.posts);
-                setIsEnabled(true);
             })
             .catch(() => setErr(true));
         }
     }
 
+    const defineFollowedUsers = () => {
+        getFollowedUsers(userInfo.token).then(ans => {
+            setFollowedUsers(ans.data.users);
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+    console.log(followedUsers);
+
     useEffect(() => {
         getPosts();
-        const intervalId =  setInterval(getPosts, 15000);
+        const intervalId = setInterval(getPosts, 15000);
+        defineFollowedUsers();
         return () => {
             clearInterval(intervalId);
         }
     }, []);
+
+    const follow = () => {
+        followUser(id, userInfo.token).then(ans => {
+            console.log(ans.data);
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+    const unfollow = () => {
+        unfollowUser(id, userInfo.token).then(ans => {
+            console.log(ans.data);
+        }).catch(err => {
+            console.log(err);
+        })
+    }
 
     if (err) {
         return <Alert message={'Não foi possível carregar os posts, por favor recarregue a página'} />
@@ -47,10 +72,10 @@ export default function UserPosts() {
             <PageContainer>
                 <header>
                     <h2>{posts.length > 0 ? posts[0].user.username : ""}'s posts</h2>
-                    {isEnabled ? (
-                        <StyledFollowButton backgroundColor={"#1877F2"} textColor={"#ffffff"}>Follow</StyledFollowButton>
+                    {followedUsers.find(user => user.id === Number(id)) ? (
+                        <StyledFollowButton backgroundColor={"#ffffff"} textColor={"#1877F2"} onClick={unfollow}>Unfollow</StyledFollowButton>
                     ) : (
-                        <StyledFollowButton backgroundColor={"#ffffff"} textColor={"#1877F2"}>Unfollow</StyledFollowButton>
+                        <StyledFollowButton backgroundColor={"#1877F2"} textColor={"#ffffff"} onClick={follow}>Follow</StyledFollowButton>
                     )}
                 </header>
                 <div className='main-content'>
