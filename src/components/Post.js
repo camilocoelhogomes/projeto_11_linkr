@@ -1,10 +1,8 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
 import { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, StyledRepostInfo, StyledRepostBox } from './StyledPost';
-import { FaTrash, FaRetweet } from 'react-icons/fa'
+import { FaTrash, FaRetweet } from 'react-icons/fa';
 import { sendLike, sendDislike, editServerPost } from '../services/API';
 import { isYouTube, isImg } from '../services/validations';
-import { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber } from './StyledPost';
-import { FaTrash } from 'react-icons/fa'
 import { Link, useHistory } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip';
 import ReactHashtag from 'react-hashtag';

@@ -7,6 +7,7 @@ import Trending from "../../components/Trending";
 import Alert from '../../components/Alert';
 import SmallAlert from "../../components/SmallAlert";
 import { PageContainer } from "../shared/styled-components/PageContainer";
+import styled from "styled-components";
 
 export default function UserPosts() {
     const [posts, setPosts] = useState([]);
@@ -121,35 +122,6 @@ export default function UserPosts() {
     );
 }
 
-const PageContainer = styled.div`
-    margin: 0 auto;
-    max-width: 1042px;
-    position: relative;
-    header {
-        width: 100%;
-        margin: 125px 0 43px 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .posts{
-        display: flex;
-        flex-direction: column;
-        gap: 16px; 
-    }
-
-    .main-content{
-        display: flex;
-        justify-content: space-between;
-        position: relative;
-    }
-
-    @media(max-width: 900px){
-        .posts{
-            width: 100%;
-        }
-    }
-`
 const StyledFollowButton = styled.button`
     width: 112px;
     height: 31px;
