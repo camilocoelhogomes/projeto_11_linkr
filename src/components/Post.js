@@ -121,7 +121,6 @@ export default function Post({ post, userInfo, getPosts }) {
                 </RepostInfo>
             :   <></>
         }
-        
         <StyledPost>
             {errorMessage !== "" ? (
                 <ErrorMessage><span>{errorMessage}</span></ErrorMessage>

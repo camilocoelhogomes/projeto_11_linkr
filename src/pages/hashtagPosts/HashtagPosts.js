@@ -34,7 +34,7 @@ export default function HashtagPosts() {
                 </header>
                 <div className='main-content'>
                     <div className='posts'>
-                        {posts.length === 0 ? <h2>Nenhm post encontrado</h2> :
+                        {posts.length === 0 ? <h2>Nenhum post encontrado</h2> :
                             posts.map(post => <Post key={post.id} post={post} userInfo={userInfo} getPosts={getPosts} />)
                         }
                     </div>
@@ -55,7 +55,6 @@ const PageContainer = styled.div`
     .posts{
         display: flex;
         flex-direction: column;
-        gap: 16px; 
     }
 
     .main-content{
