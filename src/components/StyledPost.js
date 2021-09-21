@@ -4,9 +4,7 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 const StyledPost = styled.div`
 
     span {
-        :hover{
-            cursor: pointer;
-        }
+        cursor: pointer;
     }
 
     background-color: #171717;
@@ -53,6 +51,8 @@ const StyledPost = styled.div`
         overflow: clip;
         text-decoration: none;
         box-sizing: border-box;
+        cursor: pointer;
+
     }
 
     .link-text-info{
@@ -127,9 +127,8 @@ const StyledPost = styled.div`
     .trashButton{
         border:none;
         background:none;
-        :hover{
-            cursor: pointer;
-        }
+        cursor: pointer;
+
     }
 
     textarea {
@@ -195,10 +194,13 @@ const LikesBox = styled.div`
 const LikedHeart = styled(AiFillHeart)`
     font-size: 30px;
     color: #AC0000;
+    cursor: pointer;
 `
 const EmptyHeart = styled(AiOutlineHeart)`
     font-size: 30px;
     color: #FFFFFF;
+    cursor: pointer;
+
 `
 const LikesNumber = styled.p`
     font-size: 11px;

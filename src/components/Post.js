@@ -1,21 +1,25 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import { isYouTube, isImg } from '../services/validations';
 import { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage } from './StyledPost';
 import { FaTrash } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { sendLike, sendDislike, editServerPost } from '../services/API';
 import ReactTooltip from 'react-tooltip';
-import { useHistory } from 'react-router-dom';
 import ReactHashtag from 'react-hashtag';
 import DeletePostModal from './DeletePostModal';
 import { Edit } from 'grommet-icons';
 import useKeypress from 'react-use-keypress';
 import hashtagsToLowerCase from '../services/hashtagsMask';
+import LinkContext from '../store/LinkContext';
 import { BACKGROUND_IMG } from '../Assets/img/img';
 
 export default function Post({ post, userInfo, getPosts }) {
     const textRef = useRef();
     const history = useHistory();
+    const {
+        setShowIframe,
+        setPreviewHref,
+    } = useContext(LinkContext);
     const {
         id,
         user,
@@ -180,7 +184,7 @@ export default function Post({ post, userInfo, getPosts }) {
                             <a href={link} target="_blank" rel="noreferrer">{link}</a>
                         </>
                         :
-                        <a href={link} className='link-card' target="_blank" rel="noreferrer">
+                        <div onClick={() => { setPreviewHref(link); setShowIframe(true) }} className='link-card'>
                             <div className='link-text-info'>
                                 <div className='paragraph'>
                                     <p className='link-title'>{linkTitle}</p>
@@ -199,17 +203,18 @@ export default function Post({ post, userInfo, getPosts }) {
                             <div className='link-img-container'>
                                 <img alt='link' className='link-img' src={isImg({ img: linkImage }) ? linkImage : BACKGROUND_IMG} />
                             </div>
-                        </a>
+                        </div>
                 }
             </main>
-            {isCurrentUser ?
-                <div className='buttons-trash-edit'>
-                    <button className='trashButton' onClick={() => setIsEditPost(!isEditPost)}><Edit size='16px' color='#FFFFFF' /></button>
-                    <button className='trashButton' onClick={() => setModalIsOpen(true)}><FaTrash size='16px' color='white' /></button>
-                </div>
-                :
-                ""
+            {
+                isCurrentUser ?
+                    <div className='buttons-trash-edit'>
+                        <button className='trashButton' onClick={() => setIsEditPost(!isEditPost)}><Edit size='16px' color='#FFFFFF' /></button>
+                        <button className='trashButton' onClick={() => setModalIsOpen(true)}><FaTrash size='16px' color='white' /></button>
+                    </div>
+                    :
+                    ""
             }
             <DeletePostModal state={{ modalIsOpen, setModalIsOpen }} postId={id} getPosts={getPosts} />
-        </StyledPost>)
+        </StyledPost >)
 }

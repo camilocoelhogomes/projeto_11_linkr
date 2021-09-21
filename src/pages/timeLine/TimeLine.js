@@ -29,14 +29,14 @@ export default function TimeLine() {
 
     if (!posts) return (
         <>
-        <Header />
-        <StyledTimeLine>
-            <header>
-                <h2>timeline</h2>
-            </header>
-        </StyledTimeLine>
+            <Header />
+            <StyledTimeLine>
+                <header>
+                    <h2>timeline</h2>
+                </header>
+            </StyledTimeLine>
         </>
-        )
+    )
 
     if (err) {
         return <Alert message={'Não foi possível carregar os posts, por favor recarregue a página'} />
