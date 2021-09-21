@@ -4,9 +4,7 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 const StyledPost = styled.div`
 
     span {
-        :hover{
-            cursor: pointer;
-        }
+        cursor: pointer;
     }
 
     background-color: #171717;
@@ -53,10 +51,8 @@ const StyledPost = styled.div`
         overflow: clip;
         text-decoration: none;
         box-sizing: border-box;
+        cursor: pointer;
 
-        &:hover{
-            cursor: pointer;
-        }
     }
 
     .link-text-info{
