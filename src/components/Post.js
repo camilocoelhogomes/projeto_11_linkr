@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import isYouTube from '../services/isYouTube';
-import { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage } from './StyledPost';
-import { FaTrash } from 'react-icons/fa'
+import { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage, RepostInfo, RepostBox } from './StyledPost';
+import { FaTrash, FaRetweet } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
-import { sendLike, sendDislike, editServerPost } from '../services/API';
+import { sendLike, sendDislike, editServerPost, sharePost } from '../services/API';
 import ReactTooltip from 'react-tooltip';
 import { useHistory } from 'react-router-dom';
 import ReactHashtag from 'react-hashtag';
@@ -24,6 +24,8 @@ export default function Post({ post, userInfo, getPosts }) {
         linkImage,
         linkTitle,
         link,
+        repostCount,
+        repostedBy,
     } = post;
 
     const isCurrentUser = Boolean(userInfo.user.id === user.id);
@@ -97,14 +99,29 @@ export default function Post({ post, userInfo, getPosts }) {
         }
     }
 
+    const repost = (postId) => {
+        sharePost({token: userInfo.token, postId})
+            .then(() => getPosts());
+    }
+
 
     useEffect(isPostAlreadyLiked, [])
     useEffect(() => {
         if (isEditPost) {
             textRef.current.focus()
         }
-    }, [isEditPost])
+    }, [isEditPost]);
+
     return (
+        <>
+        {!!repostedBy  
+            ?   <RepostInfo>
+                    <FaRetweet className="repost"/>
+                    <p>Re-posted by {repostedBy.id === userInfo.user.id ? "you" : repostedBy.username}</p>
+                </RepostInfo>
+            :   <></>
+        }
+        
         <StyledPost>
             {errorMessage !== "" ? (
                 <ErrorMessage><span>{errorMessage}</span></ErrorMessage>
@@ -147,6 +164,10 @@ export default function Post({ post, userInfo, getPosts }) {
                         </>
                     )}
                 </LikesBox>
+                <RepostBox>
+                    <FaRetweet className="repost" onClick={() => repost(id)}/>
+                    <p>{repostCount} re-posts</p>
+                </RepostBox>
             </div>
             <main>
                 <h4>{user.username}</h4>
@@ -208,5 +229,7 @@ export default function Post({ post, userInfo, getPosts }) {
                 ""
             }
             <DeletePostModal state={{ modalIsOpen, setModalIsOpen }} postId={id} getPosts={getPosts} />
-        </StyledPost>)
+        </StyledPost>
+        </>
+        )
 }
