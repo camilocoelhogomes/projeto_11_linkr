@@ -11,6 +11,7 @@ import DeletePostModal from './DeletePostModal';
 import { Edit } from 'grommet-icons';
 import useKeypress from 'react-use-keypress';
 import hashtagsToLowerCase from '../services/hashtagsMask';
+import { BACKGROUND_IMG } from '../Assets/img/img';
 
 export default function Post({ post, userInfo, getPosts }) {
     const textRef = useRef();
@@ -195,8 +196,8 @@ export default function Post({ post, userInfo, getPosts }) {
 
 
                             </div>
-                            <div className={isImg({ img: linkImage }) ? 'link-img-container' : 'link-img-container background-img'}>
-                                <img alt='link' className='link-img' src={linkImage} />
+                            <div className='link-img-container'>
+                                <img alt='link' className='link-img' src={isImg({ img: linkImage }) ? linkImage : BACKGROUND_IMG} />
                             </div>
                         </a>
                 }

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { BACKGROUND_IMG } from '../Assets/img/img';
+
 const StyledPost = styled.div`
 
     span {
@@ -90,9 +90,6 @@ const StyledPost = styled.div`
 
     .link-img-container{
         width: 30%;
-    }
-    .background-img{
-        background-image: url(${BACKGROUND_IMG});
     }
 
     .img-like{
