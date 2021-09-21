@@ -11,6 +11,7 @@ export default function UserPosts() {
     const [posts, setPosts] = useState([]);
     const [err, setErr] = useState(null);
     const { id } = useParams();
+    const [isEnabled, setIsEnabled] = useState(false);
     const userInfo = JSON.parse(localStorage.getItem("user"));
     const history = useHistory();
 
@@ -18,10 +19,14 @@ export default function UserPosts() {
         const isUser = (Number(id) === userInfo.user.id);
         if (isUser) {
             history.push('/my-posts');
-        }     
-        getUserPosts({token: userInfo.token, id})
-            .then( res => setPosts(res.data.posts))
+        } else {
+            getUserPosts({token: userInfo.token, id})
+            .then(res => {
+                setPosts(res.data.posts);
+                setIsEnabled(true);
+            })
             .catch(() => setErr(true));
+        }
     }
 
     useEffect(() => {
@@ -42,10 +47,15 @@ export default function UserPosts() {
             <PageContainer>
                 <header>
                     <h2>{posts.length > 0 ? posts[0].user.username : ""}'s posts</h2>
+                    {isEnabled ? (
+                        <StyledFollowButton backgroundColor={"#1877F2"} textColor={"#ffffff"}>Follow</StyledFollowButton>
+                    ) : (
+                        <StyledFollowButton backgroundColor={"#ffffff"} textColor={"#1877F2"}>Unfollow</StyledFollowButton>
+                    )}
                 </header>
                 <div className='main-content'>
                     <div className='posts'>
-                        {posts.length === 0 ? <h2>Nenhm post encontrado</h2> :
+                        {posts.length === 0 ? <h2>Nenhum post encontrado</h2> :
                             posts.map(post => <Post key={post.id} post={post} userInfo={userInfo} getPosts={getPosts}/>)
                         }
                     </div>
@@ -61,7 +71,11 @@ const PageContainer = styled.div`
     max-width: 1042px;
     position: relative;
     header {
+        width: 100vw;
         margin: 125px 0 43px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
     .posts{
         display: flex;
@@ -80,4 +94,15 @@ const PageContainer = styled.div`
             width: 100%;
         }
     }
-`;
+`
+const StyledFollowButton = styled.button`
+    width: 112px;
+    height: 31px;
+    background-color: ${({backgroundColor}) => backgroundColor};
+    color: ${({textColor}) => textColor};
+    font-size: 14px;
+    border: none;
+    line-height: 17px;
+    font-weight: bold;
+    border-radius: 5px;
+`
