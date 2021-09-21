@@ -118,7 +118,11 @@ export default function Post({ post, userInfo, getPosts }) {
             {!!repostedBy  
                 ?   <StyledRepostInfo>
                         <FaRetweet className="repost"/>
-                        <p>Re-posted by {repostedBy.id === userInfo.user.id ? "you" : repostedBy.username}</p>
+                        <p>Re-posted by 
+                            <Link to={`/user/${repostedBy.id}`}>
+                                {repostedBy.id === userInfo.user.id ? " you" : ` ${repostedBy.username}`}
+                            </Link>
+                        </p>
                     </StyledRepostInfo>
                 :   <></>
             }

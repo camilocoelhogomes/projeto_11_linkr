@@ -9,6 +9,7 @@ import { PageContainer } from "../shared/styled-components/PageContainer";
 
 export default function UserPosts() {
     const [posts, setPosts] = useState([]);
+    const [username, setUsername] = useState("");
     const [err, setErr] = useState(null);
     const { id } = useParams();
     const userInfo = JSON.parse(localStorage.getItem("user"));
@@ -20,7 +21,14 @@ export default function UserPosts() {
             history.push('/my-posts');
         }     
         getUserPosts({token: userInfo.token, id})
-            .then( res => setPosts(res.data.posts))
+            .then( res => {
+                setPosts(res.data.posts)
+                if (!!res.data.posts[0].repostedBy) {
+                    setUsername(res.data.posts[0].repostedBy.username);
+                } else {
+                    setUsername(res.data.posts[0].user.username);
+                }
+            })
             .catch(() => setErr(true));
     }
 
@@ -30,7 +38,7 @@ export default function UserPosts() {
         return () => {
             clearInterval(intervalId);
         }
-    }, []);
+    }, [id]);
 
     if (err) {
         return <Alert message={'Não foi possível carregar os posts, por favor recarregue a página'} />
@@ -41,12 +49,12 @@ export default function UserPosts() {
             <Header />
             <PageContainer>
                 <header>
-                    <h2>{posts.length > 0 ? posts[0].user.username : ""}'s posts</h2>
+                    <h2>{username}'s posts</h2>
                 </header>
                 <div className='main-content'>
                     <div className='posts'>
                         {posts.length === 0 ? <h2>Nenhum post encontrado</h2> :
-                            posts.map(post => <Post key={post.id} post={post} userInfo={userInfo} getPosts={getPosts}/>)
+                            posts.map((post, index) => <Post key={index} post={post} userInfo={userInfo} getPosts={getPosts}/>)
                         }
                     </div>
                     <Trending className='trending' />
