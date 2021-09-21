@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import isYouTube from '../services/isYouTube';
 import { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage } from './StyledPost';
 import { FaTrash } from 'react-icons/fa'
@@ -11,10 +11,15 @@ import DeletePostModal from './DeletePostModal';
 import { Edit } from 'grommet-icons';
 import useKeypress from 'react-use-keypress';
 import hashtagsToLowerCase from '../services/hashtagsMask';
+import LinkContext from '../store/LinkContext';
 
 export default function Post({ post, userInfo, getPosts }) {
     const textRef = useRef();
     const history = useHistory();
+    const {
+        setShowIframe,
+        setPreviewHref,
+    } = useContext(LinkContext);
     const {
         id,
         user,
@@ -179,7 +184,7 @@ export default function Post({ post, userInfo, getPosts }) {
                             <a href={link} target="_blank" rel="noreferrer">{link}</a>
                         </>
                         :
-                        <a href={link} className='link-card' target="_blank" rel="noreferrer">
+                        <div onClick={() => { setPreviewHref(link); setShowIframe(true) }} className='link-card'>
                             <div className='link-text-info'>
                                 <div className='paragraph'>
                                     <p className='link-title'>{linkTitle}</p>
@@ -196,17 +201,18 @@ export default function Post({ post, userInfo, getPosts }) {
 
                             </div>
                             <img alt='link' className='link-img' src={linkImage} />
-                        </a>
+                        </div>
                 }
             </main>
-            {isCurrentUser ?
-                <div className='buttons-trash-edit'>
-                    <button className='trashButton' onClick={() => setIsEditPost(!isEditPost)}><Edit size='16px' color='#FFFFFF' /></button>
-                    <button className='trashButton' onClick={() => setModalIsOpen(true)}><FaTrash size='16px' color='white' /></button>
-                </div>
-                :
-                ""
+            {
+                isCurrentUser ?
+                    <div className='buttons-trash-edit'>
+                        <button className='trashButton' onClick={() => setIsEditPost(!isEditPost)}><Edit size='16px' color='#FFFFFF' /></button>
+                        <button className='trashButton' onClick={() => setModalIsOpen(true)}><FaTrash size='16px' color='white' /></button>
+                    </div>
+                    :
+                    ""
             }
             <DeletePostModal state={{ modalIsOpen, setModalIsOpen }} postId={id} getPosts={getPosts} />
-        </StyledPost>)
+        </StyledPost >)
 }

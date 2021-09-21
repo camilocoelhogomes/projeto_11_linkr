@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { AiOutlineClose } from "react-icons/ai";
+import LinkContext from '../store/LinkContext';
+const LinkPreview = () => {
+    const { previewHref, setShowIframe } = useContext(LinkContext);
 
-const LinkPreview = ({ href }) => {
     return <StyledLinkPreview>
         <div className='preview-box'>
             <div className='preview-header'>
-                <a href={href} className='new-tab-button' target="_blank" rel="noreferrer">Abrir uma nova Aba</a>
-                <button className='close-link-preview'><AiOutlineClose /></button>
+                <a href={previewHref} className='new-tab-button' target="_blank" rel="noreferrer">Abrir uma nova Aba</a>
+                <button onClick={() => setShowIframe(false)} className='close-link-preview'><AiOutlineClose /></button>
             </div>
             <div className='frame-preview'>
-                <iframe src={href}
+                <iframe src={previewHref}
                     title="iframe Example 1" width="100%" height="100%">
                 </iframe>
             </div>
