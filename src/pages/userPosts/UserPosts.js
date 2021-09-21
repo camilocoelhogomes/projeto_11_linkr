@@ -67,7 +67,7 @@ export default function UserPosts() {
 
     const unfollow = () => {
         setIsFollowed(false);
-        unfollowUser(id, userInfo.token + 1).then(ans => {
+        unfollowUser(id, userInfo.token).then(ans => {
             console.log(ans.data);
         }).catch(err => {
             setIsFollowed(true);
