@@ -5,19 +5,21 @@ import LinkContext from '../store/LinkContext';
 const LinkPreview = () => {
     const { previewHref, setShowIframe } = useContext(LinkContext);
 
-    return <StyledLinkPreview>
-        <div className='preview-box'>
-            <div className='preview-header'>
-                <a href={previewHref} className='new-tab-button' target="_blank" rel="noreferrer">Abrir uma nova Aba</a>
-                <button onClick={() => setShowIframe(false)} className='close-link-preview'><AiOutlineClose /></button>
+    return (
+        <StyledLinkPreview>
+            <div className='preview-box'>
+                <div className='preview-header'>
+                    <a href={previewHref} className='new-tab-button' target="_blank" rel="noreferrer">Abrir uma nova Aba</a>
+                    <button onClick={() => setShowIframe(false)} className='close-link-preview'><AiOutlineClose /></button>
+                </div>
+                <div className='frame-preview'>
+                    <iframe src={previewHref}
+                        title="iframe Example 1" width="100%" height="100%">
+                    </iframe>
+                </div>
             </div>
-            <div className='frame-preview'>
-                <iframe src={previewHref}
-                    title="iframe Example 1" width="100%" height="100%">
-                </iframe>
-            </div>
-        </div>
-    </StyledLinkPreview>
+        </StyledLinkPreview>
+    );
 }
 
 export default LinkPreview;
@@ -74,9 +76,7 @@ const StyledLinkPreview = styled.div`
         font-size: 30px;
         color: #ffffff;
         border: none;
-        &:hover{
-            cursor: pointer;
-        }
+        cursor: pointer;
     }
     .frame-preview{
         height: calc(100% - 50px);

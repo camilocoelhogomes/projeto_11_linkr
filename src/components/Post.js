@@ -2,10 +2,9 @@ import React, { useEffect, useState, useRef, useContext } from 'react';
 import { isYouTube, isImg } from '../services/validations';
 import { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage } from './StyledPost';
 import { FaTrash } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { sendLike, sendDislike, editServerPost } from '../services/API';
 import ReactTooltip from 'react-tooltip';
-import { useHistory } from 'react-router-dom';
 import ReactHashtag from 'react-hashtag';
 import DeletePostModal from './DeletePostModal';
 import { Edit } from 'grommet-icons';

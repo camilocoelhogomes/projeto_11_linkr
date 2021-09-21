@@ -7,7 +7,6 @@ import Alert from '../../components/Alert';
 import Treding from '../../components/Trending';
 import Publish from './Publish';
 
-
 export default function TimeLine() {
 
     const [posts, setPosts] = useState(null);

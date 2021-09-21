@@ -199,16 +199,13 @@ const LikesBox = styled.div`
 const LikedHeart = styled(AiFillHeart)`
     font-size: 30px;
     color: #AC0000;
-    &:hover{
-        cursor: pointer;
-    }
+    cursor: pointer;
 `
 const EmptyHeart = styled(AiOutlineHeart)`
     font-size: 30px;
     color: #FFFFFF;
-    &:hover{
-        cursor: pointer;
-    }
+    cursor: pointer;
+
 `
 const LikesNumber = styled.p`
     font-size: 11px;
