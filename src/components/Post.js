@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
-import isYouTube from '../services/isYouTube';
 import { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage, StyledRepostInfo, StyledRepostBox } from './StyledPost';
 import { FaTrash, FaRetweet } from 'react-icons/fa'
 import { sendLike, sendDislike, editServerPost } from '../services/API';
