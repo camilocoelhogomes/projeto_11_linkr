@@ -81,4 +81,12 @@ const StyledLinkPreview = styled.div`
     .frame-preview{
         height: calc(100% - 50px);
     }
+
+    @media(max-width: 600px){
+        .preview-box{
+            width: 100%;
+            border-radius: 0px;
+            height: 100vh;
+        }
+    }
 `;
