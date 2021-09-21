@@ -8,6 +8,7 @@ import ReactTooltip from 'react-tooltip';
 import { useHistory } from 'react-router-dom';
 import ReactHashtag from 'react-hashtag';
 import DeletePostModal from './DeletePostModal';
+import RepostModal from './RepostModal';
 import { Edit } from 'grommet-icons';
 import useKeypress from 'react-use-keypress';
 import hashtagsToLowerCase from '../services/hashtagsMask';
@@ -33,6 +34,7 @@ export default function Post({ post, userInfo, getPosts }) {
     const [numberOfLikes, setNumberOfLikes] = useState(likes.length);
     const [errorMessage, setErrorMessage] = useState("");
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [repostModal, setRepostModal] = useState(false);
     const [isEditPost, setIsEditPost] = useState(false);
     const [postText, setPostText] = useState(text);
     const [disableEditPost, setDisableEditPost] = useState(false);
@@ -99,12 +101,6 @@ export default function Post({ post, userInfo, getPosts }) {
         }
     }
 
-    const repost = (postId) => {
-        sharePost({token: userInfo.token, postId})
-            .then(() => getPosts());
-    }
-
-
     useEffect(isPostAlreadyLiked, [])
     useEffect(() => {
         if (isEditPost) {
@@ -164,7 +160,7 @@ export default function Post({ post, userInfo, getPosts }) {
                     )}
                 </LikesBox>
                 <RepostBox>
-                    <FaRetweet className="repost" onClick={() => repost(id)}/>
+                    <FaRetweet className="repost" onClick={() => setRepostModal(true)}/>
                     <p>{repostCount} re-posts</p>
                 </RepostBox>
             </div>
@@ -228,6 +224,7 @@ export default function Post({ post, userInfo, getPosts }) {
                 ""
             }
             <DeletePostModal state={{ modalIsOpen, setModalIsOpen }} postId={id} getPosts={getPosts} />
+            <RepostModal state={{ repostModal, setRepostModal }} postId={id} getPosts={getPosts} />
         </StyledPost>
         </>
         )
