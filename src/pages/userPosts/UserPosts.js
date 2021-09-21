@@ -11,7 +11,8 @@ export default function UserPosts() {
     const [posts, setPosts] = useState([]);
     const [err, setErr] = useState(null);
     const { id } = useParams();
-    const [followedUsers, setFollowedUsers] = useState([]);
+    const [isFollowed, setIsFollowed] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const userInfo = JSON.parse(localStorage.getItem("user"));
     const history = useHistory();
 
@@ -30,12 +31,16 @@ export default function UserPosts() {
 
     const defineFollowedUsers = () => {
         getFollowedUsers(userInfo.token).then(ans => {
-            setFollowedUsers(ans.data.users);
+            setIsLoading(false);
+            if (ans.data.users.find(user => user.id === Number(id))) {
+                setIsFollowed(true);
+            } else {
+                setIsFollowed(false);
+            }
         }).catch(err => {
-            console.log(err);
+            alert("Não foi possível saber se você segue ou não o usuário! Por favor, recarregue a página.");
         })
     }
-    console.log(followedUsers);
 
     useEffect(() => {
         getPosts();
@@ -47,18 +52,20 @@ export default function UserPosts() {
     }, []);
 
     const follow = () => {
+        setIsFollowed(true);
         followUser(id, userInfo.token).then(ans => {
             console.log(ans.data);
         }).catch(err => {
-            console.log(err);
+            setIsFollowed(false);
         })
     }
 
     const unfollow = () => {
+        setIsFollowed(false);
         unfollowUser(id, userInfo.token).then(ans => {
             console.log(ans.data);
         }).catch(err => {
-            console.log(err);
+            setIsFollowed(true);
         })
     }
 
@@ -72,10 +79,14 @@ export default function UserPosts() {
             <PageContainer>
                 <header>
                     <h2>{posts.length > 0 ? posts[0].user.username : ""}'s posts</h2>
-                    {followedUsers.find(user => user.id === Number(id)) ? (
-                        <StyledFollowButton backgroundColor={"#ffffff"} textColor={"#1877F2"} onClick={unfollow}>Unfollow</StyledFollowButton>
+                    {isLoading ? (
+                        <LoadingButton>Loading...</LoadingButton>
                     ) : (
-                        <StyledFollowButton backgroundColor={"#1877F2"} textColor={"#ffffff"} onClick={follow}>Follow</StyledFollowButton>
+                        isFollowed ? (
+                            <StyledFollowButton backgroundColor={"#ffffff"} textColor={"#1877F2"} onClick={unfollow}>Unfollow</StyledFollowButton>
+                        ) : (
+                            <StyledFollowButton backgroundColor={"#1877F2"} textColor={"#ffffff"} onClick={follow}>Follow</StyledFollowButton>
+                        )
                     )}
                 </header>
                 <div className='main-content'>
@@ -130,4 +141,17 @@ const StyledFollowButton = styled.button`
     line-height: 17px;
     font-weight: bold;
     border-radius: 5px;
+`
+const LoadingButton = styled.div`
+    width: 112px;
+    height: 31px;
+    background-color: gray;
+    color: #ffffff;
+    opacity: 0.7;
+    font-size: 17px;
+    font-weight: bold;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `

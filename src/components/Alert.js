@@ -22,6 +22,7 @@ const StyledAlert = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 10;
     .alert-box{
         display: flex;
         align-items: center;
