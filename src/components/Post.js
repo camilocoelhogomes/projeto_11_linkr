@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import isYouTube from '../services/isYouTube';
+import { isYouTube, isImg } from '../services/validations';
 import { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage } from './StyledPost';
 import { FaTrash } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
@@ -11,6 +11,7 @@ import DeletePostModal from './DeletePostModal';
 import { Edit } from 'grommet-icons';
 import useKeypress from 'react-use-keypress';
 import hashtagsToLowerCase from '../services/hashtagsMask';
+import { BACKGROUND_IMG } from '../Assets/img/img';
 
 export default function Post({ post, userInfo, getPosts }) {
     const textRef = useRef();
@@ -195,7 +196,9 @@ export default function Post({ post, userInfo, getPosts }) {
 
 
                             </div>
-                            <img alt='link' className='link-img' src={linkImage} />
+                            <div className='link-img-container'>
+                                <img alt='link' className='link-img' src={isImg({ img: linkImage }) ? linkImage : BACKGROUND_IMG} />
+                            </div>
                         </a>
                 }
             </main>

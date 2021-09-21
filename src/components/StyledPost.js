@@ -26,6 +26,7 @@ const StyledPost = styled.div`
     main {
         margin: 0 0 0 18px;
         max-width: calc(100% - 71px);
+        width: calc(100% - 71px);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -84,7 +85,11 @@ const StyledPost = styled.div`
     .link-img{
         border-radius: 0px 12px 13px 0px;
         height: 100%;
-        width: 30%;        
+        width: 100%;        
+    }
+
+    .link-img-container{
+        width: 30%;
     }
 
     .img-like{
@@ -169,6 +174,7 @@ const StyledPost = styled.div`
     main{
         margin: 0 0 0 14px;
         max-width: calc(100% - 50px);
+        width: calc(100% - 50px);
     }
 
     .youtube-video{
