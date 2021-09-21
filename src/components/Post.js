@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
 import { isYouTube, isImg } from '../services/validations';
-import { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage } from './StyledPost';
+import { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber } from './StyledPost';
 import { FaTrash } from 'react-icons/fa'
 import { Link, useHistory } from 'react-router-dom'
 import { sendLike, sendDislike, editServerPost } from '../services/API';
@@ -12,6 +12,7 @@ import useKeypress from 'react-use-keypress';
 import hashtagsToLowerCase from '../services/hashtagsMask';
 import LinkContext from '../store/LinkContext';
 import { BACKGROUND_IMG } from '../Assets/img/img';
+import SmallAlert from "./SmallAlert";
 
 export default function Post({ post, userInfo, getPosts }) {
     const textRef = useRef();
@@ -40,7 +41,6 @@ export default function Post({ post, userInfo, getPosts }) {
     const [disableEditPost, setDisableEditPost] = useState(false);
 
     const likePost = (postId) => {
-
         setLiked(true);
         const actualLikesNumber = numberOfLikes;
         setNumberOfLikes(numberOfLikes + 1);
@@ -101,7 +101,6 @@ export default function Post({ post, userInfo, getPosts }) {
         }
     }
 
-
     useEffect(isPostAlreadyLiked, [])
     useEffect(() => {
         if (isEditPost) {
@@ -111,7 +110,7 @@ export default function Post({ post, userInfo, getPosts }) {
     return (
         <StyledPost>
             {errorMessage !== "" ? (
-                <ErrorMessage><span>{errorMessage}</span></ErrorMessage>
+                <SmallAlert errorMessage={errorMessage} top={"110px"} left={"5px"}></SmallAlert>
             ) : (<></>)}
             <div className='img-like'>
                 <Link to={`/user/${user.id}`}>

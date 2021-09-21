@@ -6,10 +6,13 @@ import Post from '../../components/Post';
 import Header from '../../components/Header';
 import Trending from "../../components/Trending";
 import Alert from '../../components/Alert';
+import SmallAlert from "../../components/SmallAlert";
 
 export default function UserPosts() {
     const [posts, setPosts] = useState([]);
     const [err, setErr] = useState(null);
+    const [followErr, setFollowErr] = useState(null);
+    const [errorMessage, setErrorMessage] = useState("");
     const { id } = useParams();
     const [isFollowed, setIsFollowed] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
@@ -38,7 +41,7 @@ export default function UserPosts() {
                 setIsFollowed(false);
             }
         }).catch(err => {
-            alert("Não foi possível saber se você segue ou não o usuário! Por favor, recarregue a página.");
+            setFollowErr(true);
         })
     }
 
@@ -57,20 +60,27 @@ export default function UserPosts() {
             console.log(ans.data);
         }).catch(err => {
             setIsFollowed(false);
+            setErrorMessage("Não foi possível seguir este usuário!");
+            setTimeout(() => setErrorMessage(""), 2000);
         })
     }
 
     const unfollow = () => {
         setIsFollowed(false);
-        unfollowUser(id, userInfo.token).then(ans => {
+        unfollowUser(id, userInfo.token + 1).then(ans => {
             console.log(ans.data);
         }).catch(err => {
             setIsFollowed(true);
+            setErrorMessage("Não foi possível deixar de seguir este usuário!");
+            setTimeout(() => setErrorMessage(""), 2000);
         })
     }
 
     if (err) {
         return <Alert message={'Não foi possível carregar os posts, por favor recarregue a página'} />
+    }
+    if (followErr) {
+        return <Alert message={'Não foi possível saber se você segue ou não o usuário, por favor recarregue a página'} />
     }
 
     return (
@@ -78,6 +88,9 @@ export default function UserPosts() {
             <Header />
             <PageContainer>
                 <header>
+                {errorMessage !== "" ? (
+                    <SmallAlert errorMessage={errorMessage} top={"40px"} left={"calc(100% - 200px)"}></SmallAlert>
+                ) : (<></>)}
                     <h2>{posts.length > 0 ? posts[0].user.username : ""}'s posts</h2>
                     {isLoading ? (
                         <LoadingButton>Loading...</LoadingButton>
@@ -107,7 +120,7 @@ const PageContainer = styled.div`
     max-width: 1042px;
     position: relative;
     header {
-        width: 100vw;
+        width: 100%;
         margin: 125px 0 43px 0;
         display: flex;
         justify-content: space-between;
