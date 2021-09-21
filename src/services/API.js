@@ -16,9 +16,10 @@ const signIn = (body) => axios.post(API_URL + "/sign-in", body);
 const signUp = (body) => axios.post(API_URL + "/sign-up", body);
 const getTrendingHashtags = (token) => axios.get(`${API_URL}/hashtags/trending`, createHeaders(token));
 const sendLike = (postId, token) => axios.post(`${API_URL}/posts/${postId}/like`, {}, createHeaders(token));
-const sendDislike = (postId, token) => axios.post(`${API_URL}/posts/${postId}/dislike`, {}, createHeaders(token))
+const sendDislike = (postId, token) => axios.post(`${API_URL}/posts/${postId}/dislike`, {}, createHeaders(token));
 const publishPost = ({ token, body }) => axios.post(`${API_URL}/posts`, body, createHeaders(token));
-const editServerPost = ({ token, id, data }) => axios.put(`${API_URL}/posts/${id}`, data, createHeaders(token))
+const editServerPost = ({ token, id, data }) => axios.put(`${API_URL}/posts/${id}`, data, createHeaders(token));
+const sharePost = ({ token, postId }) => axios.post(`${API_URL}/posts/${postId}/share`, {}, createHeaders(token));
 
 export {
     signUp,
@@ -33,4 +34,5 @@ export {
     sendDislike,
     publishPost,
     editServerPost,
+    sharePost,
 };

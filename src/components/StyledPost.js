@@ -16,6 +16,7 @@ const StyledPost = styled.div`
     white-space: pre-wrap;
     overflow: clip;
     position: relative;
+    margin-bottom: 16px;
 
     h4{
         width: 100%;
@@ -224,4 +225,51 @@ const ErrorMessage = styled.span`
     }
 `
 
-export { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage };
+const StyledRepostBox = styled.div`
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+
+    .repost {
+        font-size: 30px;
+        color: #FFFFFF;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+
+    p {
+        font-size: 11px;
+    }
+`;
+
+const StyledRepostInfo = styled.div`
+    height: 63px;
+    background-color: #1E1E1E;
+    border-radius: 16px;
+    width: 611px;
+    box-sizing: border-box;
+    padding: 5px 20px;
+    display: flex;
+    margin-bottom: -30px;
+    font-size: 25px;
+    color: #FFFFFF;
+
+    p {
+        margin-left: 8px;
+        margin-top: 6px;
+        font-size: 13px;
+        font-family: 'Lato', sans-serif;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    @media(max-width: 900px) {
+        width: 100%;
+    }
+`;
+
+export { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage, StyledRepostBox, StyledRepostInfo };
