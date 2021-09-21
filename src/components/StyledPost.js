@@ -264,6 +264,10 @@ const StyledRepostInfo = styled.div`
         font-size: 13px;
         font-family: 'Lato', sans-serif;
     }
+
+    @media(max-width: 900px) {
+        width: 100%;
+    }
 `;
 
 export { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage, StyledRepostBox, StyledRepostInfo };
