@@ -15,6 +15,7 @@ const PageContainer = styled.div`
     .posts{
         display: flex;
         flex-direction: column;
+        gap: 13px;
     }
     .main-content{
         display: flex;
