@@ -127,9 +127,8 @@ const StyledPost = styled.div`
     .trashButton{
         border:none;
         background:none;
-        :hover{
-            cursor: pointer;
-        }
+        cursor: pointer;
+
     }
 
     textarea {

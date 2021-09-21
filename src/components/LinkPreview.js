@@ -66,9 +66,7 @@ const StyledLinkPreview = styled.div`
         display: flex;
         align-items: center;
         justify-content: center;
-        &:hover{
-            cursor: pointer;
-        }
+        cursor: pointer;
     }
 
     .close-link-preview{
