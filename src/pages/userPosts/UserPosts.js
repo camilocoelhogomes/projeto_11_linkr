@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { getUserPosts, getFollowedUsers, followUser, unfollowUser } from "../../services/API";
 import { useParams, useHistory } from "react-router-dom";
-import styled from "styled-components";
 import Post from '../../components/Post';
 import Header from '../../components/Header';
 import Trending from "../../components/Trending";
 import Alert from '../../components/Alert';
 import SmallAlert from "../../components/SmallAlert";
+import { PageContainer } from "../shared/styled-components/PageContainer";
 
 export default function UserPosts() {
     const [posts, setPosts] = useState([]);
+    const [username, setUsername] = useState("");
     const [err, setErr] = useState(null);
     const [followErr, setFollowErr] = useState(null);
     const [errorMessage, setErrorMessage] = useState("");
@@ -25,8 +26,13 @@ export default function UserPosts() {
             history.push('/my-posts');
         } else {
             getUserPosts({token: userInfo.token, id})
-            .then(res => {
-                setPosts(res.data.posts);
+            .then( res => {
+                setPosts(res.data.posts)
+                if (!!res.data.posts[0].repostedBy) {
+                    setUsername(res.data.posts[0].repostedBy.username);
+                } else {
+                    setUsername(res.data.posts[0].user.username);
+                }
             })
             .catch(() => setErr(true));
         }
@@ -52,7 +58,7 @@ export default function UserPosts() {
         return () => {
             clearInterval(intervalId);
         }
-    }, []);
+    }, [id]);
 
     const follow = () => {
         setIsFollowed(true);
@@ -91,7 +97,7 @@ export default function UserPosts() {
                 {errorMessage !== "" ? (
                     <SmallAlert errorMessage={errorMessage} top={"40px"} left={"calc(100% - 200px)"}></SmallAlert>
                 ) : (<></>)}
-                    <h2>{posts.length > 0 ? posts[0].user.username : ""}'s posts</h2>
+                    <h2>{username}'s posts</h2>
                     {isLoading ? (
                         <LoadingButton>Loading...</LoadingButton>
                     ) : (
@@ -105,7 +111,7 @@ export default function UserPosts() {
                 <div className='main-content'>
                     <div className='posts'>
                         {posts.length === 0 ? <h2>Nenhum post encontrado</h2> :
-                            posts.map(post => <Post key={post.id} post={post} userInfo={userInfo} getPosts={getPosts}/>)
+                            posts.map((post, index) => <Post key={index} post={post} userInfo={userInfo} getPosts={getPosts}/>)
                         }
                     </div>
                     <Trending className='trending' />
