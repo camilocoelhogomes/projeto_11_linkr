@@ -13,7 +13,9 @@ export default function MyPosts() {
 
     const getPosts = () => {
         getUserPosts({token: userInfo.token, id: userInfo.user.id})
-            .then( res => setPosts(res.data.posts))
+            .then( res => {
+                setPosts(res.data.posts);
+            })
             .catch(() => setErr(true));
     }
 

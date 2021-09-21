@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { deletePost } from '../services/API';
 
 Modal.setAppElement(document.getElementById('root'));
-export default function DeletePostModal({ state, postId, getPosts }) {
+export default function DeletePostModal({ state, postId }) {
     const { modalIsOpen, setModalIsOpen } = state;
     const [isLoading, setIsLoading] = useState(false);
 
@@ -42,7 +42,7 @@ export default function DeletePostModal({ state, postId, getPosts }) {
         request.then(res => {
             setModalIsOpen(false);
             setIsLoading(false);
-            getPosts();
+            window.location.reload();
         });
         request.catch(err => errorAlert(err.response));
     }

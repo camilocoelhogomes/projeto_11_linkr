@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { sharePost } from '../services/API';
 
 Modal.setAppElement(document.getElementById('root'));
-export default function RepostModal({ state, postId, getPosts }) {
+export default function RepostModal({ state, postId }) {
     const { repostModal, setRepostModal } = state;
     const [isLoading, setIsLoading] = useState(false);
 
@@ -32,13 +32,13 @@ export default function RepostModal({ state, postId, getPosts }) {
             .then(res => {
                 setRepostModal(false);
                 setIsLoading(false);
-                getPosts();
+                window.location.reload();
             })
-            .catch(() => alert("Unable to share post!"));
+            .catch(() => alert("Unable to share post!"))
     }
 
     return (
-        <Modal isOpen={repostModal} style={customStyles} >
+        <Modal isOpen={repostModal} style={customStyles}>
             <strong><Text>Do you want to re-post this link?</Text></strong>
             <Options>
                 {isLoading ? <StyledLoadingText>Loading...</StyledLoadingText> :
@@ -74,6 +74,7 @@ const Options = styled.div`
     width: 300px;
     justify-content:space-between;
     margin:0 auto;
+
     button{
         width: 134px;
         height: 37px;

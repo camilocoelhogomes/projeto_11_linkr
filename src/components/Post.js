@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import isYouTube from '../services/isYouTube';
-import { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage, RepostInfo, RepostBox } from './StyledPost';
+import { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage, StyledRepostInfo, StyledRepostBox } from './StyledPost';
 import { FaTrash, FaRetweet } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { sendLike, sendDislike, editServerPost, sharePost } from '../services/API';
@@ -111,10 +111,10 @@ export default function Post({ post, userInfo, getPosts }) {
     return (
         <>
         {!!repostedBy  
-            ?   <RepostInfo>
+            ?   <StyledRepostInfo>
                     <FaRetweet className="repost"/>
                     <p>Re-posted by {repostedBy.id === userInfo.user.id ? "you" : repostedBy.username}</p>
-                </RepostInfo>
+                </StyledRepostInfo>
             :   <></>
         }
         <StyledPost>
@@ -159,10 +159,10 @@ export default function Post({ post, userInfo, getPosts }) {
                         </>
                     )}
                 </LikesBox>
-                <RepostBox>
+                <StyledRepostBox>
                     <FaRetweet className="repost" onClick={() => setRepostModal(true)}/>
                     <p>{repostCount} re-posts</p>
-                </RepostBox>
+                </StyledRepostBox>
             </div>
             <main>
                 <h4>{user.username}</h4>
@@ -223,8 +223,8 @@ export default function Post({ post, userInfo, getPosts }) {
                 :
                 ""
             }
-            <DeletePostModal state={{ modalIsOpen, setModalIsOpen }} postId={id} getPosts={getPosts} />
-            <RepostModal state={{ repostModal, setRepostModal }} postId={id} getPosts={getPosts} />
+            <DeletePostModal state={{ modalIsOpen, setModalIsOpen }} postId={id} />
+            <RepostModal state={{ repostModal, setRepostModal }} postId={id} />
         </StyledPost>
         </>
         )

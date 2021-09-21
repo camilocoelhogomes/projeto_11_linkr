@@ -216,7 +216,7 @@ const ErrorMessage = styled.span`
     }
 `
 
-const RepostBox = styled.div`
+const StyledRepostBox = styled.div`
     width: fit-content;
     display: flex;
     flex-direction: column;
@@ -236,7 +236,7 @@ const RepostBox = styled.div`
     }
 `;
 
-const RepostInfo = styled.div`
+const StyledRepostInfo = styled.div`
     height: 63px;
     background-color: #1E1E1E;
     border-radius: 16px;
@@ -258,4 +258,4 @@ const RepostInfo = styled.div`
     }
 `;
 
-export { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage, RepostBox, RepostInfo };
+export { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage, StyledRepostBox, StyledRepostInfo };
