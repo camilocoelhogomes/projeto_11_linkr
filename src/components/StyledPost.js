@@ -30,6 +30,7 @@ const StyledPost = styled.div`
         flex-direction: column;
         justify-content: space-between;
         box-sizing: border-box;
+        overflow-wrap: break-word;
     }
 
     .paragraph{
@@ -252,8 +253,6 @@ const StyledRepostInfo = styled.div`
     box-sizing: border-box;
     padding: 5px 20px;
     display: flex;
-    white-space: pre-wrap;
-    overflow: clip;
     margin-bottom: -30px;
     font-size: 25px;
     color: #FFFFFF;
@@ -263,6 +262,9 @@ const StyledRepostInfo = styled.div`
         margin-top: 6px;
         font-size: 13px;
         font-family: 'Lato', sans-serif;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
     }
 
     @media(max-width: 900px) {

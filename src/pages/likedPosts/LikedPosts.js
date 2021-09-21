@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { getLikedPosts } from "../../services/API";
-import styled from "styled-components";
 import Post from '../../components/Post';
 import Header from '../../components/Header';
 import Trending from "../../components/Trending";
 import Alert from "../../components/Alert";
+import { PageContainer } from "../shared/styled-components/PageContainer";
 
 export default function LikedPosts() {
     const [posts, setPosts] = useState([]);
@@ -48,28 +48,3 @@ export default function LikedPosts() {
         </>
     )
 }
-
-const PageContainer = styled.div`
-    margin: 0 auto;
-    max-width: 1042px;
-    position: relative;
-    header {
-        margin: 125px 0 43px 0;
-    }
-    .posts{
-        display: flex;
-        flex-direction: column;
-    }
-
-    .main-content{
-        display: flex;
-        justify-content: space-between;
-        position: relative;
-    }
-
-    @media(max-width: 900px){
-        .posts{
-            width: 100%;
-        }
-    }
-`;
