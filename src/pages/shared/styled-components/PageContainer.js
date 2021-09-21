@@ -6,6 +6,7 @@ const PageContainer = styled.div`
     position: relative;
     header {
         margin: 125px 0 43px 0;
+        overflow-wrap:break-word;
     }
     .posts{
         display: flex;
