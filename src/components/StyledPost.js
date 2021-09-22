@@ -233,15 +233,17 @@ const StyledRepostBox = styled.div`
     justify-content: center;
     gap: 2px;
 
-    .repost {
+    .icon {
         font-size: 30px;
         color: #FFFFFF;
-        margin-top: 10px;
+        margin-top: 15px;
         cursor: pointer;
     }
 
     p {
         font-size: 11px;
+        color: #FFFFFF;
+        white-space: nowrap;
     }
 `;
 
