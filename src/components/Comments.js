@@ -74,6 +74,7 @@ export default function Comments({userInfo, postId, authorId, getPosts}) {
                     placeholder="write a comment..."
                     value={userComment}
                     onChange={e => setUserComment(e.target.value)}
+                    required
                 />
                 <IoPaperPlaneOutline className="icon" onClick={sendComment}/>
             </CommentBar>
