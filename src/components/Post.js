@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
-import { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage, StyledRepostInfo, StyledRepostBox } from './StyledPost';
-import { FaTrash, FaRetweet } from 'react-icons/fa'
+import { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, StyledRepostInfo, StyledRepostBox } from './StyledPost';
+import { FaTrash, FaRetweet } from 'react-icons/fa';
 import { sendLike, sendDislike, editServerPost } from '../services/API';
 import { isYouTube, isImg } from '../services/validations';
 import { Link, useHistory } from 'react-router-dom'
@@ -13,6 +13,7 @@ import useKeypress from 'react-use-keypress';
 import hashtagsToLowerCase from '../services/hashtagsMask';
 import LinkContext from '../store/LinkContext';
 import { BACKGROUND_IMG } from '../Assets/img/img';
+import SmallAlert from "./SmallAlert";
 
 export default function Post({ post, userInfo, getPosts }) {
     const textRef = useRef();
@@ -33,7 +34,6 @@ export default function Post({ post, userInfo, getPosts }) {
         repostCount,
         repostedBy,
     } = post;
-
     const isCurrentUser = Boolean(userInfo.user.id === user.id);
     const [liked, setLiked] = useState(false);
     const [numberOfLikes, setNumberOfLikes] = useState(likes.length);
@@ -45,7 +45,6 @@ export default function Post({ post, userInfo, getPosts }) {
     const [disableEditPost, setDisableEditPost] = useState(false);
 
     const likePost = (postId) => {
-
         setLiked(true);
         const actualLikesNumber = numberOfLikes;
         setNumberOfLikes(numberOfLikes + 1);
@@ -128,7 +127,7 @@ export default function Post({ post, userInfo, getPosts }) {
             }
             <StyledPost>
                 {errorMessage !== "" ? (
-                    <ErrorMessage><span>{errorMessage}</span></ErrorMessage>
+                    <SmallAlert errorMessage={errorMessage} top={"110px"} left={"5px"}></SmallAlert>
                 ) : (<></>)}
                 <div className='img-like'>
                     <Link to={`/user/${user.id}`}>

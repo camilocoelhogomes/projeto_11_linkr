@@ -10,9 +10,7 @@ const StyledTimeLine = styled.div`
     .posts{
         display: flex;
         flex-direction: column;
-        
     }
-
     .main-content{
         display: flex;
         justify-content: space-between;
