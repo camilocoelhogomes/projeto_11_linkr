@@ -6,13 +6,26 @@ import { Link } from 'react-router-dom';
 
 export default function SearchInput() {
     const [usersLists, setUsersLists] = useState([]);
+    const [followedList, setFollowedList] = useState([]);
     const token = JSON.parse(localStorage.getItem("user")).token;
+    
+    getFollowedUsers(token).then(res => {
+        const idList = [];
+        res.data.users.forEach(user => idList.push(user.id))
+        setFollowedList(idList)
+    });
 
     function search(value) {
         if (!value) setUsersLists([]);
         const username = value;
-        getFollowedUsers(token).then(res => console.log(res)).catch(err => console.log(err));
-        searchUsers({ token, username }).then(res => setUsersLists(res.data.users));
+        searchUsers({ token, username }).then(res => {
+            const users = res.data.users;
+            users.sort((a, b) => {
+                if (followedList.includes(a.id)) return -1;
+                return 1;
+            });
+            setUsersLists(users);
+        });
     }
 
     return (
@@ -30,6 +43,9 @@ export default function SearchInput() {
                         <li>
                             <img src={avatar} alt={"avatar"} />
                             <h1>{username}</h1>
+                            {followedList.includes(id) ?
+                            <span>• following</span> : ""
+                            }
                         </li>
                     </Link>
                 ))}
@@ -50,7 +66,7 @@ const StyledSearchBox = styled.div`
         font-size: 19px;
         font-family: 'lato', sans-serif;
         border:none;
-        padding-left:16px;
+        padding:16px;
         z-index:1;
     }
     ul{
@@ -60,24 +76,31 @@ const StyledSearchBox = styled.div`
         margin-top:-8px;
     }
     li{
+        overflow: hidden;
         display: flex;
-        margin: 16px 0 0 16px;
+        margin: 16px;
         align-items: center;
-        :last-child{
-            margin-bottom:16px;
-        }
         h1{
             font-size: 19px;
             font-family: 'lato', sans-serif;
             color: #515151;
             margin-left:16px;
             margin-right:8px;
+            width:50%;
+            overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         }
         img{
             width: 39px;
             height: 39px;
             border-radius:50%;
             
+        }
+        span{
+            font-size: 19px;
+            font-family: 'lato', sans-serif;
+            color: #C5C5C5;
         }
     }
 `
