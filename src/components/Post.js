@@ -244,7 +244,7 @@ export default function Post({ post, userInfo, getPosts }) {
                 <DeletePostModal state={{ modalIsOpen, setModalIsOpen }} postId={id} />
                 <RepostModal state={{ repostModal, setRepostModal }} postId={id} />
             </StyledPost>
-            {isCommentSelected ? <Comments /> : ""}
+            {isCommentSelected ? <Comments userInfo={userInfo} postId={id}/> : ""}
         </>
         )
 }

@@ -20,6 +20,8 @@ const sendDislike = (postId, token) => axios.post(`${API_URL}/posts/${postId}/di
 const publishPost = ({ token, body }) => axios.post(`${API_URL}/posts`, body, createHeaders(token));
 const editServerPost = ({ token, id, data }) => axios.put(`${API_URL}/posts/${id}`, data, createHeaders(token));
 const sharePost = ({ token, postId }) => axios.post(`${API_URL}/posts/${postId}/share`, {}, createHeaders(token));
+const getComments = ({ token, postId }) => axios.get(`${API_URL}/posts/${postId}/comments`, createHeaders(token));
+const postComment = ({ token, body, postId }) => axios.post(`${API_URL}/posts/${postId}/comment`, body , createHeaders(token));
 
 export {
     signUp,
@@ -35,4 +37,6 @@ export {
     publishPost,
     editServerPost,
     sharePost,
+    getComments,
+    postComment,
 };

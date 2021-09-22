@@ -1,28 +1,57 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { IoPaperPlaneOutline } from 'react-icons/io5'
+import { IoPaperPlaneOutline } from 'react-icons/io5';
+import { getComments, postComment } from "../services/API";
 
-export default function Comments() {
+export default function Comments({userInfo, postId}) {
+    const [comments, setComments] = useState([]);
+    const [userComment, setUserComment] = useState("");
+    
+    const loadComments = () => {
+        getComments({token: userInfo.token, postId})
+            .then(res => {
+                setComments(res.data.comments)
+                
+                console.log(res.data);
+            });
+    }
+
+    const sendComment = (e) => {
+        e.preventDefault();
+        postComment({token: userInfo.token, body: {"text": userComment}, postId})
+            .then(res => {
+                loadComments();
+                setUserComment("");
+            });
+    }
+
+    useEffect(loadComments, []);
+
     return(
         <StyledCommentSection>
-            <Comment>
-                <img src="http://pm1.narvii.com/6434/36a290a925f1ae788e0e545f3e8bfbafcad7e4ff_00.jpg" alt="avatar" />
-                <UserInfo>
-                    <h4>João Avatares <span>• following</span></h4>
-                    <p>Adorei esse post galerinha!</p>
-                </UserInfo>
-            </Comment>
-            <Comment>
-                <img src="http://pm1.narvii.com/6434/36a290a925f1ae788e0e545f3e8bfbafcad7e4ff_00.jpg" alt="avatar" />
-                <UserInfo>
-                    <h4>João Avatares <span>• following</span></h4>
-                    <p>Adorei esse post galerinha!</p>
-                </UserInfo>
-            </Comment>
-            <CommentBar>
-                <img src="http://pm1.narvii.com/6434/36a290a925f1ae788e0e545f3e8bfbafcad7e4ff_00.jpg" alt="avatar" />
-                <input placeholder="write a comment..."/>
-                <IoPaperPlaneOutline className="icon"/>
+            {comments.length === 0 
+            ? ""
+            :  comments.map(comment => {
+                    return (
+                        <Comment>
+                            <img src={comment.user.avatar} alt="avatar" />
+                            <UserInfo>
+                                <h4>{comment.user.username} <span>• following</span></h4>
+                                <p>{comment.text}</p>
+                            </UserInfo>
+                        </Comment>
+                    );
+                })
+            } 
+            <CommentBar onSubmit={sendComment}>
+                <img src={userInfo.user.avatar} alt="avatar" />
+                <input 
+                    type="text"
+                    placeholder="write a comment..."
+                    value={userComment}
+                    onChange={e => setUserComment(e.target.value)}
+                />
+                <IoPaperPlaneOutline className="icon" onClick={sendComment}/>
             </CommentBar>
         </StyledCommentSection>
     );
