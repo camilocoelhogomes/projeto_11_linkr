@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { IoPaperPlaneOutline } from 'react-icons/io5';
-import { getComments, postComment } from "../services/API";
+import { getComments, postComment, getFollowedUsers } from "../services/API";
+import { Link } from "react-router-dom";
 
-export default function Comments({userInfo, postId}) {
+export default function Comments({userInfo, postId, authorId}) {
     const [comments, setComments] = useState([]);
     const [userComment, setUserComment] = useState("");
+    const [followedUsers, setFollowedUsers] = useState([]);
+
+    const listFollowedUsers = () => {
+        getFollowedUsers({token: userInfo.token})
+            .then(res => setFollowedUsers(res.data.users));
+    }
     
     const loadComments = () => {
+        listFollowedUsers();
         getComments({token: userInfo.token, postId})
             .then(res => {
                 setComments(res.data.comments)
@@ -25,26 +33,45 @@ export default function Comments({userInfo, postId}) {
             });
     }
 
+    const userType = (userId) => {
+        if (userId === authorId) {
+            return " • post's author";
+        }
+        if (followedUsers.find(user => user.id === userId)) {
+            return " • following";
+        } 
+        return "";
+    }
+
     useEffect(loadComments, []);
 
     return(
         <StyledCommentSection>
             {comments.length === 0 
-            ? ""
-            :  comments.map(comment => {
-                    return (
-                        <Comment>
-                            <img src={comment.user.avatar} alt="avatar" />
-                            <UserInfo>
-                                <h4>{comment.user.username} <span>• following</span></h4>
-                                <p>{comment.text}</p>
-                            </UserInfo>
-                        </Comment>
-                    );
-                })
+                ? ""
+                :  comments.map(comment => {
+                        return (
+                            <Comment>
+                                <Link to={`/user/${comment.user.id}`}>
+                                    <img src={comment.user.avatar} alt="avatar" />
+                                </Link>
+                                <UserInfo>
+                                    <h4>
+                                        <Link to={`/user/${comment.user.id}`}>
+                                            {comment.user.username}
+                                        </Link> 
+                                        <span>{userType(comment.user.id)}</span>
+                                    </h4>
+                                    <p>{comment.text}</p>
+                                </UserInfo>
+                            </Comment>
+                        );
+                    })
             } 
             <CommentBar onSubmit={sendComment}>
-                <img src={userInfo.user.avatar} alt="avatar" />
+                <Link to='/my-posts'>
+                    <img src={userInfo.user.avatar} alt="avatar" />
+                </Link>
                 <input 
                     type="text"
                     placeholder="write a comment..."
@@ -84,6 +111,7 @@ const Comment = styled.div`
         height: 39px;
         border-radius: 25px;
         margin-right: 14px;
+        cursor: pointer;
     }
 `;
 
@@ -93,11 +121,14 @@ const UserInfo = styled.div`
         font-weight: 700;
         color: #F3F3F3;
         font-size: 14px;
+        cursor: pointer;
+        word-break: break-all;
     }
 
     span {
         font-weight: 400;
         color: #565656;
+        cursor: initial;
     }
 
     p {
@@ -105,6 +136,7 @@ const UserInfo = styled.div`
         font-size: 14px;
         color: #ACACAC;
         margin-top: 8px;
+        word-break: break-all;
     }
 `;
 
@@ -120,6 +152,7 @@ const CommentBar = styled.form`
         height: 39px;
         border-radius: 25px;
         margin-right: 14px;
+        cursor: pointer;
     }
 
     input {

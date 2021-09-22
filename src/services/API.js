@@ -22,6 +22,7 @@ const editServerPost = ({ token, id, data }) => axios.put(`${API_URL}/posts/${id
 const sharePost = ({ token, postId }) => axios.post(`${API_URL}/posts/${postId}/share`, {}, createHeaders(token));
 const getComments = ({ token, postId }) => axios.get(`${API_URL}/posts/${postId}/comments`, createHeaders(token));
 const postComment = ({ token, body, postId }) => axios.post(`${API_URL}/posts/${postId}/comment`, body , createHeaders(token));
+const getFollowedUsers = ({ token }) => axios.get(`${API_URL}/users/follows`, createHeaders(token));
 
 export {
     signUp,
@@ -39,4 +40,5 @@ export {
     sharePost,
     getComments,
     postComment,
+    getFollowedUsers,
 };
