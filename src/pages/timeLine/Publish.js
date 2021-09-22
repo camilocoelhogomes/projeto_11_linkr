@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { publishPost } from "../../services/API";
 import hashtagsToLowerCase from "../../services/hashtagsMask";
+import { VscLocation } from "react-icons/vsc";
 
 export default function Publish({ loadPosts }) {
     const [text, setText] = useState("");
     const [link, setLink] = useState("");
     const [loading, setLoading] = useState(false);
     const userInfo = JSON.parse(localStorage.getItem("user"));
+    const [isLocation, setIsLocation] = useState(false);
 
     const publish = (e) => {
         e.preventDefault();
@@ -30,7 +32,7 @@ export default function Publish({ loadPosts }) {
     return (
         <PublishContainer>
             <img src={userInfo.user.avatar} alt="avatar" />
-            <MessageBox loading={loading}>
+            <MessageBox loading={loading} isLocation={isLocation}>
                 <h2>O que você tem pra favoritar hoje?</h2>
                 <form onSubmit={publish}>
                     <input
@@ -47,12 +49,17 @@ export default function Publish({ loadPosts }) {
                         onChange={e => setText(e.target.value)}
                     >
                     </textarea>
-                    <button type="submit">
-                        {loading
-                            ? "Publishing..."
-                            : "Publish"
-                        }
-                    </button>
+                    <div className='buttons'>
+                        <button className='location'>
+                            <VscLocation size='16px' />{isLocation ? 'Localização Ativada' : 'Localização Desativada'}
+                        </button>
+                        <button className='publish' type="submit">
+                            {loading
+                                ? "Publishing..."
+                                : "Publish"
+                            }
+                        </button>
+                    </div>
                 </form>
             </MessageBox>
         </PublishContainer>
@@ -153,11 +160,28 @@ const MessageBox = styled.div`
         }
     }
 
-    button {
-        width: 112px;
-        height: 31px;
+    .buttons{
+        width: 100%;
         position: absolute;
         right: 0;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .location{
+        border: none;
+        background-color: inherit;
+        font-family: 'Lato';
+        font-size: 13px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color:${({ isLocation }) => isLocation ? '#238700' : '#949494'};
+    }
+
+    .publish {
+        width: 112px;
+        height: 31px;
         background-color: #1877F2;
         border-radius: 5px;
         border: none;
