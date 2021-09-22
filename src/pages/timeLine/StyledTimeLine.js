@@ -10,6 +10,9 @@ const StyledTimeLine = styled.div`
     .posts{
         display: flex;
         flex-direction: column;
+        h3 {
+            margin-bottom: 15px;
+        }
     }
     .main-content{
         display: flex;
