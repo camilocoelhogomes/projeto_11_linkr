@@ -11,6 +11,12 @@ const PageContainer = styled.div`
         justify-content: space-between;
         align-items: center;
         overflow-wrap:break-word;
+        h2{
+            width: 85%;
+            justify-content: space-between;
+            align-items: center;
+            overflow-wrap:break-word;
+        }
     }
     .posts{
         display: flex;
@@ -29,4 +35,4 @@ const PageContainer = styled.div`
     }
 `;
 
-export {PageContainer}
+export { PageContainer }
