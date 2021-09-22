@@ -2,6 +2,7 @@ import { DebounceInput } from 'react-debounce-input';
 import React, { useState } from "react";
 import { searchUsers } from '../services/API';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export default function SearchInput() {
     const [usersLists, setUsersLists] = useState([]);
@@ -23,11 +24,13 @@ export default function SearchInput() {
                 onChange={event => search(event.target.value)}
             />
             <ul>
-                {usersLists.map((user, i) => (
-                    <li key={i} >
-                        <img src={user.avatar} alt={"avatar"} />
-                        <h1>{user.username}</h1>
-                    </li>
+                {usersLists.map(({ id, avatar, username }, i) => (
+                    <Link to={`/user/${id}`}>
+                        <li key={i} >
+                            <img src={avatar} alt={"avatar"} />
+                            <h1>{username}</h1>
+                        </li>
+                    </Link>
                 ))}
             </ul>
         </StyledSearchBox>
@@ -47,19 +50,21 @@ const StyledSearchBox = styled.div`
         font-family: 'lato', sans-serif;
         border:none;
         padding-left:16px;
+        z-index:1;
     }
     ul{
         width: 563px;
         background: #E7E7E7;
         border-radius: 0 0 8px 8px;
         margin-top:-8px;
-        z-index:-1;
-        padding-bottom:16px;
     }
     li{
         display: flex;
         margin: 16px 0 0 16px;
         align-items: center;
+        :last-child{
+            margin-bottom:16px;
+        }
         h1{
             font-size: 19px;
             font-family: 'lato', sans-serif;
