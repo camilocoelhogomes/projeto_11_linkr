@@ -1,11 +1,16 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
-const StyledTimeLine = styled.div`
+const PageContainer = styled.div`
     margin: 0 auto;
     max-width: 1042px;
     position: relative;
     header {
+        width: 100%;
         margin: 125px 0 43px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        overflow-wrap:break-word;
     }
     .posts{
         display: flex;
@@ -22,7 +27,6 @@ const StyledTimeLine = styled.div`
             width: 100%;
         }
     }
-
 `;
 
-export default StyledTimeLine;
+export {PageContainer}

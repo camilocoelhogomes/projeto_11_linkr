@@ -1,6 +1,6 @@
 import { DebounceInput } from 'react-debounce-input';
 import React, { useState } from "react";
-import { searchUsers } from '../services/API';
+import { searchUsers, getFollowedUsers } from '../services/API';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -11,6 +11,7 @@ export default function SearchInput() {
     function search(value) {
         if (!value) setUsersLists([]);
         const username = value;
+        getFollowedUsers(token).then(res => console.log(res)).catch(err => console.log(err));
         searchUsers({ token, username }).then(res => setUsersLists(res.data.users));
     }
 
@@ -25,8 +26,8 @@ export default function SearchInput() {
             />
             <ul>
                 {usersLists.map(({ id, avatar, username }, i) => (
-                    <Link to={`/user/${id}`}>
-                        <li key={i} >
+                    <Link to={`/user/${id}`} key={i} >
+                        <li>
                             <img src={avatar} alt={"avatar"} />
                             <h1>{username}</h1>
                         </li>

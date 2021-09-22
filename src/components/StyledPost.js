@@ -4,9 +4,7 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 const StyledPost = styled.div`
 
     span {
-        :hover{
-            cursor: pointer;
-        }
+        cursor: pointer;
     }
 
     background-color: #171717;
@@ -18,6 +16,7 @@ const StyledPost = styled.div`
     white-space: pre-wrap;
     overflow: clip;
     position: relative;
+    margin-bottom: 16px;
 
     h4{
         width: 100%;
@@ -26,10 +25,12 @@ const StyledPost = styled.div`
     main {
         margin: 0 0 0 18px;
         max-width: calc(100% - 71px);
+        width: calc(100% - 71px);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         box-sizing: border-box;
+        overflow-wrap: break-word;
     }
 
     .paragraph{
@@ -52,6 +53,8 @@ const StyledPost = styled.div`
         overflow: clip;
         text-decoration: none;
         box-sizing: border-box;
+        cursor: pointer;
+
     }
 
     .link-text-info{
@@ -84,7 +87,11 @@ const StyledPost = styled.div`
     .link-img{
         border-radius: 0px 12px 13px 0px;
         height: 100%;
-        width: 30%;        
+        width: 100%;        
+    }
+
+    .link-img-container{
+        width: 30%;
     }
 
     .img-like{
@@ -122,9 +129,8 @@ const StyledPost = styled.div`
     .trashButton{
         border:none;
         background:none;
-        :hover{
-            cursor: pointer;
-        }
+        cursor: pointer;
+
     }
 
     textarea {
@@ -169,6 +175,7 @@ const StyledPost = styled.div`
     main{
         margin: 0 0 0 14px;
         max-width: calc(100% - 50px);
+        width: calc(100% - 50px);
     }
 
     .youtube-video{
@@ -189,30 +196,60 @@ const LikesBox = styled.div`
 const LikedHeart = styled(AiFillHeart)`
     font-size: 30px;
     color: #AC0000;
+    cursor: pointer;
 `
 const EmptyHeart = styled(AiOutlineHeart)`
     font-size: 30px;
     color: #FFFFFF;
+    cursor: pointer;
 `
 const LikesNumber = styled.p`
     font-size: 11px;
 `
-const ErrorMessage = styled.span`
-    position: absolute;
-    height: 30px;
-    background-color: #000000;
-    border-radius: 5px;
-    border: 1px solid #ffffff;
-    left: 5px;
-    top: 110px;
+const StyledRepostBox = styled.div`
+    width: fit-content;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    padding: 0 10px;
-    span {
-        color: #f97a7a;
-        font-size: 14px;
+    justify-content: center;
+    gap: 2px;
+
+    .repost {
+        font-size: 30px;
+        color: #FFFFFF;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+
+    p {
+        font-size: 11px;
     }
 `
+const StyledRepostInfo = styled.div`
+    height: 63px;
+    background-color: #1E1E1E;
+    border-radius: 16px;
+    width: 611px;
+    box-sizing: border-box;
+    padding: 5px 20px;
+    display: flex;
+    margin-bottom: -30px;
+    font-size: 25px;
+    color: #FFFFFF;
 
-export { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage };
+    p {
+        margin-left: 8px;
+        margin-top: 6px;
+        font-size: 13px;
+        font-family: 'Lato', sans-serif;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    @media(max-width: 900px) {
+        width: 100%;
+    }
+`;
+
+export { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, StyledRepostBox, StyledRepostInfo };

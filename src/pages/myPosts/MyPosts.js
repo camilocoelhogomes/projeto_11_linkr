@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getUserPosts } from "../../services/API";
-import styled from "styled-components";
+import { PageContainer } from "../shared/styled-components/PageContainer";
 import Post from '../../components/Post';
 import Header from '../../components/Header';
 import Trending from "../../components/Trending";
@@ -12,12 +12,18 @@ export default function MyPosts() {
     const userInfo = JSON.parse(localStorage.getItem("user"));
 
     const getPosts = () => {
-        getUserPosts({token: userInfo.token, id: userInfo.user.id})
-            .then( res => setPosts(res.data.posts))
+        getUserPosts({ token: userInfo.token, id: userInfo.user.id })
+            .then(res => setPosts(res.data.posts))
             .catch(() => setErr(true));
     }
 
-    useEffect(getPosts, []);
+    useEffect(() => {
+        getPosts();
+        const intervalId =  setInterval(getPosts, 15000);
+        return () => {
+            clearInterval(intervalId);
+        }
+    }, []);
 
     if (err) {
         return <Alert message={'Não foi possível carregar os posts, por favor recarregue a página'} />
@@ -33,7 +39,7 @@ export default function MyPosts() {
                 <div className='main-content'>
                     <div className='posts'>
                         {posts.length === 0 ? <h2>Nenhum post encontrado</h2> :
-                            posts.map(post => <Post key={post.id} post={post} userInfo={userInfo} getPosts={getPosts}/>)
+                            posts.map(post => <Post key={post.id} post={post} userInfo={userInfo} getPosts={getPosts} />)
                         }
                     </div>
                     <Trending className='trending' />
@@ -42,29 +48,3 @@ export default function MyPosts() {
         </>
     );
 }
-
-const PageContainer = styled.div`
-    margin: 0 auto;
-    max-width: 1042px;
-    position: relative;
-    header {
-        margin: 125px 0 43px 0;
-    }
-    .posts{
-        display: flex;
-        flex-direction: column;
-        gap: 16px; 
-    }
-
-    .main-content{
-        display: flex;
-        justify-content: space-between;
-        position: relative;
-    }
-
-    @media(max-width: 900px){
-        .posts{
-            width: 100%;
-        }
-    }
-`;
