@@ -202,29 +202,10 @@ const EmptyHeart = styled(AiOutlineHeart)`
     font-size: 30px;
     color: #FFFFFF;
     cursor: pointer;
-
 `
 const LikesNumber = styled.p`
     font-size: 11px;
 `
-const ErrorMessage = styled.span`
-    position: absolute;
-    height: 30px;
-    background-color: #000000;
-    border-radius: 5px;
-    border: 1px solid #ffffff;
-    left: 5px;
-    top: 110px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 10px;
-    span {
-        color: #f97a7a;
-        font-size: 14px;
-    }
-`
-
 const StyledRepostBox = styled.div`
     width: fit-content;
     display: flex;
@@ -245,8 +226,7 @@ const StyledRepostBox = styled.div`
         color: #FFFFFF;
         white-space: nowrap;
     }
-`;
-
+`
 const StyledRepostInfo = styled.div`
     height: 63px;
     background-color: #1E1E1E;
@@ -274,4 +254,4 @@ const StyledRepostInfo = styled.div`
     }
 `;
 
-export { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, ErrorMessage, StyledRepostBox, StyledRepostInfo };
+export { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, StyledRepostBox, StyledRepostInfo };
