@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { publishPost } from "../../services/API";
 import hashtagsToLowerCase from "../../services/hashtagsMask";
 import { VscLocation } from "react-icons/vsc";
+import SmallAlert from "../../components/SmallAlert";
 
 export default function Publish({ loadPosts }) {
     const [text, setText] = useState("");
@@ -10,6 +11,8 @@ export default function Publish({ loadPosts }) {
     const [loading, setLoading] = useState(false);
     const userInfo = JSON.parse(localStorage.getItem("user"));
     const [isLocation, setIsLocation] = useState(false);
+    const [unableLocation, setUnableLocation] = useState(false);
+    const [userLocation, setUserLocation] = useState();
 
     const publish = (e) => {
         e.preventDefault();
@@ -27,6 +30,29 @@ export default function Publish({ loadPosts }) {
                 setLoading(false);
                 alert("Houve um erro ao publicar seu link");
             });
+    }
+
+    const getLocation = (e) => {
+        e.preventDefault();
+
+        const isNotLocation = () => {
+            setUnableLocation(true);
+            setIsLocation(false);
+            setTimeout(() => setUnableLocation(false), 2000);
+        }
+
+        if (!('geolocation' in navigator)) {
+            isNotLocation();
+            return;
+        }
+
+        const success = (position) => {
+            setUserLocation(position.coords)
+            console.log(userLocation);
+            debugger;
+        };
+
+        navigator.geolocation.getCurrentPosition(success, isNotLocation);
     }
 
     return (
@@ -50,9 +76,10 @@ export default function Publish({ loadPosts }) {
                     >
                     </textarea>
                     <div className='buttons'>
-                        <button className='location'>
+                        <div onClick={getLocation} className='location'>
                             <VscLocation size='16px' />{isLocation ? 'Localização Ativada' : 'Localização Desativada'}
-                        </button>
+                            {unableLocation ? <SmallAlert errorMessage={'Não foi possível exibir a localização'} left={'0'} top={'26px'} /> : <></>}
+                        </div>
                         <button className='publish' type="submit">
                             {loading
                                 ? "Publishing..."
@@ -176,7 +203,9 @@ const MessageBox = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
+        cursor: pointer;
         color:${({ isLocation }) => isLocation ? '#238700' : '#949494'};
+        position: relative;
     }
 
     .publish {
