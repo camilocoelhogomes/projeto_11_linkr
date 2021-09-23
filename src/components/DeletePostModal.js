@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { deletePost } from '../services/API';
 
 Modal.setAppElement(document.getElementById('root'));
-export default function DeletePostModal({ state, postId }) {
+export default function DeletePostModal({ state, postId, getPosts }) {
     const { modalIsOpen, setModalIsOpen } = state;
     const [isLoading, setIsLoading] = useState(false);
 
@@ -25,7 +25,7 @@ export default function DeletePostModal({ state, postId }) {
         },
     };
 
-    function errorAlert(error) {
+    const errorAlert = (error) => {
         setModalIsOpen(false);
         if (error.status === 403) {
             alert("This post belongs to another user! Can't continue.");
@@ -35,14 +35,14 @@ export default function DeletePostModal({ state, postId }) {
         setIsLoading(false);
     }
 
-    function requestDeletePost() {
+    const requestDeletePost = () => {
         setIsLoading(true);
         const token = JSON.parse(localStorage.getItem("user")).token;
         const request = deletePost({ token, postId });
         request.then(res => {
+            getPosts();
             setModalIsOpen(false);
             setIsLoading(false);
-            window.location.reload();
         });
         request.catch(err => errorAlert(err.response));
     }

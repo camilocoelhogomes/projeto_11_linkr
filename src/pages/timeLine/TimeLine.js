@@ -79,7 +79,7 @@ export default function TimeLine() {
                                 <h3 className="posts-message">Seus seguidores não postaram nada ainda!</h3>
                             ) : ("")
                         )}
-                        {posts.map(post => <Post key={post.id} post={post} userInfo={userInfo} getPosts={getPosts} />)}
+                        {posts.map(post => <Post key={!!post.repostId ? post.repostId : post.id} post={post} userInfo={userInfo} getPosts={getPosts} />)}
                     </div>
                     <Treding className='trending' />
                 </div>

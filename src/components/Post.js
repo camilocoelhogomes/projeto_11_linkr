@@ -258,8 +258,8 @@ export default function Post({ post, userInfo, getPosts }) {
                         :
                         ""
                 }
-                <DeletePostModal state={{ modalIsOpen, setModalIsOpen }} postId={id} />
-                <RepostModal state={{ repostModal, setRepostModal }} postId={id} />
+                <DeletePostModal state={{ modalIsOpen, setModalIsOpen }} postId={id} getPosts={getPosts} />
+                <RepostModal state={{ repostModal, setRepostModal }} postId={id} getPosts={getPosts} />
                 {!!location ? <LocationPreview user={user.username} setLocation={setLocation} location={location} /> : ''}
             </StyledPost>
             {isCommentSelected ? <Comments userInfo={userInfo} postId={id} authorId={user.id} getPosts={getPosts} /> : ""}

@@ -97,8 +97,8 @@ export default function Publish({ loadPosts }) {
                         </div>
                         <button className='publish' type="submit">
                             {loading
-                                ? "Publishing..."
-                                : "Publish"
+                                ? "Publicando..."
+                                : "Publicar"
                             }
                         </button>
                     </div>

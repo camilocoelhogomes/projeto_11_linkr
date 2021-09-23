@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { sharePost } from '../services/API';
 
 Modal.setAppElement(document.getElementById('root'));
-export default function RepostModal({ state, postId }) {
+export default function RepostModal({ state, postId, getPosts }) {
     const { repostModal, setRepostModal } = state;
     const [isLoading, setIsLoading] = useState(false);
 
@@ -25,14 +25,14 @@ export default function RepostModal({ state, postId }) {
         },
     };
 
-    function repost() {
+    const repost = () => {
         setIsLoading(true);
         const token = JSON.parse(localStorage.getItem("user")).token;
         sharePost({ token, postId })
             .then(res => {
+                getPosts();
                 setRepostModal(false);
                 setIsLoading(false);
-                window.location.reload();
             })
             .catch(() => alert("Unable to share post!"))
     }
