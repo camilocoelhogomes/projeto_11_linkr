@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getUserPosts, getFollowedUsers, followUser, unfollowUser } from "../../services/API";
+import { getUserPosts, getFollowedUsers, followUser, unfollowUser, getUserInfo } from "../../services/API";
 import { useParams, useHistory } from "react-router-dom";
 import Post from '../../components/Post';
 import Header from '../../components/Header';
@@ -27,15 +27,12 @@ export default function UserPosts() {
             history.push('/my-posts');
         } else {
             getUserPosts({token: userInfo.token, id})
-            .then( res => {
-                setPosts(res.data.posts)
-                if (!!res.data.posts[0].repostedBy) {
-                    setUsername(res.data.posts[0].repostedBy.username);
-                } else {
-                    setUsername(res.data.posts[0].user.username);
-                }
-            })
-            .catch(() => setErr(true));
+                .then( res => {
+                    setPosts(res.data.posts)
+                })
+                .catch(() => setErr(true));
+            getUserInfo({token: userInfo.token, id})
+                .then( res => setUsername(res.data.user.username))
         }
     }
 
