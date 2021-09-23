@@ -1,11 +1,13 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { getTrendingHashtags } from "../services/API";
 import React, { useEffect, useState } from "react";
 
 export default function Trending() {
 
     const [hashtagsList, setHashtagsList] = useState(null);
+    const [searchBoxHashtag, setSearchBoxHashtag] = useState("");
+    const history = useHistory();
 
     useEffect(() => {
         const userInfo = JSON.parse(localStorage.getItem("user"));
@@ -15,6 +17,12 @@ export default function Trending() {
             alert("Não foi possível obter as trending hashtags do servidor!")
         })
     }, [])
+
+    const search = (event) => {
+        if(event.key === 'Enter' && searchBoxHashtag.replace(/\s/g,'').length) {
+            history.push(`/hashtag/${searchBoxHashtag}`);       
+        }
+    }
 
     if (hashtagsList === null) {
         return (
@@ -38,7 +46,7 @@ export default function Trending() {
                     </HashtagLink>
                 )}
             </Hashtags>
-            <StyledTrendingInput placeholder="type a hashtag" />
+            <StyledTrendingInput placeholder="type a hashtag" type="search" value={searchBoxHashtag} onChange={e => setSearchBoxHashtag(e.target.value)} onKeyUp={e => search(e)}/>
             <StyledHashtagPlaceholder>#</StyledHashtagPlaceholder>
         </TrendingContainer>
         <Details>
@@ -50,7 +58,7 @@ export default function Trending() {
                     </HashtagLink>
                 )}
             </Hashtags>
-            <StyledTrendingInput placeholder="type a hashtag"/>
+            <StyledTrendingInput placeholder="type a hashtag" type="search" value={searchBoxHashtag} onChange={e => setSearchBoxHashtag(e.target.value)} onKeyUp={e => search(e)}/>
             <StyledHashtagPlaceholder>#</StyledHashtagPlaceholder>
         </Details>
         </>
