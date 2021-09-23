@@ -15,13 +15,13 @@ export default function TimeLine() {
 
     const getPosts = () => {
         getServerPosts({ token: userInfo.token })
-            .then((res) => { setErr(false); setPosts(res.data.posts) })
+            .then((res) => { setErr(false); setPosts(res.data.posts); })
             .catch(() => setErr(true))
     }
 
     useEffect(() => {
         getPosts();
-        const intervalId =  setInterval(getPosts, 15000);
+        const intervalId = setInterval(getPosts, 15000);
         return () => {
             clearInterval(intervalId);
         }
