@@ -11,7 +11,7 @@ import LikedPosts from "./pages/likedPosts/LikedPosts";
 import LinkPreview from "./components/LinkPreview";
 import LinkContext from "./store/LinkContext";
 function App() {
-  const [previewHref, setPreviewHref] = useState('https://onepieceex.net/');
+  const [previewHref, setPreviewHref] = useState('');
   const [showIframe, setShowIframe] = useState(false);
 
   return (
