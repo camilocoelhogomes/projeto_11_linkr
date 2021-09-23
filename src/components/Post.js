@@ -48,7 +48,6 @@ export default function Post({ post, userInfo, getPosts }) {
     const [postText, setPostText] = useState(text);
     const [disableEditPost, setDisableEditPost] = useState(false);
     const [location, setLocation] = useState(null);
-    const [isShowLocation, setIsShowLocation] = useState(false);
 
     const likePost = (postId) => {
         setLiked(true);
@@ -103,6 +102,7 @@ export default function Post({ post, userInfo, getPosts }) {
             setErrorMessage("Não foi possível descurtir esta publicação!");
             setTimeout(() => setErrorMessage(""), 2000);
         })
+
     }
 
     const isPostAlreadyLiked = () => {
@@ -113,7 +113,6 @@ export default function Post({ post, userInfo, getPosts }) {
 
     const locationHandler = () => {
         setLocation(geolocation);
-        setIsShowLocation(true);
     }
 
     useEffect(isPostAlreadyLiked, [])
@@ -254,7 +253,7 @@ export default function Post({ post, userInfo, getPosts }) {
                 }
                 <DeletePostModal state={{ modalIsOpen, setModalIsOpen }} postId={id} />
                 <RepostModal state={{ repostModal, setRepostModal }} postId={id} />
-                {isShowLocation ? <LocationPreview user={user.username} setIsShowLocation={setIsShowLocation} /> : ''}
+                {!!location ? <LocationPreview user={user.username} setLocation={setLocation} location={location} /> : ''}
             </StyledPost>
         </>
     )

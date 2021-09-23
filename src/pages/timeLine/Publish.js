@@ -63,16 +63,7 @@ export default function Publish({ loadPosts }) {
         }
 
         const success = (position) => {
-            const location = {
-                accuracy: 1392,
-                altitude: null,
-                altitudeAccuracy: null,
-                heading: null,
-                latitude: -20.3596647,
-                longitude: -41.95889,
-                speed: null,
-            }
-            setUserLocation(location);
+            setUserLocation(position.coords);
             setIsLocation(true);
         };
 

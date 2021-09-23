@@ -1,18 +1,35 @@
 import React from 'react';
 import styled from 'styled-components';
 import { AiOutlineClose } from "react-icons/ai";
+import GoogleMapReact from 'google-map-react';
+import { TiLocation } from "react-icons/ti";
 
-const LocationPreview = ({ setIsShowLocation, user }) => {
-
+const LocationPreview = ({ setLocation, user, location }) => {
+    console.log(location);
+    const center = {
+        lat: Number(location.latitude),
+        lng: Number(location.longitude)
+    }
     return (
         <StyledLinkPreview>
             <div className='preview-box'>
                 <div className='preview-header'>
                     <h2>{user}'s location</h2>
-                    <button onClick={() => setIsShowLocation(false)} className='close-link-preview'><AiOutlineClose /></button>
+                    <button onClick={() => setLocation(null)} className='close-link-preview'><AiOutlineClose /></button>
                 </div>
                 <div className='frame-preview'>
-
+                    <GoogleMapReact
+                        defaultCenter={center}
+                        defaultZoom={15}
+                    >
+                        <TiLocation
+                            lat={center.lat}
+                            lng={center.lng}
+                            text={user}
+                            size='32px'
+                            color='#ff0000'
+                        />
+                    </GoogleMapReact>
                 </div>
             </div>
         </StyledLinkPreview>
@@ -59,6 +76,7 @@ const StyledLinkPreview = styled.div`
     }
     .frame-preview{
         height: calc(100% - 50px);
+        width: 100%;
     }
 
     @media(max-width: 600px){
