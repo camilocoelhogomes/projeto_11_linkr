@@ -9,11 +9,9 @@ const PageContainer = styled.div`
         margin: 125px 0 43px 0;
         display: grid;
         grid-template-areas: 'search-input search-input';
-        justify-content: space-between;
-        align-items: center;
         overflow-wrap:break-word;
         h2{
-            width: 85%;
+            width: 80vw;
             justify-content: space-between;
             align-items: center;
             overflow-wrap:break-word;
