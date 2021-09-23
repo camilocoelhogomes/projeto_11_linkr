@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { searchUsers, getFollowedUsers } from '../services/API';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { AiOutlineSearch } from 'react-icons/ai';
 
 export default function SearchInput({ parent }) {
     const [usersLists, setUsersLists] = useState([]);
@@ -30,13 +31,21 @@ export default function SearchInput({ parent }) {
 
     return (
         <StyledSearchBox parent={parent} >
-            <DebounceInput
-                placeholder='Search for people and friends'
-                style={{ height: "45px", borderRadius: "8px" }}
-                minLength={3}
-                debounceTimeout={300}
-                onChange={event => search(event.target.value)}
-            />
+            <div class="input-box">
+                <DebounceInput
+                    placeholder='Search for people and friends'
+                    style={{ height: "45px", borderRadius: "8px 0 0 8px" }}
+                    minLength={3}
+                    debounceTimeout={300}
+                    onChange={event => search(event.target.value)}
+                />
+                <div className='search-icon' >
+                    <AiOutlineSearch
+                        color="#C6C6C6"
+                        size='24px'
+                    />
+                </div>
+            </div>
             <ul>
                 {usersLists.map(({ id, avatar, username }, i) => (
                     <Link to={`/user/${id}`} key={i} >
@@ -61,6 +70,20 @@ const StyledSearchBox = styled.div`
     position: absolute;
     top:13px;
     left: calc((100% - 563px)/2);
+    .input-box {
+        width:100%;
+        display: flex;
+        margin:0;
+        div{
+            background-color:#fff;
+            width:10%;
+            border-radius: 0 8px 8px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin:0;
+        }
+    }
     input{
         color: #C6C6C6;
         font-size: 19px;
@@ -68,6 +91,9 @@ const StyledSearchBox = styled.div`
         border:none;
         padding:16px;
         z-index:1;
+        height: 45px;
+        border-radius: 8px 0 0 8px;
+        width:90%;
     }
     ul{
         width: 100%;
@@ -104,14 +130,14 @@ const StyledSearchBox = styled.div`
         }
     }
     ${props => props.parent === 'header' ?
-    `@media (max-width: 900px){
+        `@media (max-width: 900px){
         display:none;
     }`
-    :
-    `@media (min-width: 900px){
+        :
+        `@media (min-width: 900px){
         display:none;
     }
     width:93%;
     `
-}
+    }
 `
