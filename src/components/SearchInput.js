@@ -70,7 +70,7 @@ const StyledSearchBox = styled.div`
         z-index:1;
     }
     ul{
-        width: 563px;
+        width: 100%;
         background: #E7E7E7;
         border-radius: 0 0 8px 8px;
         margin-top:-8px;

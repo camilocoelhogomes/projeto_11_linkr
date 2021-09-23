@@ -6,6 +6,7 @@ import Header from '../../components/Header';
 import Trending from "../../components/Trending";
 import Alert from "../../components/Alert";
 import { PageContainer } from "../shared/styled-components/PageContainer"
+import SearchInput from "../../components/SearchInput";
 
 export default function HashtagPosts() {
     const [posts, setPosts] = useState([]);
@@ -36,6 +37,7 @@ export default function HashtagPosts() {
             <Header />
             <PageContainer>
                 <header>
+                    <SearchInput />
                     <h2># {hashtag}</h2>
                 </header>
                 <div className='main-content'>
