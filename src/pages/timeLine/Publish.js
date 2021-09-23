@@ -12,7 +12,7 @@ export default function Publish({ loadPosts }) {
     const userInfo = JSON.parse(localStorage.getItem("user"));
     const [isLocation, setIsLocation] = useState(false);
     const [unableLocation, setUnableLocation] = useState(false);
-    const [userLocation, setUserLocation] = useState();
+    const [userLocation, setUserLocation] = useState(null);
 
     const publish = (e) => {
         e.preventDefault();
@@ -38,7 +38,12 @@ export default function Publish({ loadPosts }) {
         const isNotLocation = () => {
             setUnableLocation(true);
             setIsLocation(false);
+            setUserLocation(null);
             setTimeout(() => setUnableLocation(false), 2000);
+        }
+
+        if (isLocation) {
+            isNotLocation();
         }
 
         if (!('geolocation' in navigator)) {
