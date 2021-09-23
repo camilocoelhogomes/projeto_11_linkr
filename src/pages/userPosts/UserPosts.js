@@ -6,7 +6,7 @@ import Header from '../../components/Header';
 import Trending from "../../components/Trending";
 import Alert from '../../components/Alert';
 import SmallAlert from "../../components/SmallAlert";
-import { PageContainer } from "../shared/styled-components/PageContainer";
+import { PageContainer } from "../../components/PageContainer";
 import styled from "styled-components";
 
 export default function UserPosts() {
@@ -61,7 +61,7 @@ export default function UserPosts() {
     const follow = () => {
         setIsFollowed(true);
         followUser(id, userInfo.token).then(ans => {
-            console.log(ans.data);
+            return;
         }).catch(err => {
             setIsFollowed(false);
             setErrorMessage("Não foi possível seguir este usuário!");
@@ -72,7 +72,7 @@ export default function UserPosts() {
     const unfollow = () => {
         setIsFollowed(false);
         unfollowUser(id, userInfo.token).then(ans => {
-            console.log(ans.data);
+            return;
         }).catch(err => {
             setIsFollowed(true);
             setErrorMessage("Não foi possível deixar de seguir este usuário!");

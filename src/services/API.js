@@ -10,7 +10,6 @@ const deletePost = ({ token, postId }) => axios.delete(`${API_URL}/posts/${postI
 const getUserPosts = ({ token, id }) => axios.get(`${API_URL}/users/${id}/posts`, createHeaders(token));
 const getLikedPosts = ({ token }) => axios.get(`${API_URL}/posts/liked`, createHeaders(token));
 const getHashtagPosts = ({ token, hashtag }) => axios.get(`${API_URL}/hashtags/${hashtag}/posts`, createHeaders(token));
-const getServerPosts = ({ token }) => axios.get(`${API_URL}/posts`, createHeaders(token));
 const signIn = (body) => axios.post(API_URL + "/sign-in", body);
 const signUp = (body) => axios.post(API_URL + "/sign-up", body);
 const getTrendingHashtags = (token) => axios.get(`${API_URL}/hashtags/trending`, createHeaders(token));
@@ -31,7 +30,6 @@ export {
     signUp,
     signIn,
     getTrendingHashtags,
-    getServerPosts,
     deletePost,
     getUserPosts,
     getLikedPosts,
