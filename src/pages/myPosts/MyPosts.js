@@ -13,7 +13,10 @@ export default function MyPosts() {
 
     const getPosts = () => {
         getUserPosts({ token: userInfo.token, id: userInfo.user.id })
-            .then(res => setPosts(res.data.posts))
+            .then(res => {
+                setPosts(res.data.posts)
+                console.log(res.data.posts)
+            })
             .catch(() => setErr(true));
     }
 
@@ -28,7 +31,7 @@ export default function MyPosts() {
     if (err) {
         return <Alert message={'Não foi possível carregar os posts, por favor recarregue a página'} />
     }
-
+    console.log(posts);
     return (
         <>
             <Header />
@@ -39,7 +42,7 @@ export default function MyPosts() {
                 <div className='main-content'>
                     <div className='posts'>
                         {posts.length === 0 ? <h2>Nenhum post encontrado</h2> :
-                            posts.map(post => <Post key={post.id} post={post} userInfo={userInfo} getPosts={getPosts} />)
+                            posts.map((post, index )=> <Post key={index} post={post} userInfo={userInfo} getPosts={getPosts} />)
                         }
                     </div>
                     <Trending className='trending' />
