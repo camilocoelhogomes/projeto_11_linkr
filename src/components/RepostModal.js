@@ -25,7 +25,7 @@ export default function RepostModal({ state, postId, getPosts }) {
         },
     };
 
-    function repost() {
+    const repost = () => {
         setIsLoading(true);
         const token = JSON.parse(localStorage.getItem("user")).token;
         sharePost({ token, postId })
@@ -33,6 +33,8 @@ export default function RepostModal({ state, postId, getPosts }) {
                 setRepostModal(false);
                 setIsLoading(false);
                 getPosts();
+                console.log(res);
+                debugger
             })
             .catch(() => alert("Unable to share post!"))
     }

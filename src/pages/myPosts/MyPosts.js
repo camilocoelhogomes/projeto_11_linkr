@@ -31,6 +31,7 @@ export default function MyPosts() {
     if (err) {
         return <Alert message={'Não foi possível carregar os posts, por favor recarregue a página'} />
     }
+
     console.log(posts);
     return (
         <>
