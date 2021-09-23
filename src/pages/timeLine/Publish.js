@@ -2,21 +2,39 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { publishPost } from "../../services/API";
 import hashtagsToLowerCase from "../../services/hashtagsMask";
+import { VscLocation } from "react-icons/vsc";
+import SmallAlert from "../../components/SmallAlert";
 
 export default function Publish({ loadPosts }) {
     const [text, setText] = useState("");
     const [link, setLink] = useState("");
     const [loading, setLoading] = useState(false);
     const userInfo = JSON.parse(localStorage.getItem("user"));
+    const [isLocation, setIsLocation] = useState(false);
+    const [unableLocation, setUnableLocation] = useState(false);
+    const [userLocation, setUserLocation] = useState(null);
 
     const publish = (e) => {
         e.preventDefault();
         setLoading(true);
         const newText = hashtagsToLowerCase(text);
-        const body = { "text": newText, "link": link };
+
+        const body = isLocation ?
+            {
+                "text": newText,
+                "link": link,
+                "geolocation": {
+                    "latitude": userLocation.latitude,
+                    "longitude": userLocation.longitude
+                }
+            } :
+            { "text": newText, "link": link }
+            ;
+
         publishPost({ token: userInfo.token, body })
-            .then(() => {
+            .then((res) => {
                 setLoading(false);
+                console.log(res);
                 setText("");
                 setLink("");
                 loadPosts();
@@ -27,10 +45,35 @@ export default function Publish({ loadPosts }) {
             });
     }
 
+    const getLocation = (e) => {
+        e.preventDefault();
+
+        const isNotLocation = () => {
+            setUserLocation(null);
+            if (!isLocation) {
+                setUnableLocation(true);
+            }
+            setIsLocation(false);
+            setTimeout(() => setUnableLocation(false), 2000);
+        }
+
+        if ((!('geolocation' in navigator) || isLocation)) {
+            isNotLocation();
+            return;
+        }
+
+        const success = (position) => {
+            setUserLocation(position.coords);
+            setIsLocation(true);
+        };
+
+        navigator.geolocation.getCurrentPosition(success, isNotLocation);
+    }
+
     return (
         <PublishContainer>
             <img src={userInfo.user.avatar} alt="avatar" />
-            <MessageBox loading={loading}>
+            <MessageBox loading={loading} isLocation={isLocation}>
                 <h2>O que você tem pra favoritar hoje?</h2>
                 <form onSubmit={publish}>
                     <input
@@ -47,12 +90,18 @@ export default function Publish({ loadPosts }) {
                         onChange={e => setText(e.target.value)}
                     >
                     </textarea>
-                    <button type="submit">
-                        {loading
-                            ? "Publishing..."
-                            : "Publish"
-                        }
-                    </button>
+                    <div className='buttons'>
+                        <div onClick={getLocation} className='location'>
+                            <VscLocation size='16px' />{isLocation ? 'Localização Ativada' : 'Localização Desativada'}
+                            {unableLocation ? <SmallAlert errorMessage={'Não foi possível exibir a localização'} left={'0'} top={'26px'} /> : <></>}
+                        </div>
+                        <button className='publish' type="submit">
+                            {loading
+                                ? "Publishing..."
+                                : "Publish"
+                            }
+                        </button>
+                    </div>
                 </form>
             </MessageBox>
         </PublishContainer>
@@ -153,11 +202,30 @@ const MessageBox = styled.div`
         }
     }
 
-    button {
-        width: 112px;
-        height: 31px;
+    .buttons{
+        width: 100%;
         position: absolute;
         right: 0;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .location{
+        border: none;
+        background-color: inherit;
+        font-family: 'Lato';
+        font-size: 13px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        color:${({ isLocation }) => isLocation ? '#238700' : '#949494'};
+        position: relative;
+    }
+
+    .publish {
+        width: 112px;
+        height: 31px;
         background-color: #1877F2;
         border-radius: 5px;
         border: none;

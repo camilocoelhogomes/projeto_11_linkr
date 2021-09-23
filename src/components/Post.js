@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
 import { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, StyledRepostInfo, StyledRepostBox } from './StyledPost';
 import { FaTrash, FaRetweet } from 'react-icons/fa';
+import { AiOutlineComment } from 'react-icons/ai';
 import { sendLike, sendDislike, editServerPost } from '../services/API';
 import { isYouTube, isImg } from '../services/validations';
 import { Link, useHistory } from 'react-router-dom'
@@ -8,12 +9,15 @@ import ReactTooltip from 'react-tooltip';
 import ReactHashtag from 'react-hashtag';
 import DeletePostModal from './DeletePostModal';
 import RepostModal from './RepostModal';
+import Comments from './Comments';
 import { Edit } from 'grommet-icons';
 import useKeypress from 'react-use-keypress';
 import hashtagsToLowerCase from '../services/hashtagsMask';
 import LinkContext from '../store/LinkContext';
 import { BACKGROUND_IMG } from '../Assets/img/img';
 import SmallAlert from "./SmallAlert";
+import { TiLocation } from "react-icons/ti";
+import LocationPreview from './LocationPreview';
 
 export default function Post({ post, userInfo, getPosts }) {
     const textRef = useRef();
@@ -33,7 +37,10 @@ export default function Post({ post, userInfo, getPosts }) {
         link,
         repostCount,
         repostedBy,
+        geolocation,
+        commentCount,
     } = post;
+
     const isCurrentUser = Boolean(userInfo.user.id === user.id);
     const [liked, setLiked] = useState(false);
     const [numberOfLikes, setNumberOfLikes] = useState(likes.length);
@@ -43,6 +50,8 @@ export default function Post({ post, userInfo, getPosts }) {
     const [isEditPost, setIsEditPost] = useState(false);
     const [postText, setPostText] = useState(text);
     const [disableEditPost, setDisableEditPost] = useState(false);
+    const [location, setLocation] = useState(null);
+    const [isCommentSelected, setIsCommentSelected] = useState(false);
 
     const likePost = (postId) => {
         setLiked(true);
@@ -97,12 +106,17 @@ export default function Post({ post, userInfo, getPosts }) {
             setErrorMessage("Não foi possível descurtir esta publicação!");
             setTimeout(() => setErrorMessage(""), 2000);
         })
+
     }
 
     const isPostAlreadyLiked = () => {
         if (likes.find(like => like.userId === userInfo.user.id) !== undefined) {
             setLiked(true);
         }
+    }
+
+    const locationHandler = () => {
+        setLocation(geolocation);
     }
 
     useEffect(isPostAlreadyLiked, [])
@@ -114,16 +128,16 @@ export default function Post({ post, userInfo, getPosts }) {
 
     return (
         <>
-            {!!repostedBy  
-                ?   <StyledRepostInfo>
-                        <FaRetweet className="repost"/>
-                        <p>Re-posted by 
-                            <Link to={`/user/${repostedBy.id}`}>
-                                {repostedBy.id === userInfo.user.id ? " you" : ` ${repostedBy.username}`}
-                            </Link>
-                        </p>
-                    </StyledRepostInfo>
-                :   <></>
+            {!!repostedBy
+                ? <StyledRepostInfo>
+                    <FaRetweet className="repost" />
+                    <p>Re-posted by
+                        <Link to={`/user/${repostedBy.id}`}>
+                            {repostedBy.id === userInfo.user.id ? " you" : ` ${repostedBy.username}`}
+                        </Link>
+                    </p>
+                </StyledRepostInfo>
+                : <></>
             }
             <StyledPost>
                 {errorMessage !== "" ? (
@@ -168,12 +182,22 @@ export default function Post({ post, userInfo, getPosts }) {
                         )}
                     </LikesBox>
                     <StyledRepostBox>
-                        <FaRetweet className="repost" onClick={() => setRepostModal(true)}/>
+                        <FaRetweet className="repost" onClick={() => setRepostModal(true)} />
+                        <AiOutlineComment className="icon" onClick={() => setIsCommentSelected(!isCommentSelected)} />
+                        <p>{commentCount} comments</p>
+                        <FaRetweet className="icon" onClick={() => setRepostModal(true)} />
                         <p>{repostCount} re-posts</p>
                     </StyledRepostBox>
                 </div>
                 <main>
-                    <h4>{user.username}</h4>
+                    <h4>{user.username} {
+                        !!geolocation ?
+                            <button className='trashButton' onClick={locationHandler}>
+                                <TiLocation size='16px' color='#ffffff' />
+                            </button> :
+                            ''
+                    }
+                    </h4>
                     {
                         isEditPost ?
                             <form className='paragraph'>
@@ -183,7 +207,7 @@ export default function Post({ post, userInfo, getPosts }) {
                                 <p>
                                     <ReactHashtag onHashtagClick={hashTag => history.push(`/hashtag/${hashTag.replace(/#/g, "")}`)}>
                                         {postText}
-                                    </ReactHashtag>
+                                        <LocationPreview user={user} location={location} />       </ReactHashtag>
                                 </p>
                             </div>
                     }
@@ -236,7 +260,9 @@ export default function Post({ post, userInfo, getPosts }) {
                 }
                 <DeletePostModal state={{ modalIsOpen, setModalIsOpen }} postId={id} />
                 <RepostModal state={{ repostModal, setRepostModal }} postId={id} />
+                {!!location ? <LocationPreview user={user.username} setLocation={setLocation} location={location} /> : ''}
             </StyledPost>
+            {isCommentSelected ? <Comments userInfo={userInfo} postId={id} authorId={user.id} getPosts={getPosts} /> : ""}
         </>
-        )
+    )
 }

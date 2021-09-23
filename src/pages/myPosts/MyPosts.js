@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getUserPosts } from "../../services/API";
-import { PageContainer } from "../shared/styled-components/PageContainer";
+import { PageContainer } from "../../components/PageContainer";
 import Post from '../../components/Post';
 import Header from '../../components/Header';
 import Trending from "../../components/Trending";

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getUserPosts, getFollowedUsers, followUser, unfollowUser } from "../../services/API";
+import { getUserPosts, getFollowedUsers, followUser, unfollowUser, getUserInfo } from "../../services/API";
 import { useParams, useHistory } from "react-router-dom";
 import Post from '../../components/Post';
 import Header from '../../components/Header';
 import Trending from "../../components/Trending";
 import Alert from '../../components/Alert';
 import SmallAlert from "../../components/SmallAlert";
-import { PageContainer } from "../shared/styled-components/PageContainer";
+import { PageContainer } from "../../components/PageContainer";
 import styled from "styled-components";
 import SearchInput from "../../components/SearchInput";
 
@@ -28,15 +28,12 @@ export default function UserPosts() {
             history.push('/my-posts');
         } else {
             getUserPosts({token: userInfo.token, id})
-            .then( res => {
-                setPosts(res.data.posts)
-                if (!!res.data.posts[0].repostedBy) {
-                    setUsername(res.data.posts[0].repostedBy.username);
-                } else {
-                    setUsername(res.data.posts[0].user.username);
-                }
-            })
-            .catch(() => setErr(true));
+                .then( res => {
+                    setPosts(res.data.posts)
+                })
+                .catch(() => setErr(true));
+            getUserInfo({token: userInfo.token, id})
+                .then( res => setUsername(res.data.user.username))
         }
     }
 
@@ -65,6 +62,7 @@ export default function UserPosts() {
     const follow = () => {
         setIsFollowed(true);
         followUser(id, userInfo.token).then(ans => {
+            return;
         }).catch(err => {
             setIsFollowed(false);
             setErrorMessage("Não foi possível seguir este usuário!");
@@ -75,6 +73,7 @@ export default function UserPosts() {
     const unfollow = () => {
         setIsFollowed(false);
         unfollowUser(id, userInfo.token).then(ans => {
+            return;
         }).catch(err => {
             setIsFollowed(true);
             setErrorMessage("Não foi possível deixar de seguir este usuário!");

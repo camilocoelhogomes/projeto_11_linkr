@@ -4,7 +4,7 @@ import Post from '../../components/Post';
 import Header from '../../components/Header';
 import Trending from "../../components/Trending";
 import Alert from "../../components/Alert";
-import { PageContainer } from "../shared/styled-components/PageContainer";
+import { PageContainer } from "../../components/PageContainer";
 import SearchInput from "../../components/SearchInput";
 
 export default function LikedPosts() {
