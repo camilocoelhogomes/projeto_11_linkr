@@ -16,14 +16,9 @@ export default function TimeLine() {
     const userInfo = JSON.parse(localStorage.getItem("user"));
 
     const getPosts = () => {
-<<<<<<< HEAD
-        getServerPosts({ token: userInfo.token })
-            .then((res) => { setErr(false); setPosts(res.data.posts); })
-            .catch(() => setErr(true))
-=======
         getFollowedUsersPosts(userInfo.token)
-            .then((res) => { 
-                setErr(false); 
+            .then((res) => {
+                setErr(false);
                 setPosts(res.data.posts);
             })
             .catch(() => setErr(true));
@@ -37,7 +32,6 @@ export default function TimeLine() {
             }).catch(err => {
                 setFollowedUsersErr(true);
             })
->>>>>>> dev
     }
 
     useEffect(() => {
