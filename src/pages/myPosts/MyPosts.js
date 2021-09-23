@@ -15,18 +15,14 @@ export default function MyPosts() {
         getUserPosts({ token: userInfo.token, id: userInfo.user.id })
             .then(res => {
                 setPosts(res.data.posts)
-                console.log(res.data.posts)
+                console.log(res.data.posts);
             })
             .catch(() => setErr(true));
     }
 
     useEffect(() => {
         getPosts();
-        const intervalId =  setInterval(getPosts, 15000);
-        return () => {
-            clearInterval(intervalId);
-        }
-    }, []);
+    }, [posts]);
 
     if (err) {
         return <Alert message={'Não foi possível carregar os posts, por favor recarregue a página'} />

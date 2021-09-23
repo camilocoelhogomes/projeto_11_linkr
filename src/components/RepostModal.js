@@ -33,8 +33,6 @@ export default function RepostModal({ state, postId, getPosts }) {
                 setRepostModal(false);
                 setIsLoading(false);
                 getPosts();
-                console.log(res);
-                debugger
             })
             .catch(() => alert("Unable to share post!"))
     }
