@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
 import { StyledPost, LikesBox, LikedHeart, EmptyHeart, LikesNumber, StyledRepostInfo, StyledRepostBox } from './StyledPost';
 import { FaTrash, FaRetweet } from 'react-icons/fa';
+import { AiOutlineComment } from 'react-icons/ai';
 import { sendLike, sendDislike, editServerPost } from '../services/API';
 import { isYouTube, isImg } from '../services/validations';
 import { Link, useHistory } from 'react-router-dom'
@@ -8,6 +9,7 @@ import ReactTooltip from 'react-tooltip';
 import ReactHashtag from 'react-hashtag';
 import DeletePostModal from './DeletePostModal';
 import RepostModal from './RepostModal';
+import Comments from './Comments';
 import { Edit } from 'grommet-icons';
 import useKeypress from 'react-use-keypress';
 import hashtagsToLowerCase from '../services/hashtagsMask';
@@ -36,6 +38,7 @@ export default function Post({ post, userInfo, getPosts }) {
         repostCount,
         repostedBy,
         geolocation,
+        commentCount,
     } = post;
 
     const isCurrentUser = Boolean(userInfo.user.id === user.id);
@@ -48,6 +51,7 @@ export default function Post({ post, userInfo, getPosts }) {
     const [postText, setPostText] = useState(text);
     const [disableEditPost, setDisableEditPost] = useState(false);
     const [location, setLocation] = useState(null);
+    const [isCommentSelected, setIsCommentSelected] = useState(false);
 
     const likePost = (postId) => {
         setLiked(true);
@@ -179,6 +183,9 @@ export default function Post({ post, userInfo, getPosts }) {
                     </LikesBox>
                     <StyledRepostBox>
                         <FaRetweet className="repost" onClick={() => setRepostModal(true)} />
+                        <AiOutlineComment className="icon" onClick={() => setIsCommentSelected(!isCommentSelected)} />
+                        <p>{commentCount} comments</p>
+                        <FaRetweet className="icon" onClick={() => setRepostModal(true)} />
                         <p>{repostCount} re-posts</p>
                     </StyledRepostBox>
                 </div>
@@ -255,6 +262,7 @@ export default function Post({ post, userInfo, getPosts }) {
                 <RepostModal state={{ repostModal, setRepostModal }} postId={id} />
                 {!!location ? <LocationPreview user={user.username} setLocation={setLocation} location={location} /> : ''}
             </StyledPost>
+            {isCommentSelected ? <Comments userInfo={userInfo} postId={id} authorId={user.id} getPosts={getPosts} /> : ""}
         </>
     )
 }
