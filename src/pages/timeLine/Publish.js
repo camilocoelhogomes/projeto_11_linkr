@@ -18,10 +18,23 @@ export default function Publish({ loadPosts }) {
         e.preventDefault();
         setLoading(true);
         const newText = hashtagsToLowerCase(text);
-        const body = { "text": newText, "link": link };
+
+        const body = isLocation ?
+            {
+                "text": newText,
+                "link": link,
+                "geolocation": {
+                    "latitude": userLocation.latitude,
+                    "longitude": userLocation.longitude
+                }
+            } :
+            { "text": newText, "link": link }
+            ;
+
         publishPost({ token: userInfo.token, body })
-            .then(() => {
+            .then((res) => {
                 setLoading(false);
+                console.log(res);
                 setText("");
                 setLink("");
                 loadPosts();
@@ -36,17 +49,15 @@ export default function Publish({ loadPosts }) {
         e.preventDefault();
 
         const isNotLocation = () => {
-            setUnableLocation(true);
-            setIsLocation(false);
             setUserLocation(null);
+            if (!isLocation) {
+                setUnableLocation(true);
+            }
+            setIsLocation(false);
             setTimeout(() => setUnableLocation(false), 2000);
         }
 
-        if (isLocation) {
-            isNotLocation();
-        }
-
-        if (!('geolocation' in navigator)) {
+        if ((!('geolocation' in navigator) || isLocation)) {
             isNotLocation();
             return;
         }
