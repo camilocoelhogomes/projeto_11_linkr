@@ -15,6 +15,9 @@ const PageContainer = styled.div`
     .posts{
         display: flex;
         flex-direction: column;
+        .posts-message {
+            margin-bottom: 15px;
+        }
     }
     .main-content{
         display: flex;
