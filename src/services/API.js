@@ -23,6 +23,9 @@ const followUser = (userId, token) => axios.post(`${API_URL}/users/${userId}/fol
 const unfollowUser = (userId, token) => axios.post(`${API_URL}/users/${userId}/unfollow`, {}, createHeaders(token));
 const sharePost = ({ token, postId }) => axios.post(`${API_URL}/posts/${postId}/share`, {}, createHeaders(token));
 const getFollowedUsersPosts = (token) => axios.get(`${API_URL}/following/posts`, createHeaders(token));
+const getComments = ({ token, postId }) => axios.get(`${API_URL}/posts/${postId}/comments`, createHeaders(token));
+const postComment = ({ token, body, postId }) => axios.post(`${API_URL}/posts/${postId}/comment`, body , createHeaders(token));
+const getUserInfo = ({ token, id }) => axios.get(`${API_URL}/users/${id}`, createHeaders(token));
 
 export {
     signUp,
@@ -42,4 +45,7 @@ export {
     unfollowUser,
     sharePost,
     getFollowedUsersPosts,
+    getComments,
+    postComment,
+    getUserInfo,
 };
