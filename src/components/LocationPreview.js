@@ -53,7 +53,7 @@ const StyledLinkPreview = styled.div`
     .preview-box{
         border-radius: 20px;
         background-color: #333333;
-        height: calc(100vh - 120px);
+        height: 354px;
         width: 70vw;
         padding: 18px 22px;
         display: flex;
