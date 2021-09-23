@@ -5,6 +5,7 @@ import Post from '../../components/Post';
 import Header from '../../components/Header';
 import Trending from "../../components/Trending";
 import Alert from "../../components/Alert";
+import InfiniteScroll from "react-infinite-scroller";
 
 export default function MyPosts() {
     const [posts, setPosts] = useState([]);
@@ -38,9 +39,17 @@ export default function MyPosts() {
                 </header>
                 <div className='main-content'>
                     <div className='posts'>
-                        {posts.length === 0 ? <h2>Nenhum post encontrado</h2> :
-                            posts.map(post => <Post key={post.id} post={post} userInfo={userInfo} getPosts={getPosts} />)
-                        }
+                        <InfiniteScroll
+                            pageStart={0}
+                            loadMore={loadFunc}
+                            hasMore={true || false}
+                            loader={<div className="loader" key={0}>Loading ...</div>}
+                        >
+                            {posts.length === 0 
+                                ? <h2>Nenhum post encontrado</h2> 
+                                : posts.map(post => <Post key={post.id} post={post} userInfo={userInfo} getPosts={getPosts} />)
+                            }
+                        </InfiniteScroll>
                     </div>
                     <Trending className='trending' />
                 </div>
