@@ -47,9 +47,17 @@ export default function Publish({ loadPosts }) {
         }
 
         const success = (position) => {
-            setUserLocation(position.coords)
-            console.log(userLocation);
-            debugger;
+            const location = {
+                accuracy: 1392,
+                altitude: null,
+                altitudeAccuracy: null,
+                heading: null,
+                latitude: -20.3596647,
+                longitude: -41.95889,
+                speed: null,
+            }
+            setUserLocation(location);
+            setIsLocation(true);
         };
 
         navigator.geolocation.getCurrentPosition(success, isNotLocation);
