@@ -4,11 +4,11 @@ import { searchUsers, getFollowedUsers } from '../services/API';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export default function SearchInput() {
+export default function SearchInput({ parent }) {
     const [usersLists, setUsersLists] = useState([]);
     const [followedList, setFollowedList] = useState([]);
     const token = JSON.parse(localStorage.getItem("user")).token;
-    
+
     getFollowedUsers(token).then(res => {
         const idList = [];
         res.data.users.forEach(user => idList.push(user.id))
@@ -29,7 +29,7 @@ export default function SearchInput() {
     }
 
     return (
-        <StyledSearchBox>
+        <StyledSearchBox parent={parent} >
             <DebounceInput
                 placeholder='Search for people and friends'
                 style={{ height: "45px", borderRadius: "8px" }}
@@ -44,7 +44,7 @@ export default function SearchInput() {
                             <img src={avatar} alt={"avatar"} />
                             <h1>{username}</h1>
                             {followedList.includes(id) ?
-                            <span>• following</span> : ""
+                                <span>• following</span> : ""
                             }
                         </li>
                     </Link>
@@ -103,4 +103,15 @@ const StyledSearchBox = styled.div`
             color: #C5C5C5;
         }
     }
+    ${props => props.parent === 'header' ?
+    `@media (max-width: 900px){
+        display:none;
+    }`
+    :
+    `@media (min-width: 900px){
+        display:none;
+    }
+    width:93%;
+    `
+}
 `

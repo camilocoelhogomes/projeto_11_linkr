@@ -35,7 +35,7 @@ export default function Header() {
             <Link to='/timeline'>
                 <h1>linkr</h1>
             </Link>
-            <SearchInput />
+            <SearchInput parent='header' />
             <Menu onBlur={() => toggleMenu(true)}>
                 {isSelected
                     ? <ArrowUp onClick={() => toggleMenu(false)} />
@@ -73,6 +73,11 @@ const HeaderContainer = styled.header`
         font-size: 49px;
         color: #FFFFFF;
         letter-spacing: 0.05em;
+    }
+    @media(min-width:900px){
+        .desktop-input{
+            display:none;
+        }
     }
 `;
 

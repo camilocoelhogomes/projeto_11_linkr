@@ -6,6 +6,10 @@ const StyledTimeLine = styled.div`
     position: relative;
     header {
         margin: 125px 0 43px 0;
+        div{
+            position: initial;
+            margin:0 auto 19px;
+        }
     }
     .posts{
         display: flex;

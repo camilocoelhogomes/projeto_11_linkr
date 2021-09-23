@@ -6,6 +6,7 @@ import { getServerPosts } from '../../services/API';
 import Alert from '../../components/Alert';
 import Treding from '../../components/Trending';
 import Publish from './Publish';
+import SearchInput from '../../components/SearchInput';
 
 export default function TimeLine() {
 
@@ -21,7 +22,7 @@ export default function TimeLine() {
 
     useEffect(() => {
         getPosts();
-        const intervalId =  setInterval(getPosts, 15000);
+        const intervalId = setInterval(getPosts, 15000);
         return () => {
             clearInterval(intervalId);
         }
@@ -32,6 +33,7 @@ export default function TimeLine() {
             <Header />
             <StyledTimeLine>
                 <header>
+                    <SearchInput />
                     <h2>timeline</h2>
                 </header>
             </StyledTimeLine>
@@ -47,6 +49,7 @@ export default function TimeLine() {
             <Header />
             <StyledTimeLine>
                 <header>
+                    <SearchInput />
                     <h2>timeline</h2>
                 </header>
                 <div className='main-content'>
