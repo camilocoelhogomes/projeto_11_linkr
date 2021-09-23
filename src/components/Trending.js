@@ -38,6 +38,8 @@ export default function Trending() {
                     </HashtagLink>
                 )}
             </Hashtags>
+            <StyledTrendingInput placeholder="type a hashtag" />
+            <StyledHashtagPlaceholder>#</StyledHashtagPlaceholder>
         </TrendingContainer>
         <Details>
             <summary>trending</summary>
@@ -48,6 +50,8 @@ export default function Trending() {
                     </HashtagLink>
                 )}
             </Hashtags>
+            <StyledTrendingInput placeholder="type a hashtag"/>
+            <StyledHashtagPlaceholder>#</StyledHashtagPlaceholder>
         </Details>
         </>
     )
@@ -100,7 +104,7 @@ const TrendingContainer = styled.div`
     height: fit-content;
     position: sticky;
     top: 160px; 
-    
+
     @media(max-width:900px){
         display: none;
     }
@@ -117,7 +121,37 @@ const Hashtags = styled.ul`
     flex-direction: column;
     padding: 22px 16px;
     gap: 13px;
+    font-weight: 700;
 `
 const HashtagLink = styled(Link)`
     text-decoration: none;
+`
+const StyledTrendingInput = styled.input`
+    height: 35px;
+    width: calc(100% - 32px);
+    margin-bottom: 15px;
+    margin-left: 16px;
+    border-radius: 8px;
+    background: #252525;
+    outline: none;
+    color: #ffffff;
+    font-size: 16px;
+    padding-left: 36px;
+    padding-right: 16px;
+    border: none;
+
+    ::placeholder {
+        color: #575757;
+        font-size: 16px;
+        font-style: italic;
+        border: none;
+    }
+`
+const StyledHashtagPlaceholder = styled.span`
+    font-size: 19px;
+    font-weight: 700;
+    bottom: 23px;
+    left: 29px;
+    z-index: 3;
+    position: absolute;
 `
