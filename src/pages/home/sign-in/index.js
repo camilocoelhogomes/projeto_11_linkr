@@ -11,17 +11,16 @@ import {
     BlueButton,
     StyledForm,
     Anchor,
-    StyledOption,
-    StyledConfirm,
-    StyledButtonOptions,
-    StyledConfirmBox
+    DirectLoginBox, 
+    DirectLoginButton, 
+    DirectLoginAsk
 } from "../style"
+
 export default function LogIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [lastLogin, setLastLogin] = useState("");
-    const [directLogin, setDirectLogin] = useState(true);
     const history = useHistory();
 
     useEffect(() => {
@@ -58,19 +57,6 @@ export default function LogIn() {
 
     return (
         <>
-        {directLogin && lastLogin !== "" ? (
-            <StyledConfirm>
-                <StyledConfirmBox>
-                    <p>Você deseja logar diretamente com a seguinte conta?</p>
-                    <p>Nome: <strong>{lastLogin.user.username}</strong></p>
-                    <p>Email: <strong>{lastLogin.user.email}</strong></p>
-                    <StyledButtonOptions>
-                        <StyledOption onClick={() => history.push("/timeline")} buttonColor="#0ab51e">Logar</StyledOption>
-                        <StyledOption onClick={() => setDirectLogin(false)} buttonColor="#ff0000">Cancelar</StyledOption>   
-                    </StyledButtonOptions>
-                </StyledConfirmBox>
-            </StyledConfirm>
-        ) : (<></>)}
             <BodyContainer>
             <Banner>
                 <strong>
@@ -92,6 +78,16 @@ export default function LogIn() {
                         First time? Create an account!
                     </Link>
                 </Anchor>
+                {lastLogin !== "" ? (
+                    <DirectLoginBox>
+                        <DirectLoginAsk>
+                            <h4>Você deseja logar diretamente com a seguinte conta?</h4>
+                            <p>Nome: <strong>{lastLogin.user.username}</strong></p>
+                            <p>Email: <strong>{lastLogin.user.email}</strong></p>
+                        </DirectLoginAsk>
+                        <DirectLoginButton onClick={() => history.push("/timeline")}>Logar</DirectLoginButton>
+                    </DirectLoginBox>
+                ) : ("")}
             </Container>
         </BodyContainer>
         </>
