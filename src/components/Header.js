@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import styled from "styled-components";
+import { Redirect } from "react-router-dom";
 
 export default function Header() {
     const [isSelected, setIsSelected] = useState(false);
@@ -28,7 +29,9 @@ export default function Header() {
     }
 
     return (
-        <HeaderContainer>
+        <>
+        {userInfo ? (
+            <HeaderContainer>
             <Link to='/timeline'>
                 <h1>linkr</h1>
             </Link>
@@ -48,6 +51,10 @@ export default function Header() {
                 }
             </Menu>
         </HeaderContainer>
+        ) : (
+            <Redirect to="/"></Redirect>
+        )}
+    </>
     );
 }
 
