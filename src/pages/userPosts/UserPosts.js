@@ -89,7 +89,6 @@ export default function UserPosts() {
 
     return (
         <>
-            <Header />
             <PageContainer>
                 <header>
                 {errorMessage !== "" ? (
@@ -115,6 +114,7 @@ export default function UserPosts() {
                     <Trending className='trending' />
                 </div>
             </PageContainer>
+            <Header />
         </>
     );
 }

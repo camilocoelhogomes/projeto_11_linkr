@@ -33,7 +33,6 @@ export default function HashtagPosts() {
 
     return (
         <>
-            <Header />
             <PageContainer>
                 <header>
                     <h2># {hashtag}</h2>
@@ -47,6 +46,7 @@ export default function HashtagPosts() {
                     <Trending className='trending' />
                 </div>
             </PageContainer>
+            <Header />
         </>
     );
 }

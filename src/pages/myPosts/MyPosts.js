@@ -31,7 +31,6 @@ export default function MyPosts() {
 
     return (
         <>
-            <Header />
             <PageContainer>
                 <header>
                     <h2>my posts</h2>
@@ -45,6 +44,7 @@ export default function MyPosts() {
                     <Trending className='trending' />
                 </div>
             </PageContainer>
+            <Header />
         </>
     );
 }

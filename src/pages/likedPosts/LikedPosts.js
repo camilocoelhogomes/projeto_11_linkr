@@ -31,7 +31,6 @@ export default function LikedPosts() {
 
     return (
         <>
-            <Header />
             <PageContainer>
                 <header>
                     <h2>my likes</h2>
@@ -45,6 +44,7 @@ export default function LikedPosts() {
                     <Trending className='trending' />
                 </div>
             </PageContainer>
+            <Header />
         </>
     )
 }
