@@ -6,6 +6,7 @@ import Header from '../../components/Header';
 import Trending from "../../components/Trending";
 import Alert from "../../components/Alert";
 import InfiniteScroll from "react-infinite-scroller";
+import loading from '../../Assets/loading.gif';
 
 export default function MyPosts() {
     const [posts, setPosts] = useState([]);
@@ -81,6 +82,7 @@ export default function MyPosts() {
                                     hasMore={hasMore}
                                     loader={
                                         <div className="loader" key={0}>
+                                            <img src={loading}/>
                                             Loading more posts...
                                         </div>
                                     }
