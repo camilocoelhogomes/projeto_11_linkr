@@ -1,11 +1,12 @@
 import { DebounceInput } from 'react-debounce-input';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { searchUsers, getFollowedUsers } from '../services/API';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { AiOutlineSearch } from 'react-icons/ai';
 
 export default function SearchInput({ parent }) {
+    const [user, setUser] = useState('');
     const [usersLists, setUsersLists] = useState([]);
     const [followedList, setFollowedList] = useState([]);
     const token = JSON.parse(localStorage.getItem("user")).token;
@@ -16,9 +17,10 @@ export default function SearchInput({ parent }) {
         setFollowedList(idList)
     });
 
-    function search(value) {
-        if (!value) setUsersLists([]);
-        const username = value;
+    
+    useEffect(() => {
+        if (!user) setUsersLists([]);
+        const username = user;
         searchUsers({ token, username }).then(res => {
             const users = res.data.users;
             users.sort((a, b) => {
@@ -27,7 +29,8 @@ export default function SearchInput({ parent }) {
             });
             setUsersLists(users);
         });
-    }
+    }, [user])
+
 
     return (
         <StyledSearchBox parent={parent} >
@@ -37,7 +40,8 @@ export default function SearchInput({ parent }) {
                     style={{ height: "45px", borderRadius: "8px 0 0 8px" }}
                     minLength={3}
                     debounceTimeout={300}
-                    onChange={event => search(event.target.value)}
+                    value={user}
+                    onChange={event => setUser(event.target.value)}
                 />
                 <div className='search-icon' >
                     <AiOutlineSearch
@@ -49,7 +53,7 @@ export default function SearchInput({ parent }) {
             <ul>
                 {usersLists.map(({ id, avatar, username }, i) => (
                     <Link to={`/user/${id}`} key={i} >
-                        <li>
+                        <li onClick={()=>setUser('')}>
                             <img src={avatar} alt={"avatar"} />
                             <h1>{username}</h1>
                             {followedList.includes(id) ?
@@ -82,6 +86,7 @@ const StyledSearchBox = styled.div`
             align-items: center;
             justify-content: center;
             margin:0;
+            z-index:1;
         }
     }
     input{

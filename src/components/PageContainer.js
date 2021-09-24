@@ -10,8 +10,9 @@ const PageContainer = styled.div`
         display: grid;
         grid-template-areas: 'search-input search-input';
         overflow-wrap:break-word;
+        justify-content:space-between;
         h2{
-            width: 80vw;
+            max-width:60vw;
             justify-content: space-between;
             align-items: center;
             overflow-wrap:break-word;
@@ -38,6 +39,14 @@ const PageContainer = styled.div`
     @media(max-width: 900px){
         .posts{
             width: 100%;
+        }
+        header{
+            h2{
+                margin-left:16px;
+            }
+            button{
+                margin-right:16px;
+            }
         }
     }
 `;
