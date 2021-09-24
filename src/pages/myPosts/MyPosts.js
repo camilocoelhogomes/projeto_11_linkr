@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getUserPosts } from "../../services/API";
-import { PageContainer } from "../shared/styled-components/PageContainer";
+import { PageContainer } from "../../components/PageContainer";
 import Post from '../../components/Post';
 import Header from '../../components/Header';
 import Trending from "../../components/Trending";
@@ -63,7 +63,7 @@ export default function MyPosts() {
                                     </div>
                                 }
                             >
-                                {posts.map(post => <Post key={post.repostId ? post.repostId : post.id} post={post} userInfo={userInfo} getPosts={getPosts} />)}
+                                {posts.map(post => <Post key={!!post.repostId ? post.repostId : post.id} post={post} userInfo={userInfo} getPosts={getPosts} />)}
                                 
                             </InfiniteScroll>
                     }

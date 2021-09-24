@@ -4,7 +4,7 @@ import Post from '../../components/Post';
 import Header from '../../components/Header';
 import Trending from "../../components/Trending";
 import Alert from "../../components/Alert";
-import { PageContainer } from "../shared/styled-components/PageContainer";
+import { PageContainer } from "../../components/PageContainer";
 
 export default function LikedPosts() {
     const [posts, setPosts] = useState([]);
@@ -39,7 +39,7 @@ export default function LikedPosts() {
                 <div className='main-content'>
                     <div className='posts'>
                         {posts.length === 0 ? <h2>Nenhum post encontrado</h2> :
-                            posts.map(post => <Post key={post.id} post={post} userInfo={userInfo} getPosts={getPosts}/>)
+                            posts.map(post => <Post key={!!post.repostId ? post.repostId : post.id} post={post} userInfo={userInfo} getPosts={getPosts}/>)
                         }
                     </div>
                     <Trending className='trending' />
