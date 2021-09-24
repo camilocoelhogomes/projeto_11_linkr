@@ -19,7 +19,7 @@ import SmallAlert from "./SmallAlert";
 import { TiLocation } from "react-icons/ti";
 import LocationPreview from './LocationPreview';
 
-export default function Post({ post, userInfo, getPosts }) {
+export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
     const textRef = useRef();
     const history = useHistory();
     const {
@@ -58,7 +58,15 @@ export default function Post({ post, userInfo, getPosts }) {
         const actualLikesNumber = numberOfLikes;
         setNumberOfLikes(numberOfLikes + 1);
         sendLike(postId, userInfo.token).then(ans => {
-            getPosts();
+            const newPosts = posts.map(post => {
+                if(post.id === id) {
+                    post.likes.push({"userId": userInfo.user.id});
+                    return post;
+                } else {
+                    return post;
+                }
+            })
+            setPosts([...newPosts]);
         }).catch(err => {
             setLiked(false);
             setNumberOfLikes(actualLikesNumber);
@@ -76,6 +84,15 @@ export default function Post({ post, userInfo, getPosts }) {
                 id: id,
                 data: data,
             }).then(res => {
+                const newPosts = posts.map(post => {
+                    if(post.id === id) {
+                        post.text = data.text;
+                        return post;
+                    } else {
+                        return post;
+                    }
+                })
+                setPosts([...newPosts]);
                 setDisableEditPost(false);
                 setIsEditPost(false);
             }).catch(() => {
@@ -99,7 +116,15 @@ export default function Post({ post, userInfo, getPosts }) {
         const actualLikesNumber = numberOfLikes;
         setNumberOfLikes(numberOfLikes - 1);
         sendDislike(postId, userInfo.token).then(ans => {
-            getPosts();
+            const newPosts = posts.map(post => {
+                if(post.id === id) {
+                    post.likes.filter(like => like.userId ==! userInfo.user.id);
+                    return post;
+                } else {
+                    return post;
+                }
+            })
+            setPosts([...newPosts]);
         }).catch(err => {
             setLiked(true);
             setNumberOfLikes(actualLikesNumber);
@@ -182,7 +207,6 @@ export default function Post({ post, userInfo, getPosts }) {
                         )}
                     </LikesBox>
                     <StyledRepostBox>
-                        <FaRetweet className="repost" onClick={() => setRepostModal(true)} />
                         <AiOutlineComment className="icon" onClick={() => setIsCommentSelected(!isCommentSelected)} />
                         <p>{commentCount} comments</p>
                         <FaRetweet className="icon" onClick={() => setRepostModal(true)} />
@@ -258,11 +282,11 @@ export default function Post({ post, userInfo, getPosts }) {
                         :
                         ""
                 }
-                <DeletePostModal state={{ modalIsOpen, setModalIsOpen }} postId={id} getPosts={getPosts} />
-                <RepostModal state={{ repostModal, setRepostModal }} postId={id} getPosts={getPosts} />
+                <DeletePostModal state={{ modalIsOpen, setModalIsOpen }} postId={id} posts={posts} setPosts={setPosts} />
+                <RepostModal state={{ repostModal, setRepostModal }} postId={id} getNewPosts={getNewPosts} posts={posts} setPosts={setPosts} />
                 {!!location ? <LocationPreview user={user.username} setLocation={setLocation} location={location} /> : ''}
             </StyledPost>
-            {isCommentSelected ? <Comments userInfo={userInfo} postId={id} authorId={user.id} getPosts={getPosts} /> : ""}
+            {isCommentSelected ? <Comments userInfo={userInfo} postId={id} authorId={user.id} posts={posts} setPosts={setPosts} /> : ""}
         </>
     )
 }

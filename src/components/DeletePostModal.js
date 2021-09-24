@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { deletePost } from '../services/API';
 
 Modal.setAppElement(document.getElementById('root'));
-export default function DeletePostModal({ state, postId, getPosts }) {
+export default function DeletePostModal({ state, postId, posts, setPosts }) {
     const { modalIsOpen, setModalIsOpen } = state;
     const [isLoading, setIsLoading] = useState(false);
 
@@ -40,7 +40,8 @@ export default function DeletePostModal({ state, postId, getPosts }) {
         const token = JSON.parse(localStorage.getItem("user")).token;
         const request = deletePost({ token, postId });
         request.then(res => {
-            getPosts();
+            const newPosts = posts.filter(post => post.id !== postId);
+            setPosts(newPosts);
             setModalIsOpen(false);
             setIsLoading(false);
         });
