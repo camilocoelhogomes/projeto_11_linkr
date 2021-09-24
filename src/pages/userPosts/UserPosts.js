@@ -8,6 +8,8 @@ import Alert from '../../components/Alert';
 import SmallAlert from "../../components/SmallAlert";
 import { PageContainer } from "../../components/PageContainer";
 import styled from "styled-components";
+import InfiniteScroll from "react-infinite-scroller";
+import loading from '../../Assets/img/loading.gif';
 
 export default function UserPosts() {
     const [posts, setPosts] = useState([]);
@@ -18,23 +20,49 @@ export default function UserPosts() {
     const { id } = useParams();
     const [isFollowed, setIsFollowed] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [hasMore, setHasMore] = useState(true);
+    const [postId, setPostId] = useState("");
     const userInfo = JSON.parse(localStorage.getItem("user"));
     const history = useHistory();
 
-    const getPosts = () => { 
-        const isUser = (Number(id) === userInfo.user.id);
-        if (isUser) {
-            history.push('/my-posts');
-        } else {
-            getUserPosts({token: userInfo.token, id})
-                .then( res => {
-                    setPosts(res.data.posts)
+    const loadMorePosts = () => {
+        
+            getUserPosts({ token: userInfo.token, id, postId })
+                .then(res => {
+                    setPosts([...posts, ...res.data.posts]);
+                    if (res.data.posts.length === 0) {
+                        setHasMore(false);
+                    }
                 })
                 .catch(() => setErr(true));
             getUserInfo({token: userInfo.token, id})
                 .then( res => setUsername(res.data.user.username))
-        }
+        
     }
+
+    const getNewPosts = (newPosts = [], idPost) => {
+        console.log(newPosts)
+        return getUserPosts({ token: userInfo.token, id, postId: (idPost ? idPost : "") })
+            .then(res => {
+                newPosts.push(...res.data.posts);
+                if (newPosts.length === posts.length || res.data.posts.length === 0) {
+                    return newPosts;
+                }
+                if (!!newPosts[newPosts.length - 1].repostId) {
+                    return getNewPosts(newPosts, newPosts[newPosts.length - 1].repostId);
+                } else {
+                    return getNewPosts(newPosts, newPosts[newPosts.length - 1].id);
+                }
+            })    
+    }
+
+    const getPosts = () => {
+        getNewPosts().then(data => {setPosts(data)});   
+    }
+
+    useEffect(() => {
+        loadMorePosts();
+    }, [postId]);
 
     const defineFollowedUsers = () => {
         getFollowedUsers(userInfo.token).then(ans => {
@@ -50,9 +78,21 @@ export default function UserPosts() {
     }
 
     useEffect(() => {
-        getPosts();
-        const intervalId = setInterval(getPosts, 15000);
+        const isUser = (Number(id) === userInfo.user.id);
+        if (isUser) {
+            history.push('/my-posts');
+        }
+        getUserPosts({token: userInfo.token, id, postId: ""})
+            .then( res => {
+                window.scrollTo({top: 0, behavior: 'smooth'});   
+                setPosts(res.data.posts);
+                setHasMore(true);
+            })
+            .catch(() => setErr(true));
+        getUserInfo({token: userInfo.token, id})
+            .then( res => setUsername(res.data.user.username));
         defineFollowedUsers();
+        const intervalId = setInterval(getPosts, 15000);
         return () => {
             clearInterval(intervalId);
         }
@@ -108,8 +148,28 @@ export default function UserPosts() {
                 </header>
                 <div className='main-content'>
                     <div className='posts'>
-                        {posts.length === 0 ? <h2>Nenhum post encontrado</h2> :
-                            posts.map(post => <Post key={!!post.repostId ? post.repostId : post.id} post={post} userInfo={userInfo} getPosts={getPosts}/>)
+                        {posts.length === 0 
+                            ?   <h2>Nenhum post encontrado</h2> 
+                            :   <InfiniteScroll
+                                    pageStart={0}
+                                    loadMore={() => {
+                                            if (!!posts[posts.length - 1].repostId) {
+                                                setPostId(posts[posts.length - 1].repostId)
+                                            } else {
+                                                setPostId(posts[posts.length - 1].id)
+                                            }
+                                        }
+                                    }
+                                    hasMore={hasMore}
+                                    loader={
+                                        <div className="loader" key={0}>
+                                            <img src={loading}/>
+                                            Loading more posts...
+                                        </div>
+                                    }
+                                >
+                                    {posts.map(post => <Post key={!!post.repostId ? post.repostId : post.id} post={post} userInfo={userInfo} getPosts={getPosts} />)}   
+                                </InfiniteScroll>
                         }
                     </div>
                     <Trending className='trending' />

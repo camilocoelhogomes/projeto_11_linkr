@@ -33,6 +33,7 @@ export default function RepostModal({ state, postId, getPosts }) {
                 getPosts();
                 setRepostModal(false);
                 setIsLoading(false);
+                window.scrollTo({top: 0, behavior: 'smooth'});
             })
             .catch(() => alert("Unable to share post!"))
     }

@@ -52,14 +52,13 @@ export default function Post({ post, userInfo, getPosts }) {
     const [disableEditPost, setDisableEditPost] = useState(false);
     const [location, setLocation] = useState(null);
     const [isCommentSelected, setIsCommentSelected] = useState(false);
-    const [commentNumber, setCommentNumber] = useState(commentCount);
 
     const likePost = (postId) => {
         setLiked(true);
         const actualLikesNumber = numberOfLikes;
         setNumberOfLikes(numberOfLikes + 1);
         sendLike(postId, userInfo.token).then(ans => {
-            
+            getPosts();
         }).catch(err => {
             setLiked(false);
             setNumberOfLikes(actualLikesNumber);
@@ -101,7 +100,7 @@ export default function Post({ post, userInfo, getPosts }) {
         const actualLikesNumber = numberOfLikes;
         setNumberOfLikes(numberOfLikes - 1);
         sendDislike(postId, userInfo.token).then(ans => {
-           
+           getPosts();
         }).catch(err => {
             setLiked(true);
             setNumberOfLikes(actualLikesNumber);
@@ -263,7 +262,7 @@ export default function Post({ post, userInfo, getPosts }) {
                 <RepostModal state={{ repostModal, setRepostModal }} postId={id} getPosts={getPosts} />
                 {!!location ? <LocationPreview user={user.username} setLocation={setLocation} location={location} /> : ''}
             </StyledPost>
-            {isCommentSelected ? <Comments userInfo={userInfo} postId={id} authorId={user.id} setCommentNumber={setCommentNumber} getPosts={getPosts} /> : ""}
+            {isCommentSelected ? <Comments userInfo={userInfo} postId={id} authorId={user.id} getPosts={getPosts} /> : ""}
         </>
     )
 }

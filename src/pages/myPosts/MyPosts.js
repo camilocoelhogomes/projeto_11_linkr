@@ -11,12 +11,12 @@ import loading from '../../Assets/img/loading.gif';
 export default function MyPosts() {
     const [posts, setPosts] = useState([]);
     const [err, setErr] = useState(null);
-    const userInfo = JSON.parse(localStorage.getItem("user"));
     const [hasMore, setHasMore] = useState(true);
     const [postId, setPostId] = useState("");
+    const userInfo = JSON.parse(localStorage.getItem("user"));
 
-    const getPosts = () => {
-        getUserPosts({ token: userInfo.token, id: userInfo.user.id, postId: `olderThan=${postId}` })
+    const loadPosts = () => {
+        getUserPosts({ token: userInfo.token, id: userInfo.user.id, postId })
             .then(res => {
                 setPosts([...posts, ...res.data.posts]);
                 if (res.data.posts.length === 0) {
@@ -26,9 +26,35 @@ export default function MyPosts() {
             .catch(() => setErr(true));
     }
 
+    const getNewPosts = (newPosts = [], id) => {
+        return getUserPosts({ token: userInfo.token, id: userInfo.user.id, postId: (id ? id : "") })
+            .then(res => {
+                newPosts.push(...res.data.posts);
+                if (newPosts.length === posts.length || res.data.posts.length === 0) {
+                    return newPosts;
+                }
+                if (!!newPosts[newPosts.length - 1].repostId) {
+                    return getNewPosts(newPosts, newPosts[newPosts.length - 1].repostId);
+                } else {
+                    return getNewPosts(newPosts, newPosts[newPosts.length - 1].id);
+                }
+            })    
+    }
+
+    const getPosts = () => {
+        getNewPosts().then(data => {setPosts(data)});   
+    }
+
     useEffect(() => {
-        getPosts();
+        loadPosts();
     }, [postId]);
+
+    useEffect(() => {
+        const intervalId =  setInterval(getPosts, 15000);
+        return () => {
+            clearInterval(intervalId);
+        }
+    }, []);
 
     if (err) {
         return <Alert message={'Não foi possível carregar os posts, por favor recarregue a página'} />
@@ -64,7 +90,6 @@ export default function MyPosts() {
                                 }
                             >
                                 {posts.map(post => <Post key={!!post.repostId ? post.repostId : post.id} post={post} userInfo={userInfo} getPosts={getPosts} />)}
-                                
                             </InfiniteScroll>
                     }
                     </div>
