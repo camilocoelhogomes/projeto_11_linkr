@@ -47,18 +47,20 @@ export default function Post({ post, userInfo, getPosts }) {
     const [postText, setPostText] = useState(text);
     const [disableEditPost, setDisableEditPost] = useState(false);
     const [isCommentSelected, setIsCommentSelected] = useState(false);
+    const [commentNumber, setCommentNumber] = useState(commentCount);
 
     const likePost = (postId) => {
         setLiked(true);
         const actualLikesNumber = numberOfLikes;
         setNumberOfLikes(numberOfLikes + 1);
         sendLike(postId, userInfo.token).then(ans => {
-            getPosts();
+            
         }).catch(err => {
             setLiked(false);
             setNumberOfLikes(actualLikesNumber);
             setErrorMessage("Não foi possível curtir esta publicação!");
             setTimeout(() => setErrorMessage(""), 2000);
+            getPosts();
         })
     }
 
@@ -94,7 +96,7 @@ export default function Post({ post, userInfo, getPosts }) {
         const actualLikesNumber = numberOfLikes;
         setNumberOfLikes(numberOfLikes - 1);
         sendDislike(postId, userInfo.token).then(ans => {
-            getPosts();
+           
         }).catch(err => {
             setLiked(true);
             setNumberOfLikes(actualLikesNumber);
@@ -173,7 +175,7 @@ export default function Post({ post, userInfo, getPosts }) {
                     </LikesBox>
                     <StyledRepostBox>
                         <AiOutlineComment className="icon" onClick={() => setIsCommentSelected(!isCommentSelected)}/>
-                        <p>{commentCount} comments</p>
+                        <p>{commentNumber} comments</p>
                         <FaRetweet className="icon" onClick={() => setRepostModal(true)}/>
                         <p>{repostCount} re-posts</p>
                     </StyledRepostBox>
@@ -243,7 +245,7 @@ export default function Post({ post, userInfo, getPosts }) {
                 <DeletePostModal state={{ modalIsOpen, setModalIsOpen }} postId={id} />
                 <RepostModal state={{ repostModal, setRepostModal }} postId={id} />
             </StyledPost>
-            {isCommentSelected ? <Comments userInfo={userInfo} postId={id} authorId={user.id} getPosts={getPosts} /> : ""}
+            {isCommentSelected ? <Comments userInfo={userInfo} postId={id} authorId={user.id} setCommentNumber={setCommentNumber} getPosts={getPosts} /> : ""}
         </>
         )
 }

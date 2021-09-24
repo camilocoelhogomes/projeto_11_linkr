@@ -4,7 +4,7 @@ import { IoPaperPlaneOutline } from 'react-icons/io5';
 import { getComments, postComment, getFollowedUsers } from "../services/API";
 import { Link } from "react-router-dom";
 
-export default function Comments({userInfo, postId, authorId, getPosts}) {
+export default function Comments({userInfo, postId, authorId, setCommentNumber}) {
     const [comments, setComments] = useState([]);
     const [userComment, setUserComment] = useState("");
     const [followedUsers, setFollowedUsers] = useState([]);
@@ -16,9 +16,11 @@ export default function Comments({userInfo, postId, authorId, getPosts}) {
     
     const loadComments = () => {
         listFollowedUsers();
-        getPosts();
         getComments({token: userInfo.token, postId})
-            .then(res => setComments(res.data.comments));
+            .then(res => {
+                setComments(res.data.comments)
+                setCommentNumber(res.data.comments.length)
+            });
     }
 
     const sendComment = (e) => {
@@ -48,7 +50,7 @@ export default function Comments({userInfo, postId, authorId, getPosts}) {
                 ? ""
                 :  comments.map(comment => {
                         return (
-                            <Comment>
+                            <Comment key={comment.id}>
                                 <Link to={`/user/${comment.user.id}`}>
                                     <img src={comment.user.avatar} alt="avatar" />
                                 </Link>

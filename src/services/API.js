@@ -8,7 +8,7 @@ const createHeaders = (token) => {
 
 const deletePost = ({ token, postId }) => axios.delete(`${API_URL}/posts/${postId}`, createHeaders(token));
 
-const getUserPosts = ({ token, id }) => axios.get(`${API_URL}/users/${id}/posts`, createHeaders(token));
+const getUserPosts = ({ token, id, postId }) => axios.get(`${API_URL}/users/${id}/posts?${postId}`, createHeaders(token));
 const getLikedPosts = ({ token }) => axios.get(`${API_URL}/posts/liked`, createHeaders(token));
 const getHashtagPosts = ({ token, hashtag }) => axios.get(`${API_URL}/hashtags/${hashtag}/posts`, createHeaders(token));
 const getServerPosts = ({ token }) => axios.get(`${API_URL}/posts`, createHeaders(token));
