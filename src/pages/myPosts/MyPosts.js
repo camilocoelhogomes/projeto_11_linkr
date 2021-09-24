@@ -15,7 +15,7 @@ export default function MyPosts() {
     const [postId, setPostId] = useState("");
     const userInfo = JSON.parse(localStorage.getItem("user"));
 
-    const loadPosts = () => {
+    const loadMorePosts = () => {
         getUserPosts({ token: userInfo.token, id: userInfo.user.id, postId })
             .then(res => {
                 setPosts([...posts, ...res.data.posts]);
@@ -46,7 +46,7 @@ export default function MyPosts() {
     }
 
     useEffect(() => {
-        loadPosts();
+        loadMorePosts();
     }, [postId]);
 
     useEffect(() => {

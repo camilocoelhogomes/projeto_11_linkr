@@ -19,7 +19,7 @@ export default function TimeLine() {
     const [postId, setPostId] = useState("");
     const userInfo = JSON.parse(localStorage.getItem("user"));
 
-    const loadPosts = () => {
+    const loadMorePosts = () => {
         getFollowedUsersPosts( userInfo.token, (postId === "" ? "" : `olderThan=${postId}`) )
             .then(res => {
                 setErr(false);
@@ -61,7 +61,7 @@ export default function TimeLine() {
     }
 
     useEffect(() => {
-        loadPosts();
+        loadMorePosts();
     }, [postId]);
 
     useEffect(() => {

@@ -15,7 +15,7 @@ export default function LikedPosts() {
     const [postId, setPostId] = useState("");
     const userInfo = JSON.parse(localStorage.getItem("user"));
 
-    const loadPosts = () => {
+    const loadMorePosts = () => {
         getLikedPosts({ token: userInfo.token, postId })
             .then(res => {
                 setPosts([...posts, ...res.data.posts]);
@@ -33,11 +33,7 @@ export default function LikedPosts() {
                 if (newPosts.length === posts.length || res.data.posts.length === 0) {
                     return newPosts;
                 }
-                if (!!newPosts[newPosts.length - 1].repostId) {
-                    return getNewPosts(newPosts, newPosts[newPosts.length - 1].repostId);
-                } else {
-                    return getNewPosts(newPosts, newPosts[newPosts.length - 1].id);
-                }
+                return getNewPosts(newPosts, newPosts[newPosts.length - 1].id);
             })    
     }
 
@@ -46,7 +42,7 @@ export default function LikedPosts() {
     }
 
     useEffect(() => {
-        loadPosts();
+        loadMorePosts();
     }, [postId]);
 
     useEffect(() => {
@@ -73,14 +69,7 @@ export default function LikedPosts() {
                             ?   <h2>Nenhum post encontrado</h2> 
                             :   <InfiniteScroll
                                     pageStart={0}
-                                    loadMore={() => {
-                                            if (!!posts[posts.length - 1].repostId) {
-                                                setPostId(posts[posts.length - 1].repostId)
-                                            } else {
-                                                setPostId(posts[posts.length - 1].id)
-                                            }
-                                        }
-                                    }
+                                    loadMore={() => setPostId(posts[posts.length - 1].id)}
                                     hasMore={hasMore}
                                     loader={
                                         <div className="loader" key={0}>
@@ -89,7 +78,7 @@ export default function LikedPosts() {
                                         </div>
                                     }
                                 >
-                                    {posts.map(post => <Post key={!!post.repostId ? post.repostId : post.id} post={post} userInfo={userInfo} getPosts={getPosts} />)}
+                                    {posts.map(post => <Post key={post.id} post={post} userInfo={userInfo} getPosts={getPosts} />)}
                                 </InfiniteScroll>
                         }
                     </div>

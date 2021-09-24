@@ -26,7 +26,6 @@ export default function UserPosts() {
     const history = useHistory();
 
     const loadMorePosts = () => {
-        
             getUserPosts({ token: userInfo.token, id, postId })
                 .then(res => {
                     setPosts([...posts, ...res.data.posts]);
@@ -35,13 +34,9 @@ export default function UserPosts() {
                     }
                 })
                 .catch(() => setErr(true));
-            getUserInfo({token: userInfo.token, id})
-                .then( res => setUsername(res.data.user.username))
-        
     }
 
     const getNewPosts = (newPosts = [], idPost) => {
-        console.log(newPosts)
         return getUserPosts({ token: userInfo.token, id, postId: (idPost ? idPost : "") })
             .then(res => {
                 newPosts.push(...res.data.posts);
