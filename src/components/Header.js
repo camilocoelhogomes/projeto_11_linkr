@@ -3,6 +3,7 @@ import { useHistory, Link } from "react-router-dom";
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import styled from "styled-components";
 import { Redirect } from "react-router-dom";
+import TrendingMobile from "./TrendingMobile";
 
 export default function Header() {
     const [isSelected, setIsSelected] = useState(false);
@@ -35,6 +36,7 @@ export default function Header() {
             <Link to='/timeline'>
                 <h1>linkr</h1>
             </Link>
+            <TrendingMobile />
             <Menu onBlur={() => toggleMenu(true)}>
                 {isSelected
                     ? <ArrowUp onClick={() => toggleMenu(false)} />

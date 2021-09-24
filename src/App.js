@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import React, { useState } from "react";
 import LinkContext from "./store/LinkContext";
 import LinkPreview from "./components/LinkPreview";
-import TransitionStyle from "./TransitionStyle";
+import TransitionStyle from "./components/TransitionStyle";
 import AppRoutes from "./AppRoutes";
 
 function App() {

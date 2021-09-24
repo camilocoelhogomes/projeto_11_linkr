@@ -6,6 +6,7 @@ import Alert from '../../components/Alert';
 import Treding from '../../components/Trending';
 import Publish from './Publish';
 import { PageContainer } from '../../components/PageContainer';
+import styled from 'styled-components';
 
 export default function TimeLine() {
 
@@ -45,12 +46,12 @@ export default function TimeLine() {
 
     if (!posts) return (
         <>
-            <Header />
             <PageContainer>
                 <header>
                     <h2>timeline</h2>
                 </header>
             </PageContainer>
+            <Header />
         </>
     )
 
@@ -64,7 +65,6 @@ export default function TimeLine() {
 
     return (
         <>
-            <Header />
             <PageContainer>
                 <header>
                     <h2>timeline</h2>
@@ -81,9 +81,10 @@ export default function TimeLine() {
                         )}
                         {posts.map(post => <Post key={!!post.repostId ? post.repostId : post.id} post={post} userInfo={userInfo} getPosts={getPosts} />)}
                     </div>
-                    <Treding className='trending' />
+                    <Treding />
                 </div>
             </PageContainer>
+            <Header />
         </>
     );
 }

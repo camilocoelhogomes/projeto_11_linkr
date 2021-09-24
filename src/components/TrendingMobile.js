@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { getTrendingHashtags } from "../services/API";
 import React, { useEffect, useState } from "react";
 
-export default function Trending() {
+export default function TrendingMobile () {
 
     const [hashtagsList, setHashtagsList] = useState(null);
     const [searchBoxHashtag, setSearchBoxHashtag] = useState("");
@@ -32,12 +32,8 @@ export default function Trending() {
     }
 
     return (
-        <TrendingContainer>
-            <TitleBox>
-                <h3>
-                    trending
-                </h3>
-            </TitleBox>
+        <Details>
+            <summary>trending</summary>
             <Hashtags>
                 {hashtagsList.map((hashtag, i) =>
                     <HashtagLink to={`/hashtag/${hashtag.name}`} id={hashtag.id} key={i}>
@@ -47,29 +43,10 @@ export default function Trending() {
             </Hashtags>
             <StyledTrendingInput placeholder="type a hashtag" type="search" value={searchBoxHashtag} onChange={e => setSearchBoxHashtag(e.target.value)} onKeyUp={e => search(e)}/>
             <StyledHashtagPlaceholder>#</StyledHashtagPlaceholder>
-        </TrendingContainer>
+        </Details>
     )
 }
 
-const TrendingContainer = styled.div`
-    width: 301px;
-    background-color: #171717;
-    border-radius: 16px;
-    height: fit-content;
-    position: sticky;
-    top: 160px; 
-
-    @media(max-width:900px){
-        display: none;
-    }
-`
-const TitleBox = styled.div`
-    height: 61px;
-    border-bottom: 1px solid #484848;
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-`
 const Hashtags = styled.ul`
     display: flex;
     flex-direction: column;
@@ -108,4 +85,46 @@ const StyledHashtagPlaceholder = styled.span`
     left: 29px;
     z-index: 3;
     position: absolute;
+`
+
+const Details = styled.details`
+    display: none;
+
+    @media(max-width:900px){
+        display: initial;
+        position: fixed;
+        top: 65px;
+        left: 0;
+        background-color: #171717;
+        border-radius: 10px;
+        width: 230px;
+
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateX(-10em);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        &:not([open]) { 
+            height: 40px; 
+        }
+        &[open] { 
+            animation-name: fadeInDown;
+            animation-duration: 0.7s;
+        }
+        &[open] li{ 
+            animation-name: fadeInDown;
+            animation-duration: 0.75s;
+        }
+        summary {
+            color: #ffffff;
+            font-size: 25px;
+            font-weight: bold;
+            padding: 6px 15px;
+        }
+    }
 `
