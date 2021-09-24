@@ -9,15 +9,16 @@ import HashtagPosts from "./pages/hashtagPosts/HashtagPosts";
 import LikedPosts from "./pages/likedPosts/LikedPosts";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
-function Content () {
+function AppRoutes () {
 
     const location = useLocation();
 
     return (
-        <div className="fill-content">
           <TransitionGroup>
           <CSSTransition
-            timeout={1000}
+            timeout={
+                500
+            }
             classNames="fade"
             key={location.key}
           >
@@ -46,8 +47,7 @@ function Content () {
             </Switch>
           </CSSTransition>
           </TransitionGroup>
-        </div>
     )
 }
 
-export default Content;
+export default AppRoutes;

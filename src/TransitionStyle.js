@@ -2,20 +2,21 @@ import { createGlobalStyle } from 'styled-components'
 
 const TransitionStyle = createGlobalStyle`
     .fade-enter {
-        opacity: 0;
+        transform: translateY(-1000px);
         z-index: 5;
     }
     .fade-enter.fade-enter-active {
-        opacity: 1;
-        transition: opacity 1000ms ease-in;
+        transform: translateY(100px);
+        transition: transform 500ms ease-out;
     }
+    .fade-enter-done {
+        transform: translateY(0px);
+        transition: transform 500ms ease-in;
+    }
+
     .fade-exit {
-        opacity: 0;
-        z-index: 5;
-    }
-    .fade-exit.fade-exit-active {
-        opacity: 0;
-        transition: opacity 0ms ease-in;
+        z-index: 6;
+        transform: translateY(-10000px);
     }
 `
 

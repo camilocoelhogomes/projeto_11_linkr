@@ -19,7 +19,7 @@ export default function TimeLine() {
         getFollowedUsersPosts(userInfo.token)
             .then((res) => {
                 setErr(false);
-                setPosts(res.data.posts);
+                setTimeout(() => setPosts(res.data.posts), 1200);
             })
             .catch(() => setErr(true));
     }

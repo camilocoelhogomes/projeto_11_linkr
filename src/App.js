@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import LinkContext from "./store/LinkContext";
 import LinkPreview from "./components/LinkPreview";
 import TransitionStyle from "./TransitionStyle";
-import Content from "./Content";
+import AppRoutes from "./AppRoutes";
 
 function App() {
   const [previewHref, setPreviewHref] = useState('');
@@ -20,7 +20,7 @@ function App() {
               <LinkPreview /> :
               <></>
           }
-        <Content />
+        <AppRoutes />
       </Router>
     </LinkContext.Provider>
   );
