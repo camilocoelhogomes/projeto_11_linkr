@@ -101,9 +101,9 @@ const DirectLoginBox = styled.div`
     margin-top: 30px;
 `
 const DirectLoginButton = styled.button`
-    width: 100px;
+    width: 100%;
     height: 50px;
-    background-color: #0ab51e;
+    background-color: #1877F2;
     border-radius: 10px;
     border: none;
     color: #ffffff;
