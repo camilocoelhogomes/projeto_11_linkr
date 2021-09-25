@@ -42,10 +42,10 @@ export default function UserPosts() {
                 const newPosts = [];
                 res.data.posts.some(post => {
                     if (!!post.repostId) {
-                        if(!posts[0].respostId) {
+                        if(!posts[0].repostId) {
                             return newPosts.push(post);
                         } 
-                        if (post.respostId === posts[0].respostId) {
+                        if (post.repostId === posts[0].repostId) {
                             return true;
                         } 
                         return newPosts.push(post);    

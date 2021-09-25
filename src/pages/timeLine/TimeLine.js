@@ -20,7 +20,6 @@ export default function TimeLine() {
     const userInfo = JSON.parse(localStorage.getItem("user"));
     const [firstRender, setFirstRender] = useState(false);
 
-
     const getPosts = () => {
         getFollowedUsersPosts(userInfo.token, (postId === "" ? "" : `?olderThan=${postId}`))
             .then(res => {
@@ -33,42 +32,37 @@ export default function TimeLine() {
                 }
             })
             .catch(() => { setErr(true); });
-
     }
 
     const getNewPosts = () => {
         getFollowedUsersPosts(userInfo.token, "")
             .then(res => {
-                console.log(res.data.posts);
                 const newPosts = [];
-                console.log("1");
-
+                let isTheSamePost = false;
                 res.data.posts.some(post => {
-                    if (!!post.repostId) {
-                        console.log("3")
-                        if (!posts[0].respostId) {
+                    if(!isTheSamePost && firstRender) {
+                        if (!!post.repostId) {
+                            if (!posts[0].repostId) {
+                                return newPosts.push(post);
+                            }
+                            if (post.repostId === posts[0].repostId) {
+                                isTheSamePost = true;
+                                return;
+                            }
                             return newPosts.push(post);
                         }
-                        if (post.respostId === posts[0].respostId) {
+                        if (post.id === posts[0].id) {
+                            isTheSamePost = true;
                             return;
                         }
                         return newPosts.push(post);
                     }
-                    if (post.id === posts[0].id) {
-                        return;
-                    }
-                    return newPosts.push(post);
-                })
-                console.log(newPosts)
-                setPosts([...newPosts, ...posts]);
+                });
+                setPosts(() => [...newPosts, ...posts]);
             })
             .catch((err) => {
-
-                console.log(err)
-                debugger;
                 setErr(true)
             });
-
     }
 
     const defineFollowedUsers = () => {
@@ -85,17 +79,14 @@ export default function TimeLine() {
         defineFollowedUsers();
         getPosts();
     }, [postId]);
-    //
+    
     useEffect(() => {
-
-        if (firstRender) {
-            const intervalId = setInterval(getNewPosts, 15000);
-            return () => {
-                clearInterval(intervalId);
-            }
+        const intervalId = setInterval(getNewPosts, 15000);
+        return () => {
+            clearInterval(intervalId);
         }
-    }, [firstRender]);
-    //*/
+    }, [posts]);
+
     if (!posts) return (
         <>
             <Header />
