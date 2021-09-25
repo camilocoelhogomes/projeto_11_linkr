@@ -6,6 +6,7 @@ import Trending from "../../components/Trending";
 import Alert from "../../components/Alert";
 import { PageContainer } from "../../components/PageContainer";
 import LoadingPosts from "../../components/LoadingPosts";
+import SearchInput from "../../components/SearchInput";
 
 export default function LikedPosts() {
     const [posts, setPosts] = useState(null);
@@ -46,6 +47,7 @@ export default function LikedPosts() {
         <>
             <PageContainer>
                 <header>
+                    <SearchInput />
                     <h2>my likes</h2>
                 </header>
                 <div className='main-content'>

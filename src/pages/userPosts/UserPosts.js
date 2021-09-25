@@ -9,6 +9,7 @@ import SmallAlert from "../../components/SmallAlert";
 import { PageContainer } from "../../components/PageContainer";
 import styled from "styled-components";
 import LoadingPosts from "../../components/LoadingPosts";
+import SearchInput from "../../components/SearchInput";
 
 export default function UserPosts() {
     const [posts, setPosts] = useState(null);
@@ -104,6 +105,7 @@ export default function UserPosts() {
         <>
             <PageContainer>
                 <header>
+                    <SearchInput />
                 {errorMessage !== "" ? (
                     <SmallAlert errorMessage={errorMessage} top={"40px"} left={"calc(100% - 200px)"}></SmallAlert>
                 ) : (<></>)}

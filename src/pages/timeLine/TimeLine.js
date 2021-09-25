@@ -5,6 +5,7 @@ import { getFollowedUsersPosts, getFollowedUsers } from '../../services/API';
 import Alert from '../../components/Alert';
 import Treding from '../../components/Trending';
 import Publish from './Publish';
+import SearchInput from '../../components/SearchInput';
 import { PageContainer } from '../../components/PageContainer';
 import LoadingPosts from "../../components/LoadingPosts";
 
@@ -48,6 +49,7 @@ export default function TimeLine() {
         <>
             <PageContainer>
                 <header>
+                    <SearchInput />
                     <h2>timeline</h2>
                 </header>
                 <LoadingPosts />
@@ -68,6 +70,7 @@ export default function TimeLine() {
         <>
             <PageContainer>
                 <header>
+                    <SearchInput />
                     <h2>timeline</h2>
                 </header>
                 <div className='main-content'>

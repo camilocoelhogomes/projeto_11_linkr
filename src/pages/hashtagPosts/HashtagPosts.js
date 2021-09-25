@@ -5,8 +5,9 @@ import Post from '../../components/Post';
 import Header from '../../components/Header';
 import Trending from "../../components/Trending";
 import Alert from "../../components/Alert";
-import { PageContainer } from "../../components/PageContainer";
 import LoadingPosts from "../../components/LoadingPosts";
+import { PageContainer } from "../../components/PageContainer"
+import SearchInput from "../../components/SearchInput";
 
 export default function HashtagPosts() {
     const [posts, setPosts] = useState(null);
@@ -48,6 +49,7 @@ export default function HashtagPosts() {
         <>
             <PageContainer>
                 <header>
+                    <SearchInput />
                     <h2># {hashtag}</h2>
                 </header>
                 <div className='main-content'>
