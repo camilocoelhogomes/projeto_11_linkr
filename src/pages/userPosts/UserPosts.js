@@ -145,7 +145,7 @@ const StyledFollowButton = styled.button`
     font-weight: bold;
     border-radius: 5px;
 `
-const LoadingButton = styled.div`
+const LoadingButton = styled.button`
     width: 112px;
     height: 31px;
     background-color: gray;
@@ -157,4 +157,5 @@ const LoadingButton = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    border: none;
 `

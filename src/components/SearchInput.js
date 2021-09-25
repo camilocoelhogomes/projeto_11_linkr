@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { AiOutlineSearch } from 'react-icons/ai';
 
 export default function SearchInput({ parent }) {
+    
     const [user, setUser] = useState('');
     const [usersLists, setUsersLists] = useState([]);
     const [followedList, setFollowedList] = useState([]);
@@ -17,7 +18,6 @@ export default function SearchInput({ parent }) {
         setFollowedList(idList)
     });
 
-    
     useEffect(() => {
         if (!user) setUsersLists([]);
         const username = user;
@@ -30,7 +30,6 @@ export default function SearchInput({ parent }) {
             setUsersLists(users);
         });
     }, [user])
-
 
     return (
         <StyledSearchBox parent={parent} >
