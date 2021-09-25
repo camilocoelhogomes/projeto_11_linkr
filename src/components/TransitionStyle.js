@@ -2,24 +2,23 @@ import { createGlobalStyle } from 'styled-components'
 
 const TransitionStyle = createGlobalStyle`
     .fade-enter {
-        transform: translateY(-1000px);
+        transform: translateX(-1000px);
         opacity: 0;
-        z-index: 5;
+        z-index: 1;
     }
     .fade-enter.fade-enter-active {
-        transform: translateY(100px);
-        opacity: 0.7;
+        transform: translateX(100px);
+        opacity: 0.6;
         transition: all 500ms ease-out;
     }
     .fade-enter-done {
-        transform: translateY(0px);
+        transform: translateX(0px);
         opacity: 1;
         transition: all 500ms ease-in;
     }
-
     .fade-exit {
-        z-index: 6;
-        transform: translateY(-10000px);
+        transform: translateX(10000px);
     }
+
 `
 export default TransitionStyle;

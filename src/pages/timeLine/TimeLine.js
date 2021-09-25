@@ -6,7 +6,7 @@ import Alert from '../../components/Alert';
 import Treding from '../../components/Trending';
 import Publish from './Publish';
 import { PageContainer } from '../../components/PageContainer';
-import styled from 'styled-components';
+import LoadingPosts from "../../components/LoadingPosts";
 
 export default function TimeLine() {
 
@@ -50,6 +50,7 @@ export default function TimeLine() {
                 <header>
                     <h2>timeline</h2>
                 </header>
+                <LoadingPosts />
             </PageContainer>
             <Header />
         </>
