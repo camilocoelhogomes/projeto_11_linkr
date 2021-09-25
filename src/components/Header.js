@@ -27,13 +27,14 @@ export default function Header() {
             localStorage.removeItem("user");
         }
         history.push(page);
+        window.scrollTo(0,0);
     }
 
     return (
         <>
         {userInfo ? (
             <HeaderContainer>
-            <Link to='/timeline'>
+            <Link to='/timeline' onClick={() => window.scrollTo(0,0)}>
                 <h1>linkr</h1>
             </Link>
             <TrendingMobile />

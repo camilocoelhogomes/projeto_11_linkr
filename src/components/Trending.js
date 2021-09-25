@@ -20,7 +20,8 @@ export default function Trending() {
 
     const search = (event) => {
         if(event.key === 'Enter' && searchBoxHashtag.replace(/\s/g,'').length) {
-            history.push(`/hashtag/${searchBoxHashtag}`);       
+            history.push(`/hashtag/${searchBoxHashtag}`);   
+            window.scrollTo(0, 0);    
         }
     }
 
@@ -40,7 +41,7 @@ export default function Trending() {
             </TitleBox>
             <Hashtags>
                 {hashtagsList.map((hashtag, i) =>
-                    <HashtagLink to={`/hashtag/${hashtag.name}`} id={hashtag.id} key={i}>
+                    <HashtagLink to={`/hashtag/${hashtag.name}`} id={hashtag.id} key={i} onClick={() => window.scrollTo(0,0)}>
                         <li># {hashtag.name}</li>
                     </HashtagLink>
                 )}

@@ -126,13 +126,18 @@ export default function Post({ post, userInfo, getPosts }) {
         }
     }, [isEditPost]);
 
+    const goToHashtag = (hashTag) => {
+        history.push(`/hashtag/${hashTag.replace(/#/g, "")}`);
+        window.scrollTo(0,0);
+    }
+
     return (
         <>
             {!!repostedBy
                 ? <StyledRepostInfo>
                     <FaRetweet className="repost" />
                     <p>Re-posted by
-                        <Link to={`/user/${repostedBy.id}`}>
+                        <Link to={`/user/${repostedBy.id}`} onClick={() => window.scrollTo(0,0)}>
                             {repostedBy.id === userInfo.user.id ? " you" : ` ${repostedBy.username}`}
                         </Link>
                     </p>
@@ -144,7 +149,7 @@ export default function Post({ post, userInfo, getPosts }) {
                     <SmallAlert errorMessage={errorMessage} top={"110px"} left={"5px"}></SmallAlert>
                 ) : (<></>)}
                 <div className='img-like'>
-                    <Link to={`/user/${user.id}`}>
+                    <Link to={`/user/${user.id}`} onClick={() => window.scrollTo(0,0)}>
                         <img alt='user' className='user-img' src={user.avatar} />
                     </Link>
                     <ReactTooltip
@@ -205,9 +210,10 @@ export default function Post({ post, userInfo, getPosts }) {
                             </form> :
                             <div className='paragraph'>
                                 <p>
-                                    <ReactHashtag onHashtagClick={hashTag => history.push(`/hashtag/${hashTag.replace(/#/g, "")}`)}>
+                                    <ReactHashtag onHashtagClick={hashTag => goToHashtag(hashTag)}>
                                         {postText}
-                                        <LocationPreview user={user} location={location} />       </ReactHashtag>
+                                        <LocationPreview user={user} location={location} />       
+                                    </ReactHashtag>
                                 </p>
                             </div>
                     }
