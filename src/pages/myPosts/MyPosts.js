@@ -5,6 +5,7 @@ import Post from '../../components/Post';
 import Header from '../../components/Header';
 import Trending from "../../components/Trending";
 import Alert from "../../components/Alert";
+import SearchInput from "../../components/SearchInput";
 
 export default function MyPosts() {
     const [posts, setPosts] = useState([]);
@@ -34,6 +35,7 @@ export default function MyPosts() {
             <Header />
             <PageContainer>
                 <header>
+                    <SearchInput />
                     <h2>my posts</h2>
                 </header>
                 <div className='main-content'>
