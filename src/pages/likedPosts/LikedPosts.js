@@ -5,9 +5,10 @@ import Header from '../../components/Header';
 import Trending from "../../components/Trending";
 import Alert from "../../components/Alert";
 import { PageContainer } from "../../components/PageContainer";
+import LoadingPosts from "../../components/LoadingPosts";
 
 export default function LikedPosts() {
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState(null);
     const [err, setErr] = useState(null);
     const userInfo = JSON.parse(localStorage.getItem("user"));
 
@@ -28,6 +29,18 @@ export default function LikedPosts() {
     if (err) {
         return <Alert message={'Não foi possível carregar os posts, por favor recarregue a página'} />
     }
+
+    if (!posts) return (
+        <>
+            <PageContainer>
+                <header>
+                    <h2>my likes</h2>
+                </header>
+                <LoadingPosts />
+            </PageContainer>
+            <Header />
+        </>
+    )
 
     return (
         <>

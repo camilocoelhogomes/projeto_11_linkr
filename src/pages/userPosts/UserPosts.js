@@ -8,9 +8,10 @@ import Alert from '../../components/Alert';
 import SmallAlert from "../../components/SmallAlert";
 import { PageContainer } from "../../components/PageContainer";
 import styled from "styled-components";
+import LoadingPosts from "../../components/LoadingPosts";
 
 export default function UserPosts() {
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState(null);
     const [username, setUsername] = useState("");
     const [err, setErr] = useState(null);
     const [followErr, setFollowErr] = useState(null);
@@ -86,6 +87,18 @@ export default function UserPosts() {
     if (followErr) {
         return <Alert message={'Não foi possível saber se você segue ou não o usuário, por favor recarregue a página'} />
     }
+
+    if (!posts) return (
+        <>
+            <PageContainer>
+                <header>
+                    <h2>' posts</h2>
+                </header>
+                <LoadingPosts />
+            </PageContainer>
+            <Header />
+        </>
+    )
 
     return (
         <>
