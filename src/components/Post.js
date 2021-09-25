@@ -117,12 +117,13 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
         setNumberOfLikes(numberOfLikes - 1);
         sendDislike(postId, userInfo.token).then(ans => {
             const newPosts = posts.map(post => {
-                if(post.id === id) {
-                    post.likes.filter(like => like.userId ==! userInfo.user.id);
-                    return post;
-                } else {
+                if (post.likes.length > 0 && postId === post.id) {
+                    console.log(post.likes);
+                    post.likes = post.likes.filter(like => like.userId !== userInfo.user.id);
+                    console.log(post.likes)
                     return post;
                 }
+                return post;  
             })
             setPosts([...newPosts]);
         }).catch(err => {
@@ -137,6 +138,8 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
     const isPostAlreadyLiked = () => {
         if (likes.find(like => like.userId === userInfo.user.id) !== undefined) {
             setLiked(true);
+        } else {
+            setLiked(false);
         }
     }
 
@@ -144,7 +147,7 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
         setLocation(geolocation);
     }
 
-    useEffect(isPostAlreadyLiked, [])
+    useEffect(isPostAlreadyLiked, [likes.length])
     useEffect(() => {
         if (isEditPost) {
             textRef.current.focus()
@@ -189,7 +192,7 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
                                                 : (`Curtido por você e ${likes[1]["user.username"]}`))
                                                 : (likes[likes.length - 1].userId === userInfo.user.id ? (`Curtido por você, ${likes[likes.length - 2]["user.username"]} e outras ${likes.length - 2} pessoa(s)`)
                                                     : (`Curtido por você, ${likes[likes.length - 1]["user.username"]} e outras ${likes.length - 2} pessoa(s)`))))}>
-                                    {numberOfLikes} likes
+                                    {likes.length} likes
                                 </LikesNumber>
                             </>
                         ) : (
@@ -201,7 +204,7 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
                                             : (likes.length === 2 ? (`Curtido por ${likes[0]["user.username"]} e ${likes[1]["user.username"]}`)
                                                 : (`Curtido por ${likes[likes.length - 1]["user.username"]}, ${likes[likes.length - 2]["user.username"]} e outras ${likes.length - 2} pessoa(s)`)))
                                 }>
-                                    {numberOfLikes} likes
+                                    {likes.length} likes
                                 </LikesNumber>
                             </>
                         )}
@@ -230,7 +233,7 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
                             <div className='paragraph'>
                                 <p>
                                     <ReactHashtag onHashtagClick={hashTag => history.push(`/hashtag/${hashTag.replace(/#/g, "")}`)}>
-                                        {postText}
+                                        {text != postText ? text : postText}
                                         <LocationPreview user={user} location={location} />       </ReactHashtag>
                                 </p>
                             </div>

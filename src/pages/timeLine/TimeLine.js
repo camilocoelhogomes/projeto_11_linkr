@@ -33,25 +33,32 @@ export default function TimeLine() {
     const getNewPosts = () => {
         getFollowedUsersPosts(userInfo.token, "")
             .then(res => {
+                console.log(res.data.posts);
                 const newPosts = [];
-                res.data.posts.some(post => {
+                console.log("1")
+                res.data.posts.forEach(post => {
                     if (!!post.repostId) {
+                        console.log("3")
                         if(!posts[0].respostId) {
                             return newPosts.push(post);
                         } 
                         if (post.respostId === posts[0].respostId) {
-                            return true;
+                            return;
                         } 
                         return newPosts.push(post);    
                     }
                     if(post.id === posts[0].id) {
-                        return true;
+                        return;
                     } 
                     return newPosts.push(post); 
                 })
-                setPosts([...newPosts, ...posts]);
+                console.log(newPosts)
+                setPosts([...newPosts, ...posts]);   
             })
-            .catch(() => setErr(true));
+            .catch((err) => {
+                console.log(err)
+                debugger;
+                setErr(true)});
     }
 
     const defineFollowedUsers = () => {
@@ -70,11 +77,11 @@ export default function TimeLine() {
     }, [postId]);
 
     useEffect(() => {
-        const intervalId = setInterval(getNewPosts, 15000);
-        return () => {
-            clearInterval(intervalId);
-        }
-    }, [])
+        const intervalId = setInterval(getNewPosts, 300000);
+            return () => {
+                clearInterval(intervalId);
+            }
+    }, []);
 
     if (!posts) return (
         <>
