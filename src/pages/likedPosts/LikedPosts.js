@@ -7,6 +7,7 @@ import Alert from "../../components/Alert";
 import { PageContainer } from "../../components/PageContainer";
 import InfiniteScroll from "react-infinite-scroller";
 import loading from '../../Assets/loading.gif';
+import SearchInput from "../../components/SearchInput";
 
 export default function LikedPosts() {
     const [posts, setPosts] = useState([]);
@@ -54,6 +55,7 @@ export default function LikedPosts() {
             <Header />
             <PageContainer>
                 <header>
+                    <SearchInput />
                     <h2>my likes</h2>
                 </header>
                 <div className='main-content'>

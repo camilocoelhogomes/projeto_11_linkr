@@ -5,6 +5,7 @@ import { getFollowedUsersPosts, getFollowedUsers } from '../../services/API';
 import Alert from '../../components/Alert';
 import Treding from '../../components/Trending';
 import Publish from './Publish';
+import SearchInput from '../../components/SearchInput';
 import { PageContainer } from '../../components/PageContainer';
 import InfiniteScroll from "react-infinite-scroller";
 import loading from '../../Assets/loading.gif';
@@ -92,6 +93,7 @@ export default function TimeLine() {
             <Header />
             <PageContainer>
                 <header>
+                    <SearchInput />
                     <h2>timeline</h2>
                 </header>
             </PageContainer>
@@ -111,6 +113,7 @@ export default function TimeLine() {
             <Header />
             <PageContainer>
                 <header>
+                    <SearchInput />
                     <h2>timeline</h2>
                 </header>
                 <div className='main-content'>

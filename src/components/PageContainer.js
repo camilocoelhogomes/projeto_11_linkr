@@ -7,10 +7,21 @@ const PageContainer = styled.div`
     header {
         width: 100%;
         margin: 125px 0 43px 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        display: grid;
+        grid-template-areas: 'search-input search-input';
         overflow-wrap:break-word;
+        justify-content:space-between;
+        h2{
+            max-width:60vw;
+            justify-content: space-between;
+            align-items: center;
+            overflow-wrap:break-word;
+        }
+        div{
+            position: initial;
+            margin:0 auto 19px;
+            grid-area: search-input;
+        }
     }
     .posts{
         display: flex;
@@ -42,7 +53,15 @@ const PageContainer = styled.div`
         .posts{
             width: 100%;
         }
+        header{
+            h2{
+                margin-left:16px;
+            }
+            button{
+                margin-right:16px;
+            }
+        }
     }
 `;
 
-export {PageContainer}
+export { PageContainer }

@@ -7,6 +7,7 @@ import Trending from "../../components/Trending";
 import Alert from "../../components/Alert";
 import InfiniteScroll from "react-infinite-scroller";
 import loading from '../../Assets/loading.gif';
+import SearchInput from "../../components/SearchInput";
 
 export default function MyPosts() {
     const [posts, setPosts] = useState([]);
@@ -63,6 +64,7 @@ export default function MyPosts() {
             <Header />
             <PageContainer>
                 <header>
+                    <SearchInput />
                     <h2>my posts</h2>
                 </header>
                 <div className='main-content'>

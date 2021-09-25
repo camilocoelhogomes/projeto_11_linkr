@@ -5,7 +5,8 @@ import Post from '../../components/Post';
 import Header from '../../components/Header';
 import Trending from "../../components/Trending";
 import Alert from "../../components/Alert";
-import { PageContainer } from "../../components/PageContainer";
+import { PageContainer } from "../../components/PageContainer"
+import SearchInput from "../../components/SearchInput";
 import InfiniteScroll from "react-infinite-scroller";
 import loading from '../../Assets/loading.gif';
 
@@ -65,6 +66,7 @@ export default function HashtagPosts() {
             <Header />
             <PageContainer>
                 <header>
+                    <SearchInput />
                     <h2># {hashtag}</h2>
                 </header>
                 <div className='main-content'>

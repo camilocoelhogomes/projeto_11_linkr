@@ -7,6 +7,7 @@ const createHeaders = (token) => {
 }
 
 const deletePost = ({ token, postId }) => axios.delete(`${API_URL}/posts/${postId}`, createHeaders(token));
+const searchUsers = ({ token, username }) => axios.get(`${API_URL}/users/search?username=${username}`, createHeaders(token));
 const getUserPosts = ({ token, id, postId }) => axios.get(`${API_URL}/users/${id}/posts?olderThan=${postId}`, createHeaders(token));
 const getLikedPosts = ({ token, postId }) => axios.get(`${API_URL}/posts/liked?olderThan=${postId}`, createHeaders(token));
 const getHashtagPosts = ({ token, hashtag, postId }) => axios.get(`${API_URL}/hashtags/${hashtag}/posts?olderThan=${postId}`, createHeaders(token));
@@ -38,6 +39,7 @@ export {
     sendDislike,
     publishPost,
     editServerPost,
+    searchUsers,
     getFollowedUsers,
     followUser,
     unfollowUser,

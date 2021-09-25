@@ -10,6 +10,7 @@ import { PageContainer } from "../../components/PageContainer";
 import styled from "styled-components";
 import InfiniteScroll from "react-infinite-scroller";
 import loading from '../../Assets/loading.gif';
+import SearchInput from "../../components/SearchInput";
 
 export default function UserPosts() {
     const [posts, setPosts] = useState([]);
@@ -127,6 +128,7 @@ export default function UserPosts() {
             <Header />
             <PageContainer>
                 <header>
+                    <SearchInput />
                 {errorMessage !== "" ? (
                     <SmallAlert errorMessage={errorMessage} top={"40px"} left={"calc(100% - 200px)"}></SmallAlert>
                 ) : (<></>)}
