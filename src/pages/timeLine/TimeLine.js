@@ -18,6 +18,8 @@ export default function TimeLine() {
     const [hasMore, setHasMore] = useState(true);
     const [postId, setPostId] = useState("");
     const userInfo = JSON.parse(localStorage.getItem("user"));
+    const [firstRender, setFirstRender] = useState(false);
+
 
     const getPosts = () => {
         getFollowedUsersPosts(userInfo.token, (postId === "" ? "" : `?olderThan=${postId}`))
@@ -26,8 +28,12 @@ export default function TimeLine() {
                 if (res.data.posts.length === 0) {
                     setHasMore(false);
                 }
+                if (!firstRender) {
+                    setFirstRender(true);
+                }
             })
-            .catch(() => setErr(true));
+            .catch(() => { setErr(true); });
+
     }
 
     const getNewPosts = () => {
@@ -35,30 +41,34 @@ export default function TimeLine() {
             .then(res => {
                 console.log(res.data.posts);
                 const newPosts = [];
-                console.log("1")
-                res.data.posts.forEach(post => {
+                console.log("1");
+
+                res.data.posts.some(post => {
                     if (!!post.repostId) {
                         console.log("3")
-                        if(!posts[0].respostId) {
+                        if (!posts[0].respostId) {
                             return newPosts.push(post);
-                        } 
+                        }
                         if (post.respostId === posts[0].respostId) {
                             return;
-                        } 
-                        return newPosts.push(post);    
+                        }
+                        return newPosts.push(post);
                     }
-                    if(post.id === posts[0].id) {
+                    if (post.id === posts[0].id) {
                         return;
-                    } 
-                    return newPosts.push(post); 
+                    }
+                    return newPosts.push(post);
                 })
                 console.log(newPosts)
-                setPosts([...newPosts, ...posts]);   
+                setPosts([...newPosts, ...posts]);
             })
             .catch((err) => {
+
                 console.log(err)
                 debugger;
-                setErr(true)});
+                setErr(true)
+            });
+
     }
 
     const defineFollowedUsers = () => {
@@ -75,14 +85,17 @@ export default function TimeLine() {
         defineFollowedUsers();
         getPosts();
     }, [postId]);
-
+    //
     useEffect(() => {
-        const intervalId = setInterval(getNewPosts, 300000);
+
+        if (firstRender) {
+            const intervalId = setInterval(getNewPosts, 15000);
             return () => {
                 clearInterval(intervalId);
             }
-    }, []);
-
+        }
+    }, [firstRender]);
+    //*/
     if (!posts) return (
         <>
             <Header />
@@ -119,28 +132,28 @@ export default function TimeLine() {
                                 <h3 className="posts-message">Seus seguidores não postaram nada ainda!</h3>
                             ) : ("")
                         )}
-                        {posts.length === 0 
-                            ?   <h2>Nenhum post encontrado</h2> 
-                            :   <InfiniteScroll
-                                    pageStart={0}
-                                    loadMore={() => {
-                                            if (!!posts[posts.length - 1].repostId) {
-                                                setPostId(posts[posts.length - 1].repostId)
-                                            } else {
-                                                setPostId(posts[posts.length - 1].id)
-                                            }
-                                        }
+                        {posts.length === 0
+                            ? <h2>Nenhum post encontrado</h2>
+                            : <InfiniteScroll
+                                pageStart={0}
+                                loadMore={() => {
+                                    if (!!posts[posts.length - 1].repostId) {
+                                        setPostId(posts[posts.length - 1].repostId)
+                                    } else {
+                                        setPostId(posts[posts.length - 1].id)
                                     }
-                                    hasMore={hasMore}
-                                    loader={
-                                        <div className="loader" key={0}>
-                                            <img src={loading}/>
-                                            Loading more posts...
-                                        </div>
-                                    }
-                                >
-                                    {posts.map(post => <Post key={!!post.repostId ? post.repostId : post.id} post={post} userInfo={userInfo} getNewPosts={getNewPosts} posts={posts} setPosts={setPosts}/>)}
-                                </InfiniteScroll>
+                                }
+                                }
+                                hasMore={hasMore}
+                                loader={
+                                    <div className="loader" key={0}>
+                                        <img src={loading} />
+                                        Loading more posts...
+                                    </div>
+                                }
+                            >
+                                {posts.map(post => <Post key={!!post.repostId ? post.repostId : post.id} post={post} userInfo={userInfo} getNewPosts={getNewPosts} posts={posts} setPosts={setPosts} />)}
+                            </InfiniteScroll>
                         }
                     </div>
                     <Treding className='trending' />
