@@ -15,37 +15,35 @@ function AppRoutes () {
 
     return (
           <TransitionGroup>
-          <CSSTransition
-            timeout={
-                500
-            }
-            classNames="fade"
-            key={location.key}
-          >
-            <Switch location={location}>
-              <Route exact path="/" >
-                <LogIn />
-              </Route>
-              <Route exact path="/sign-up" >
-                <SignUp />
-              </Route>
-              <Route exact path="/timeline" >
-                <TimeLine />
-              </Route>
-              <Route exact path="/my-posts" >
-                <MyPosts />
-              </Route>
-              <Route exact path="/user/:id" >
-                <UserPosts />
-              </Route>
-              <Route exact path="/hashtag/:hashtag" >
-                <HashtagPosts />
-              </Route>
-              <Route exact path="/my-likes" >
-                <LikedPosts />
-              </Route>
-            </Switch>
-          </CSSTransition>
+            <CSSTransition
+              timeout={500}
+              classNames="fade-drop"
+              key={location.key}
+            >
+              <Switch location={location}>
+                <Route exact path="/" >
+                  <LogIn />
+                </Route>
+                <Route exact path="/sign-up" >
+                  <SignUp />
+                </Route>
+                <Route exact path="/timeline" >
+                  <TimeLine />
+                </Route>
+                <Route exact path="/my-posts" >
+                  <MyPosts />
+                </Route>
+                <Route exact path="/user/:id" >
+                  <UserPosts />
+                </Route>
+                <Route exact path="/hashtag/:hashtag" >
+                  <HashtagPosts />
+                </Route>
+                <Route exact path="/my-likes" >
+                  <LikedPosts />
+                </Route>
+              </Switch>
+            </CSSTransition>
           </TransitionGroup>
     )
 }
