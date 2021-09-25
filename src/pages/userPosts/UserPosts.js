@@ -92,7 +92,7 @@ export default function UserPosts() {
         <>
             <PageContainer>
                 <header>
-                    <h2>' posts</h2>
+                    <h2>'s posts</h2>
                 </header>
                 <LoadingPosts />
             </PageContainer>
