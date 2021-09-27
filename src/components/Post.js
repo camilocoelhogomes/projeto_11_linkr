@@ -45,7 +45,7 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
     const [liked, setLiked] = useState(false);
     const [numberOfLikes, setNumberOfLikes] = useState(likes.length);
     const [errorMessage, setErrorMessage] = useState("");
-    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [deleteModal, setDeleteModal] = useState(false);
     const [repostModal, setRepostModal] = useState(false);
     const [isEditPost, setIsEditPost] = useState(false);
     const [postText, setPostText] = useState(text);
@@ -153,6 +153,13 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
             textRef.current.focus()
         }
     }, [isEditPost]);
+    useEffect(() => {
+        if (deleteModal || repostModal) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+    }, [deleteModal, repostModal])
 
     const goToHashtag = (hashTag) => {
         history.push(`/hashtag/${hashTag.replace(/#/g, "")}`);
@@ -286,12 +293,12 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
                     isCurrentUser ?
                         <div className='buttons-trash-edit'>
                             <button className='trashButton' onClick={() => setIsEditPost(!isEditPost)}><Edit size='16px' color='#FFFFFF' /></button>
-                            <button className='trashButton' onClick={() => setModalIsOpen(true)}><FaTrash size='16px' color='white' /></button>
+                            <button className='trashButton' onClick={() => setDeleteModal(true)}><FaTrash size='16px' color='white' /></button>
                         </div>
                         :
                         ""
                 }
-                <DeletePostModal state={{ modalIsOpen, setModalIsOpen }} postId={id} posts={posts} setPosts={setPosts} />
+                <DeletePostModal state={{ deleteModal, setDeleteModal }} postId={id} posts={posts} setPosts={setPosts} />
                 <RepostModal state={{ repostModal, setRepostModal }} postId={id} getNewPosts={getNewPosts} posts={posts} setPosts={setPosts} />
                 {!!location ? <LocationPreview user={user.username} setLocation={setLocation} location={location} /> : ''}
             </StyledPost>
