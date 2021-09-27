@@ -21,13 +21,18 @@ export default function LogIn() {
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [lastLogin, setLastLogin] = useState("");
+    const [userInfoControl, setUserInfoControl] = useState(false);
     const history = useHistory();
 
     useEffect(() => {
-        if (localStorage.getItem("user") !== null) {
-            setLastLogin(JSON.parse(localStorage.getItem("user")));
+        if (userInfoControl) {
+            if (localStorage.getItem("user") !== null) {
+                setLastLogin(JSON.parse(localStorage.getItem("user")));
+            }
         }
-    }, [])
+    }, [userInfoControl])
+
+    setTimeout(() => setUserInfoControl(true), 700);
 
     function errorAlert(error) {
         if (error.status === 403) {

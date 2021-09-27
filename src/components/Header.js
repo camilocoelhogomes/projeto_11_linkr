@@ -25,8 +25,8 @@ export default function Header() {
     const goToPage = (page) => {
         setIsSelected(false);
         if (page === '/') {
-            localStorage.removeItem("user");
-        }
+            setTimeout(() => localStorage.removeItem("user"), 700);
+        } 
         history.push(page);
         window.scrollTo(0,0);
     }

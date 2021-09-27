@@ -40,7 +40,7 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
         geolocation,
         commentCount,
     } = post;
-
+    
     const isCurrentUser = Boolean(userInfo.user.id === user.id);
     const [liked, setLiked] = useState(false);
     const [numberOfLikes, setNumberOfLikes] = useState(likes.length);
