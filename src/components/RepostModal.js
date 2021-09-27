@@ -40,8 +40,8 @@ export default function RepostModal({ state, postId, getNewPosts, posts, setPost
                 })
                 setPosts(newPosts);
                 getNewPosts();
-                setRepostModal(false);
                 setIsLoading(false);
+                setRepostModal(false);
             })
             .catch(() => alert("Unable to share post!"))
     }
