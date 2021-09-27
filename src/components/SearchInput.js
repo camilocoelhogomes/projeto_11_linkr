@@ -30,7 +30,7 @@ export default function SearchInput({ parent }) {
                 setUsersLists(users);
             })
         }
-    }, [user])
+    }, [user]);
 
     return (
         <StyledSearchBox parent={parent} >
