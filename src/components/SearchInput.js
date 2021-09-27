@@ -126,6 +126,18 @@ const StyledSearchBox = styled.div`
         margin: 16px;
         align-items: center;
 
+        :hover {
+            background-color: #c4c4c4;
+            border-radius: 20px;
+            span {
+                color: #5e5e5e;
+                opacity: 0.8;
+            }
+        }
+        :active {
+            transform: translateY(-3px);
+        }
+
         h1{
             font-size: 19px;
             font-family: 'lato', sans-serif;

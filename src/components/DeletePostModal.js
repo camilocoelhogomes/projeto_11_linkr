@@ -92,6 +92,12 @@ button{
     font-weight:bold;
     font-size: 18px;
     font-family: "Lato",sans-serif;
+    :hover {
+        opacity: 0.8;
+    }
+    :active {
+        transform: translateY(-3px);
+    }
 }
 `
 const WhiteButton = styled.button`

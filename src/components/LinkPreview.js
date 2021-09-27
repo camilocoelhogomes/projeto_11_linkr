@@ -68,6 +68,12 @@ const StyledLinkPreview = styled.div`
         align-items: center;
         justify-content: center;
         cursor: pointer;
+        :hover {
+            opacity: 0.8;
+        }
+        :active {
+            transform: translateY(-3px);
+        }
     }
 
     .close-link-preview{
@@ -76,6 +82,12 @@ const StyledLinkPreview = styled.div`
         color: #ffffff;
         border: none;
         cursor: pointer;
+        :hover {
+            color: red;
+        }
+        :active {
+            transform: translateY(-3px);
+        }
     }
     .frame-preview{
         height: calc(100% - 50px);

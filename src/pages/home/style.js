@@ -73,6 +73,12 @@ const BlueButton = styled.button`
     font-size: 22px;
     line-height: 33px;
     color: #FFFFFF;
+    :hover {
+        opacity: 0.8;
+    }
+    :active {
+        transform: translateY(-3px);
+    }
 `
 const StyledForm = styled.form`
     display:grid;
@@ -88,6 +94,11 @@ const Anchor = styled.h4`
     }
     margin-top:14px;
     text-align: center;
+    .switch-sign {
+        :hover {
+            opacity: 0.8;
+        }
+    }
 `
 const DirectLoginBox = styled.div`
     align-self: center;
@@ -111,6 +122,12 @@ const DirectLoginButton = styled.button`
     font-weight: bold;
     align-self: center;
     margin-top: 15px;
+    :hover {
+        opacity: 0.8;
+    }
+    :active {
+        transform: translateY(-3px);
+    }
 `
 const DirectLoginAsk = styled.span`
     h4 {
