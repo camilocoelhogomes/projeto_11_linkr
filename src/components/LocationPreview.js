@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { AiOutlineClose } from "react-icons/ai";
 import GoogleMapReact from 'google-map-react';
 import { TiLocation } from "react-icons/ti";
-
-const LocationPreview = ({ setLocation, user, location }) => {
-    console.log(location);
+import LinkContext from '../store/LinkContext';
+const LocationPreview = () => {
+    const { location, setLocation, userLocation } = useContext(LinkContext);
     const center = {
         lat: Number(location.latitude),
         lng: Number(location.longitude)
@@ -14,8 +14,8 @@ const LocationPreview = ({ setLocation, user, location }) => {
         <StyledLinkPreview>
             <div className='preview-box'>
                 <div className='preview-header'>
-                    <h2>{user}'s location</h2>
-                    <button onClick={() => setLocation(null)} className='close-link-preview'><AiOutlineClose /></button>
+                    <h2>{userLocation}'s location</h2>
+                    <button onClick={() => { setLocation(null); }} className='close-link-preview'><AiOutlineClose /></button>
                 </div>
                 <div className='frame-preview'>
                     <GoogleMapReact
@@ -25,7 +25,7 @@ const LocationPreview = ({ setLocation, user, location }) => {
                         <TiLocation
                             lat={center.lat}
                             lng={center.lng}
-                            text={user}
+                            text={userLocation}
                             size='32px'
                             color='#ff0000'
                         />

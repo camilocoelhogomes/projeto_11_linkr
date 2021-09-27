@@ -38,14 +38,14 @@ export default function DeletePostModal({ state, postId, posts, setPosts }) {
     const requestDeletePost = () => {
         setIsLoading(true);
         const token = JSON.parse(localStorage.getItem("user")).token;
-        const request = deletePost({ token, postId });
-        request.then(res => {
-            const newPosts = posts.filter(post => post.id !== postId);
-            setPosts(newPosts);
-            setDeleteModal(false);
-            setIsLoading(false);
-        });
-        request.catch(err => errorAlert(err.response));
+        deletePost({ token, postId })
+            .then(res => {
+                const newPosts = posts.filter(post => post.id !== postId);
+                setIsLoading(false);
+                setDeleteModal(false);
+                setPosts(newPosts);
+            })
+            .catch(err => errorAlert(err.response));
     }
 
     return (
@@ -93,6 +93,12 @@ const Options = styled.div`
         font-weight:bold;
         font-size: 18px;
         font-family: "Lato",sans-serif;
+        :hover {
+            opacity: 0.8;
+        }
+        :active {
+            transform: translateY(-3px);
+        }
 }
 `
 const WhiteButton = styled.button`

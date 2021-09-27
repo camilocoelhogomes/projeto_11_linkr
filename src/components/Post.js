@@ -25,6 +25,9 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
     const {
         setShowIframe,
         setPreviewHref,
+        setUserLocation,
+        setLocation,
+        setScrollY,
     } = useContext(LinkContext);
     const {
         id,
@@ -50,7 +53,6 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
     const [isEditPost, setIsEditPost] = useState(false);
     const [postText, setPostText] = useState(text);
     const [disableEditPost, setDisableEditPost] = useState(false);
-    const [location, setLocation] = useState(null);
     const [isCommentSelected, setIsCommentSelected] = useState(false);
 
     const likePost = (postId) => {
@@ -59,8 +61,8 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
         setNumberOfLikes(numberOfLikes + 1);
         sendLike(postId, userInfo.token).then(ans => {
             const newPosts = posts.map(post => {
-                if(post.id === id) {
-                    post.likes.push({"userId": userInfo.user.id});
+                if (post.id === id) {
+                    post.likes.push({ "userId": userInfo.user.id });
                     return post;
                 } else {
                     return post;
@@ -85,7 +87,7 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
                 data: data,
             }).then(res => {
                 const newPosts = posts.map(post => {
-                    if(post.id === id) {
+                    if (post.id === id) {
                         post.text = data.text;
                         return post;
                     } else {
@@ -123,7 +125,7 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
                     console.log(post.likes)
                     return post;
                 }
-                return post;  
+                return post;
             })
             setPosts([...newPosts]);
         }).catch(err => {
@@ -145,6 +147,8 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
 
     const locationHandler = () => {
         setLocation(geolocation);
+        setUserLocation(user.username);
+        setScrollY(window.scrollY);
     }
 
     useEffect(isPostAlreadyLiked, [likes.length])
@@ -163,7 +167,7 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
 
     const goToHashtag = (hashTag) => {
         history.push(`/hashtag/${hashTag.replace(/#/g, "")}`);
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
     }
 
     return (
@@ -172,7 +176,7 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
                 ? <StyledRepostInfo>
                     <FaRetweet className="repost" />
                     <p>Re-posted by
-                        <Link to={`/user/${repostedBy.id}`} onClick={() => window.scrollTo(0,0)}>
+                        <Link to={`/user/${repostedBy.id}`} onClick={() => window.scrollTo(0, 0)}>
                             {repostedBy.id === userInfo.user.id ? " you" : ` ${repostedBy.username}`}
                         </Link>
                     </p>
@@ -184,7 +188,7 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
                     <SmallAlert errorMessage={errorMessage} top={"110px"} left={"5px"}></SmallAlert>
                 ) : (<></>)}
                 <div className='img-like'>
-                    <Link to={`/user/${user.id}`} onClick={() => window.scrollTo(0,0)}>
+                    <Link to={`/user/${user.id}`} onClick={() => window.scrollTo(0, 0)}>
                         <img alt='user' className='user-img' src={user.avatar} />
                     </Link>
                     <ReactTooltip
@@ -246,7 +250,6 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
                                 <p>
                                     <ReactHashtag onHashtagClick={hashTag => goToHashtag(hashTag)}>
                                         {text != postText ? text : postText}
-                                        <LocationPreview user={user} location={location} />       
                                     </ReactHashtag>
                                 </p>
                             </div>
@@ -267,7 +270,7 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
                                 <a href={link} target="_blank" rel="noreferrer">{link}</a>
                             </>
                             :
-                            <div onClick={() => { setPreviewHref(link); setShowIframe(true) }} className='link-card'>
+                            <div onClick={() => { setPreviewHref(link); setShowIframe(true); setScrollY(window.scrollY); }} className='link-card'>
                                 <div className='link-text-info'>
                                     <div className='paragraph'>
                                         <p className='link-title'>{linkTitle}</p>
@@ -300,7 +303,6 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
                 }
                 <DeletePostModal state={{ deleteModal, setDeleteModal }} postId={id} posts={posts} setPosts={setPosts} />
                 <RepostModal state={{ repostModal, setRepostModal }} postId={id} getNewPosts={getNewPosts} posts={posts} setPosts={setPosts} />
-                {!!location ? <LocationPreview user={user.username} setLocation={setLocation} location={location} /> : ''}
             </StyledPost>
             {isCommentSelected ? <Comments userInfo={userInfo} postId={id} authorId={user.id} posts={posts} setPosts={setPosts} /> : ""}
         </>
