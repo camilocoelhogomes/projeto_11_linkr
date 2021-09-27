@@ -34,7 +34,6 @@ export default function Publish({ loadPosts }) {
         publishPost({ token: userInfo.token, body })
             .then((res) => {
                 setLoading(false);
-                console.log(res);
                 setText("");
                 setLink("");
                 loadPosts();
