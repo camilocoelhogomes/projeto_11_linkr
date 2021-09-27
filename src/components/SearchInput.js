@@ -12,23 +12,24 @@ export default function SearchInput({ parent }) {
     const [followedList, setFollowedList] = useState([]);
     const token = JSON.parse(localStorage.getItem("user")).token;
 
-    getFollowedUsers(token).then(res => {
-        const idList = [];
-        res.data.users.forEach(user => idList.push(user.id))
-        setFollowedList(idList)
-    });
-
     useEffect(() => {
         if (!user) setUsersLists([]);
         const username = user;
-        searchUsers({ token, username }).then(res => {
-            const users = res.data.users;
-            users.sort((a, b) => {
-                if (followedList.includes(a.id)) return -1;
-                return 1;
-            });
-            setUsersLists(users);
-        });
+        getFollowedUsers(token).then(res => {
+            const idList = [];
+            res.data.users.forEach(user => idList.push(user.id))
+            setFollowedList(idList)
+        })
+        if (user) {
+            searchUsers({ token, username }).then(res => {
+                const users = res.data.users;
+                users.sort((a, b) => {
+                    if (followedList.includes(a.id)) return -1;
+                    return 1;
+                });
+                setUsersLists(users);
+            })
+        }
     }, [user])
 
     return (

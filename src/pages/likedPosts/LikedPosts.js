@@ -20,7 +20,7 @@ export default function LikedPosts() {
     const getPosts = () => {
         getLikedPosts({ token: userInfo.token, postId })
             .then(res => {
-                setPosts([...posts, ...res.data.posts]);
+                (!posts) ? setPosts([...res.data.posts]) : setPosts([...posts, ...res.data.posts]);
                 if (res.data.posts.length === 0) {
                     setHasMore(false);
                 }

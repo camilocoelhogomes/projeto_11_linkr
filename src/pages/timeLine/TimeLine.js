@@ -13,7 +13,7 @@ import loading from '../../Assets/loading.gif';
 
 export default function TimeLine() {
 
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState(null);
     const [err, setErr] = useState(null);
     const [followedUsersErr, setFollowedUsersErr] = useState(null);
     const [followedUsers, setFollowedUsers] = useState([]);
@@ -25,7 +25,7 @@ export default function TimeLine() {
     const getPosts = () => {
         getFollowedUsersPosts(userInfo.token, (postId === "" ? "" : `?olderThan=${postId}`))
             .then(res => {
-                setPosts([...posts, ...res.data.posts]);
+                (!posts) ? setPosts([...res.data.posts]) : setPosts([...posts, ...res.data.posts]);
                 if (res.data.posts.length === 0) {
                     setHasMore(false);
                 }

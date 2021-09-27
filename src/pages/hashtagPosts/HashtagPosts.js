@@ -22,7 +22,7 @@ export default function HashtagPosts() {
     const getPosts = () => {
         getHashtagPosts({ token: userInfo.token, hashtag, postId })
             .then(res => {
-                setPosts([...posts, ...res.data.posts]);
+                (!posts) ? setPosts([...res.data.posts]) : setPosts([...posts, ...res.data.posts]);
                 if (res.data.posts.length === 0) {
                     setHasMore(false);
                 }

@@ -237,16 +237,10 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
                             </form> :
                             <div className='paragraph'>
                                 <p>
-<<<<<<< HEAD
                                     <ReactHashtag onHashtagClick={hashTag => goToHashtag(hashTag)}>
-                                        {postText}
+                                        {text != postText ? text : postText}
                                         <LocationPreview user={user} location={location} />       
                                     </ReactHashtag>
-=======
-                                    <ReactHashtag onHashtagClick={hashTag => history.push(`/hashtag/${hashTag.replace(/#/g, "")}`)}>
-                                        {text != postText ? text : postText}
-                                        <LocationPreview user={user} location={location} />       </ReactHashtag>
->>>>>>> dev
                                 </p>
                             </div>
                     }

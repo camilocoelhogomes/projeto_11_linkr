@@ -30,7 +30,7 @@ export default function UserPosts() {
     const getPosts = () => {
         getUserPosts({ token: userInfo.token, id, postId })
             .then(res => {
-                setPosts([...posts, ...res.data.posts]);
+                (!posts) ? setPosts([...res.data.posts]) : setPosts([...posts, ...res.data.posts]);
                 if (res.data.posts.length === 0) {
                     setHasMore(false);
                 }
