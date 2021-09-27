@@ -13,6 +13,7 @@ import LocationPreview from "./components/LocationPreview";
 import LinkPreview from "./components/LinkPreview";
 import TransitionStyle from "./components/TransitionStyle";
 import AppRoutes from "./AppRoutes";
+import styled from 'styled-components';
 
 function App() {
   const [previewHref, setPreviewHref] = useState('');
@@ -24,7 +25,7 @@ function App() {
   useEffect(() => { window.scrollTo(0, scrollY); }, [location, showIframe]);
 
   return (
-    <div className={(showIframe || location) ? 'overflow-y' : ''}>
+    <Main showIframe={showIframe} location={location} scrollY={scrollY}>
       <LinkContext.Provider value={{ previewHref, setPreviewHref, showIframe, setShowIframe, location, setLocation, userLocation, setUserLocation, scrollY, setScrollY }}>
         <Router>
           <GlobalStyle />
@@ -60,9 +61,15 @@ function App() {
           </Switch>
         </Router>
       </LinkContext.Provider>
-    </div>
+    </Main>
   );
 }
 
 export default App;
 
+const Main = styled.div`
+  overflow-y: ${({ showIframe, location }) => (showIframe || location) ? 'hidden' : 'initial'};
+  height: ${({ showIframe, location }) => (showIframe || location) ? '100vh' : 'initial'};
+  position: ${({ showIframe, location }) => (showIframe || location) ? 'fixed' : 'initial'};
+  top: ${({ showIframe, location, scrollY }) => (showIframe || location) ? `-${scrollY}px` : 'initial'};
+`
