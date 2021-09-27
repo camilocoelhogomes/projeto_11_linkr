@@ -25,6 +25,7 @@ const LinkPreview = () => {
 export default LinkPreview;
 
 const StyledLinkPreview = styled.div`
+    overflow-y: hidden;
     height: 100vh;
     width: 100vw;
     background-color: rgba(255,255,255,0.9);
@@ -81,6 +82,7 @@ const StyledLinkPreview = styled.div`
     }
 
     @media(max-width: 600px){
+        overflow-y: hidden;
         .preview-box{
             width: 100%;
             border-radius: 0px;
