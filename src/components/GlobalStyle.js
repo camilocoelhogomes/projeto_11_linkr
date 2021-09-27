@@ -92,6 +92,10 @@ const GlobalStyle = createGlobalStyle`
         font-size: 27px;  
         font-weight: 700;
     }
+    .overflow-y{
+        overflow-y: hidden;
+        height: 100vh;
+    }
 
     @media (max-width: 600px){
         body {

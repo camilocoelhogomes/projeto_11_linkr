@@ -25,6 +25,8 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
     const {
         setShowIframe,
         setPreviewHref,
+        setUserLocation,
+        setLocation,
     } = useContext(LinkContext);
     const {
         id,
@@ -50,7 +52,6 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
     const [isEditPost, setIsEditPost] = useState(false);
     const [postText, setPostText] = useState(text);
     const [disableEditPost, setDisableEditPost] = useState(false);
-    const [location, setLocation] = useState(null);
     const [isCommentSelected, setIsCommentSelected] = useState(false);
 
     const likePost = (postId) => {
@@ -59,8 +60,8 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
         setNumberOfLikes(numberOfLikes + 1);
         sendLike(postId, userInfo.token).then(ans => {
             const newPosts = posts.map(post => {
-                if(post.id === id) {
-                    post.likes.push({"userId": userInfo.user.id});
+                if (post.id === id) {
+                    post.likes.push({ "userId": userInfo.user.id });
                     return post;
                 } else {
                     return post;
@@ -85,7 +86,7 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
                 data: data,
             }).then(res => {
                 const newPosts = posts.map(post => {
-                    if(post.id === id) {
+                    if (post.id === id) {
                         post.text = data.text;
                         return post;
                     } else {
@@ -123,7 +124,7 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
                     console.log(post.likes)
                     return post;
                 }
-                return post;  
+                return post;
             })
             setPosts([...newPosts]);
         }).catch(err => {
@@ -145,6 +146,7 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
 
     const locationHandler = () => {
         setLocation(geolocation);
+        setUserLocation(user.username)
     }
 
     useEffect(isPostAlreadyLiked, [likes.length])
@@ -234,7 +236,7 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
                                 <p>
                                     <ReactHashtag onHashtagClick={hashTag => history.push(`/hashtag/${hashTag.replace(/#/g, "")}`)}>
                                         {text != postText ? text : postText}
-                                        <LocationPreview user={user} location={location} />       </ReactHashtag>
+                                    </ReactHashtag>
                                 </p>
                             </div>
                     }
@@ -287,7 +289,6 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
                 }
                 <DeletePostModal state={{ modalIsOpen, setModalIsOpen }} postId={id} posts={posts} setPosts={setPosts} />
                 <RepostModal state={{ repostModal, setRepostModal }} postId={id} getNewPosts={getNewPosts} posts={posts} setPosts={setPosts} />
-                {!!location ? <LocationPreview user={user.username} setLocation={setLocation} location={location} /> : ''}
             </StyledPost>
             {isCommentSelected ? <Comments userInfo={userInfo} postId={id} authorId={user.id} posts={posts} setPosts={setPosts} /> : ""}
         </>
