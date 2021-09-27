@@ -10,6 +10,9 @@ export default function Header() {
     const [isSelected, setIsSelected] = useState(false);
     const history = useHistory();
     const userInfo = JSON.parse(localStorage.getItem("user"));
+    if (!userInfo) {
+        history.push("/");
+    }
 
     const toggleMenu = (isBlur) => {
         if (isBlur) {
@@ -25,8 +28,8 @@ export default function Header() {
     const goToPage = (page) => {
         setIsSelected(false);
         if (page === '/') {
-            localStorage.removeItem("user");
-        }
+            setTimeout(() => localStorage.removeItem("user"), 800);
+        } 
         history.push(page);
         window.scrollTo(0,0);
     }
