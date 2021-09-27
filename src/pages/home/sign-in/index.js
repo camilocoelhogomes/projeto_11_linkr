@@ -74,7 +74,7 @@ export default function LogIn() {
                     <BlueButton type="submit" isLoading={isLoading} disabled={isLoading}>{isLoading ? "Loading..." : "Log In"}</BlueButton>
                 </StyledForm>
                 <Anchor>
-                    <Link to="/sign-up">
+                    <Link to="/sign-up" className="switch-sign">
                         First time? Create an account!
                     </Link>
                 </Anchor>

@@ -26,6 +26,15 @@ const Hashtags = styled.ul`
     padding: 22px 16px;
     gap: 13px;
     font-weight: 700;
+    
+    li {
+        :hover {
+            color: #1877F2;
+        }
+        :active {
+            transform: translateY(-3px);
+        }
+    }
 `
 const HashtagLink = styled(Link)`
     text-decoration: none;
@@ -97,6 +106,10 @@ const Details = styled.details`
             font-size: 25px;
             font-weight: bold;
             padding: 6px 15px;
+            cursor: pointer;
+            :hover {
+                opacity: 0.8;
+            }
         }
     }
 `
