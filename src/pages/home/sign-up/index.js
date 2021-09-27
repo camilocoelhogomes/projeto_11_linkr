@@ -29,7 +29,8 @@ export default function SignUp() {
         if (error.status === 403) {
             alert("The email you entered is already in use, please choose another one");
         } else if (error.status === 400) {
-            alert("Image url is not supported, please choose another one");
+            const invalidParam = error.data.message.slice(15);
+            alert(`${invalidParam} format is not supported, please choose another one`);
         } else {
             alert("Unable to register")
         };

@@ -89,46 +89,40 @@ const Anchor = styled.h4`
     margin-top:14px;
     text-align: center;
 `
-const StyledButtonOptions = styled.div`
+const DirectLoginBox = styled.div`
+    align-self: center;
+    width: 330px;
+    background-color: #545454;
+    border-radius: 18px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    gap: 30px;
-    margin-top: 20px;
+    padding: 15px 20px;
+    margin-top: 30px;
 `
-const StyledOption = styled.button`
-    width: 100px;
+const DirectLoginButton = styled.button`
+    width: 100%;
     height: 50px;
-    background-color: ${props => props.buttonColor};
+    background-color: #1877F2;
     border-radius: 10px;
     border: none;
     color: #ffffff;
     font-size: 18px;
     font-weight: bold;
+    align-self: center;
+    margin-top: 15px;
 `
-const StyledConfirm = styled.div`
-    height: 100vh;
-    width: 100vw;
-    background-color: rgba(255,255,255,0.9);
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`
-const StyledConfirmBox = styled.div`
-    width: 597px;
-    background: #333333;
-    border-radius: 50px;
-    padding: 30px 45px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 10px;
-    p {
+const DirectLoginAsk = styled.span`
+    h4 {
+        margin-bottom: 10px;
         font-weight: 400;
-        font-size: 23px;
+    }
+    p {
+        font-size: 20px;
         color: #ffffff;
+        font-weight: 400;
+        line-height: 25px;
+        word-break: break-all;
     }
 `
-export { BodyContainer, Banner, AppName, AppCopy, Container, StyledInput, BlueButton, StyledForm, Anchor, StyledOption, StyledConfirm, StyledButtonOptions, StyledConfirmBox }
+export { BodyContainer, Banner, AppName, AppCopy, Container, StyledInput, BlueButton, StyledForm, Anchor, DirectLoginBox, DirectLoginButton, DirectLoginAsk }

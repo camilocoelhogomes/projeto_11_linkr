@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import styled from "styled-components";
+import { Redirect } from "react-router-dom";
+import TrendingMobile from "./TrendingMobile";
+import SearchInput from "./SearchInput";
 
 export default function Header() {
     const [isSelected, setIsSelected] = useState(false);
@@ -25,13 +28,18 @@ export default function Header() {
             localStorage.removeItem("user");
         }
         history.push(page);
+        window.scrollTo(0,0);
     }
 
     return (
-        <HeaderContainer>
-            <Link to='/timeline'>
+        <>
+        {userInfo ? (
+            <HeaderContainer>
+            <Link to='/timeline' onClick={() => window.scrollTo(0,0)}>
                 <h1>linkr</h1>
             </Link>
+            <TrendingMobile />
+            <SearchInput parent='header' />
             <Menu onBlur={() => toggleMenu(true)}>
                 {isSelected
                     ? <ArrowUp onClick={() => toggleMenu(false)} />
@@ -48,6 +56,10 @@ export default function Header() {
                 }
             </Menu>
         </HeaderContainer>
+        ) : (
+            <Redirect to="/"></Redirect>
+        )}
+    </>
     );
 }
 
@@ -69,6 +81,11 @@ const HeaderContainer = styled.header`
         font-size: 49px;
         color: #FFFFFF;
         letter-spacing: 0.05em;
+    }
+    @media(min-width:900px){
+        .desktop-input{
+            display:none;
+        }
     }
 `;
 
