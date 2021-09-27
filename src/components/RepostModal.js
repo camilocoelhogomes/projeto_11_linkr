@@ -40,8 +40,8 @@ export default function RepostModal({ state, postId, getNewPosts, posts, setPost
                 })
                 setPosts(newPosts);
                 getNewPosts();
-                setRepostModal(false);
                 setIsLoading(false);
+                setRepostModal(false);
             })
             .catch(() => alert("Unable to share post!"))
     }
@@ -97,8 +97,20 @@ const Options = styled.div`
 const WhiteButton = styled.button`
     background: #FFFFFF;
     color: #1877F2;
+    :hover {
+        opacity: 0.8;
+    }
+    :active {
+        transform: translateY(-3px);
+    }
 `
 const BlueButton = styled.button`
     background: #1877F2;
     color: #FFFFFF;
+    :hover {
+        opacity: 0.8;
+    }
+    :active {
+        transform: translateY(-3px);
+    }
 `

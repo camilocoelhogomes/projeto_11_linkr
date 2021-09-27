@@ -199,6 +199,12 @@ const StyledFollowButton = styled.button`
     line-height: 17px;
     font-weight: bold;
     border-radius: 5px;
+    :hover {
+        opacity: 0.8;
+    }
+    :active {
+        transform: translateY(-3px);
+    }
 `
 const LoadingButton = styled.button`
     width: 112px;

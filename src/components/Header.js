@@ -10,6 +10,9 @@ export default function Header() {
     const [isSelected, setIsSelected] = useState(false);
     const history = useHistory();
     const userInfo = JSON.parse(localStorage.getItem("user"));
+    if (!userInfo) {
+        history.push("/");
+    }
 
     const toggleMenu = (isBlur) => {
         if (isBlur) {
@@ -25,8 +28,8 @@ export default function Header() {
     const goToPage = (page) => {
         setIsSelected(false);
         if (page === '/') {
-            localStorage.removeItem("user");
-        }
+            setTimeout(() => localStorage.removeItem("user"), 800);
+        } 
         history.push(page);
         window.scrollTo(0,0);
     }
@@ -36,7 +39,7 @@ export default function Header() {
         {userInfo ? (
             <HeaderContainer>
             <Link to='/timeline' onClick={() => window.scrollTo(0,0)}>
-                <h1>linkr</h1>
+                <h1 className="site-name">linkr</h1>
             </Link>
             <TrendingMobile />
             <SearchInput parent='header' />
@@ -50,7 +53,7 @@ export default function Header() {
                     ? <ul>
                         <li onClick={() => goToPage('/my-posts')}>My posts</li>
                         <li onClick={() => goToPage('/my-likes')}>My likes</li>
-                        <li onClick={() => goToPage('/')}>Logout</li>
+                        <li onClick={() => goToPage('/')} className="logout">Logout</li>
                     </ul>
                     : ""
                 }
@@ -82,6 +85,14 @@ const HeaderContainer = styled.header`
         color: #FFFFFF;
         letter-spacing: 0.05em;
     }
+    .site-name {
+        :hover {
+            opacity: 0.8;
+        }
+        :active {
+            transform: translateY(-3px);
+        }
+    }
     @media(min-width:900px){
         .desktop-input{
             display:none;
@@ -111,6 +122,12 @@ const Menu = styled.button`
         right: -20px;
         background-color: #171717;
         border-bottom-left-radius: 20px;
+        .logout {
+            :hover {
+                color: red;
+                opacity: 0.8;
+            }
+        }
     }
 
     li {
@@ -121,6 +138,12 @@ const Menu = styled.button`
         font-family: 'Lato', sans-serif;
         margin-top: 10px;
         cursor: pointer;
+        :hover {
+            color: #1877F2;
+        }
+        :active {
+            transform: translateY(-3px);
+        }
     }
 `;
 
@@ -130,6 +153,9 @@ const ArrowDown = styled(FiChevronDown)`
     font-size: 35px;
     margin-right: 10px;
     cursor: pointer;
+    :hover {
+        opacity: 0.8;
+    }
 `;
 
 const ArrowUp = styled(FiChevronUp)`
@@ -138,4 +164,7 @@ const ArrowUp = styled(FiChevronUp)`
     font-size: 35px;
     margin-right: 10px;
     cursor: pointer;
+    :hover {
+        opacity: 0.8;
+    }
 `;

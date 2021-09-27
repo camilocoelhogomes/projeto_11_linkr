@@ -21,13 +21,18 @@ export default function LogIn() {
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [lastLogin, setLastLogin] = useState("");
+    const [userInfoControl, setUserInfoControl] = useState(false);
     const history = useHistory();
 
     useEffect(() => {
-        if (localStorage.getItem("user") !== null) {
-            setLastLogin(JSON.parse(localStorage.getItem("user")));
+        if (userInfoControl) {
+            if (localStorage.getItem("user") !== null) {
+                setLastLogin(JSON.parse(localStorage.getItem("user")));
+            }
         }
-    }, [])
+    }, [userInfoControl])
+
+    setTimeout(() => setUserInfoControl(true), 1500);
 
     function errorAlert(error) {
         if (error.status === 403) {
@@ -74,7 +79,7 @@ export default function LogIn() {
                     <BlueButton type="submit" isLoading={isLoading} disabled={isLoading}>{isLoading ? "Loading..." : "Log In"}</BlueButton>
                 </StyledForm>
                 <Anchor>
-                    <Link to="/sign-up">
+                    <Link to="/sign-up" className="switch-sign">
                         First time? Create an account!
                     </Link>
                 </Anchor>

@@ -54,7 +54,9 @@ const StyledPost = styled.div`
         text-decoration: none;
         box-sizing: border-box;
         cursor: pointer;
-
+        :hover {
+            border: 1px solid gray;
+        }
     }
 
     .link-text-info{
@@ -111,6 +113,12 @@ const StyledPost = styled.div`
         width: 50px;
         height: 50px;
         border-radius: 50%;
+        :hover {
+            opacity: 0.8;
+        }
+        :active {
+            transform: translateY(-3px);
+        }
     }
 
     .like-text{
@@ -130,7 +138,12 @@ const StyledPost = styled.div`
         border:none;
         background:none;
         cursor: pointer;
-
+        :hover {
+           opacity: 0.8;
+        }
+        :active {
+            transform: translateY(-3px);
+        }
     }
 
     textarea {
@@ -197,11 +210,23 @@ const LikedHeart = styled(AiFillHeart)`
     font-size: 30px;
     color: #AC0000;
     cursor: pointer;
+    :hover {
+        opacity: 0.8
+    }
+    :active {
+        transform: translateY(-3px);
+    }
 `
 const EmptyHeart = styled(AiOutlineHeart)`
     font-size: 30px;
     color: #FFFFFF;
     cursor: pointer;
+    :hover {
+           color: #AC0000;
+        }
+    :active {
+        transform: translateY(-3px);
+    }
 `
 const LikesNumber = styled.p`
     font-size: 11px;
@@ -219,6 +244,12 @@ const StyledRepostBox = styled.div`
         color: #FFFFFF;
         margin-top: 15px;
         cursor: pointer;
+        :hover {
+           opacity: 0.8;
+        }
+        :active {
+            transform: translateY(-3px);
+        }
     }
 
     p {

@@ -25,6 +25,7 @@ const LinkPreview = () => {
 export default LinkPreview;
 
 const StyledLinkPreview = styled.div`
+    overflow-y: hidden;
     height: 100vh;
     width: 100vw;
     background-color: rgba(255,255,255,0.9);
@@ -67,6 +68,12 @@ const StyledLinkPreview = styled.div`
         align-items: center;
         justify-content: center;
         cursor: pointer;
+        :hover {
+            opacity: 0.8;
+        }
+        :active {
+            transform: translateY(-3px);
+        }
     }
 
     .close-link-preview{
@@ -75,12 +82,19 @@ const StyledLinkPreview = styled.div`
         color: #ffffff;
         border: none;
         cursor: pointer;
+        :hover {
+            color: red;
+        }
+        :active {
+            transform: translateY(-3px);
+        }
     }
     .frame-preview{
         height: calc(100% - 50px);
     }
 
     @media(max-width: 600px){
+        overflow-y: hidden;
         .preview-box{
             width: 100%;
             border-radius: 0px;

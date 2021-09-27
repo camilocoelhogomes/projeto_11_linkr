@@ -17,7 +17,18 @@ export default function Comments({userInfo, postId, authorId, posts, setPosts}) 
     const loadComments = () => {
         listFollowedUsers();
         getComments({token: userInfo.token, postId})
-            .then(res => setComments(res.data.comments));
+            .then(res => {
+                setComments(res.data.comments);
+                const newPosts = posts.map(post => {
+                    if(post.id === postId) {
+                        post.commentCount = res.data.comments.length;
+                        return post;
+                    } else {
+                        return post;
+                    }
+                })
+                setPosts(newPosts);
+            });
     }
 
     const sendComment = (e) => {
@@ -25,15 +36,6 @@ export default function Comments({userInfo, postId, authorId, posts, setPosts}) 
         postComment({token: userInfo.token, body: {"text": userComment}, postId})
             .then(res => {
                 loadComments();
-                const newPosts = posts.map(post => {
-                    if(post.id === postId) {
-                        post.commentCount++;
-                        return post;
-                    } else {
-                        return post;
-                    }
-                })
-                setPosts(newPosts);
                 setUserComment("");
             });
     }

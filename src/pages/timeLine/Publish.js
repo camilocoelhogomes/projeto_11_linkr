@@ -164,7 +164,6 @@ const MessageBox = styled.div`
         pointer-events: ${({ loading }) => loading ? 'none' : 'all'};
         opacity: ${({ loading }) => loading ? 0.7 : 1};
         
-
         ::placeholder {
             font-weight: 300;
             color: #949494;
@@ -235,6 +234,14 @@ const MessageBox = styled.div`
         cursor: pointer;
         opacity: ${({ loading }) => loading ? 0.7 : 1};
         pointer-events: ${({ loading }) => loading ? 'none' : 'all'};
+
+        :hover {
+            opacity: 0.8;
+        }
+
+        :active {
+            transform: translateY(-3px);
+        }
     }
 
     @media(max-width: 900px) {

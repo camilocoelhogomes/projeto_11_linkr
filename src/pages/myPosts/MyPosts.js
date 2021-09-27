@@ -34,18 +34,18 @@ export default function MyPosts() {
                 const newPosts = [];
                 res.data.posts.some(post => {
                     if (!!post.repostId) {
-                        if(!posts[0].repostId) {
+                        if (!posts[0].repostId) {
                             return newPosts.push(post);
-                        } 
+                        }
                         if (post.repostId === posts[0].repostId) {
                             return true;
-                        } 
-                        return newPosts.push(post);    
+                        }
+                        return newPosts.push(post);
                     }
-                    if(post.id === posts[0].id) {
+                    if (post.id === posts[0].id) {
                         return true;
-                    } 
-                    return newPosts.push(post); 
+                    }
+                    return newPosts.push(post);
                 })
                 setPosts([...newPosts, ...posts]);
             })
@@ -81,28 +81,28 @@ export default function MyPosts() {
                 </header>
                 <div className='main-content'>
                     <div className='posts'>
-                        {posts.length === 0 
-                            ?   <h2>Nenhum post encontrado</h2> 
-                            :   <InfiniteScroll
-                                    pageStart={0}
-                                    loadMore={() => {
-                                            if (!!posts[posts.length - 1].repostId) {
-                                                setPostId(posts[posts.length - 1].repostId)
-                                            } else {
-                                                setPostId(posts[posts.length - 1].id)
-                                            }
-                                        }
+                        {posts.length === 0
+                            ? <h2>Nenhum post encontrado</h2>
+                            : <InfiniteScroll
+                                pageStart={0}
+                                loadMore={() => {
+                                    if (!!posts[posts.length - 1].repostId) {
+                                        setPostId(posts[posts.length - 1].repostId)
+                                    } else {
+                                        setPostId(posts[posts.length - 1].id)
                                     }
-                                    hasMore={hasMore}
-                                    loader={
-                                        <div className="loader" key={0}>
-                                            <img src={loading}/>
-                                            Loading more posts...
-                                        </div>
-                                    }
-                                >
-                                    {posts.map(post => <Post key={!!post.repostId ? post.repostId : post.id} post={post} userInfo={userInfo} getNewPosts={getNewPosts} posts={posts} setPosts={setPosts}/>)}
-                                </InfiniteScroll>
+                                }
+                                }
+                                hasMore={hasMore}
+                                loader={
+                                    <div className="loader" key={0}>
+                                        <img src={loading} />
+                                        Loading more posts...
+                                    </div>
+                                }
+                            >
+                                {posts.map(post => <Post key={!!post.repostId ? post.repostId : post.id} post={post} userInfo={userInfo} getNewPosts={getNewPosts} posts={posts} setPosts={setPosts} />)}
+                            </InfiniteScroll>
                         }
                     </div>
                     <Trending className='trending' />

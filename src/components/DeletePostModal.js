@@ -5,7 +5,7 @@ import { deletePost } from '../services/API';
 
 Modal.setAppElement(document.getElementById('root'));
 export default function DeletePostModal({ state, postId, posts, setPosts }) {
-    const { modalIsOpen, setModalIsOpen } = state;
+    const { deleteModal, setDeleteModal } = state;
     const [isLoading, setIsLoading] = useState(false);
 
     const customStyles = {
@@ -26,7 +26,7 @@ export default function DeletePostModal({ state, postId, posts, setPosts }) {
     };
 
     const errorAlert = (error) => {
-        setModalIsOpen(false);
+        setDeleteModal(false);
         if (error.status === 403) {
             alert("This post belongs to another user! Can't continue.");
         } else {
@@ -38,23 +38,23 @@ export default function DeletePostModal({ state, postId, posts, setPosts }) {
     const requestDeletePost = () => {
         setIsLoading(true);
         const token = JSON.parse(localStorage.getItem("user")).token;
-        const request = deletePost({ token, postId });
-        request.then(res => {
-            const newPosts = posts.filter(post => post.id !== postId);
-            setPosts(newPosts);
-            setModalIsOpen(false);
-            setIsLoading(false);
-        });
-        request.catch(err => errorAlert(err.response));
+        deletePost({ token, postId })
+            .then(res => {
+                const newPosts = posts.filter(post => post.id !== postId);
+                setIsLoading(false);
+                setDeleteModal(false);
+                setPosts(newPosts);
+            })
+            .catch(err => errorAlert(err.response));
     }
 
     return (
-        <Modal isOpen={modalIsOpen} style={customStyles} >
+        <Modal isOpen={deleteModal} style={customStyles} >
             <strong><Text>Tem certeza que deseja excluir essa publicação?</Text></strong>
             <Options>
                 {isLoading ? <StyledLoadingText>Loading...</StyledLoadingText> :
                     <>
-                        <WhiteButton onClick={() => setModalIsOpen(false)}>Não, voltar</WhiteButton>
+                        <WhiteButton onClick={() => setDeleteModal(false)}>Não, voltar</WhiteButton>
                         <BlueButton onClick={requestDeletePost}>Sim, excluir</BlueButton>
                     </>
                 }
@@ -80,25 +80,32 @@ const StyledLoadingText = styled.h1`
     margin: 0 auto;
 `
 const Options = styled.div`
-display:flex;
-width: 300px;
-justify-content:space-between;
-margin:0 auto;
-button{
-    width: 134px;
-    height: 37px;
-    border-radius: 5px;
-    border:none;
-    font-weight:bold;
-    font-size: 18px;
-    font-family: "Lato",sans-serif;
+    display:flex;
+    width: 300px;
+    justify-content:space-between;
+    margin:0 auto;
+
+    button{
+        width: 134px;
+        height: 37px;
+        border-radius: 5px;
+        border:none;
+        font-weight:bold;
+        font-size: 18px;
+        font-family: "Lato",sans-serif;
+        :hover {
+            opacity: 0.8;
+        }
+        :active {
+            transform: translateY(-3px);
+        }
 }
 `
 const WhiteButton = styled.button`
-background: #FFFFFF;
-color: #1877F2;
+    background: #FFFFFF;
+    color: #1877F2;
 `
 const BlueButton = styled.button`
-background: #1877F2;
-color: #FFFFFF;
+    background: #1877F2;
+    color: #FFFFFF;
 `
