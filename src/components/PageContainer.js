@@ -11,6 +11,7 @@ const PageContainer = styled.div`
         grid-template-areas: 'search-input search-input';
         overflow-wrap:break-word;
         justify-content:space-between;
+        align-items: center;
         h2{
             max-width:60vw;
             justify-content: space-between;

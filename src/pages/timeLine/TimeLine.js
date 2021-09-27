@@ -7,12 +7,13 @@ import Treding from '../../components/Trending';
 import Publish from './Publish';
 import SearchInput from '../../components/SearchInput';
 import { PageContainer } from '../../components/PageContainer';
+import LoadingPosts from "../../components/LoadingPosts";
 import InfiniteScroll from "react-infinite-scroller";
 import loading from '../../Assets/loading.gif';
 
 export default function TimeLine() {
 
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState(null);
     const [err, setErr] = useState(null);
     const [followedUsersErr, setFollowedUsersErr] = useState(null);
     const [followedUsers, setFollowedUsers] = useState([]);
@@ -24,7 +25,7 @@ export default function TimeLine() {
     const getPosts = () => {
         getFollowedUsersPosts(userInfo.token, (postId === "" ? "" : `?olderThan=${postId}`))
             .then(res => {
-                setPosts([...posts, ...res.data.posts]);
+                (!posts) ? setPosts([...res.data.posts]) : setPosts([...posts, ...res.data.posts]);
                 if (res.data.posts.length === 0) {
                     setHasMore(false);
                 }
@@ -90,13 +91,14 @@ export default function TimeLine() {
 
     if (!posts) return (
         <>
-            <Header />
             <PageContainer>
                 <header>
                     <SearchInput />
                     <h2>timeline</h2>
                 </header>
+                <LoadingPosts />
             </PageContainer>
+            <Header />
         </>
     )
 
@@ -110,7 +112,6 @@ export default function TimeLine() {
 
     return (
         <>
-            <Header />
             <PageContainer>
                 <header>
                     <SearchInput />
@@ -150,9 +151,10 @@ export default function TimeLine() {
                             </InfiniteScroll>
                         }
                     </div>
-                    <Treding className='trending' />
+                    <Treding />
                 </div>
             </PageContainer>
+            <Header />
         </>
     );
 }

@@ -5,12 +5,13 @@ import Post from '../../components/Post';
 import Header from '../../components/Header';
 import Trending from "../../components/Trending";
 import Alert from "../../components/Alert";
+import LoadingPosts from "../../components/LoadingPosts";
 import InfiniteScroll from "react-infinite-scroller";
 import loading from '../../Assets/loading.gif';
 import SearchInput from "../../components/SearchInput";
 
 export default function MyPosts() {
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState(null);
     const [err, setErr] = useState(null);
     const [hasMore, setHasMore] = useState(true);
     const [postId, setPostId] = useState("");
@@ -19,7 +20,7 @@ export default function MyPosts() {
     const getPosts = () => {
         getUserPosts({ token: userInfo.token, id: userInfo.user.id, postId })
             .then(res => {
-                setPosts([...posts, ...res.data.posts]);
+                (!posts) ? setPosts([...res.data.posts]) : setPosts([...posts, ...res.data.posts]);
                 if (res.data.posts.length === 0) {
                     setHasMore(false);
                 }
@@ -59,9 +60,20 @@ export default function MyPosts() {
         return <Alert message={'Não foi possível carregar os posts, por favor recarregue a página'} />
     }
 
+    if (!posts) return (
+        <>
+            <PageContainer>
+                <header>
+                    <h2>my posts</h2>
+                </header>
+                <LoadingPosts />
+            </PageContainer>
+            <Header />
+        </>
+    )
+
     return (
         <>
-            <Header />
             <PageContainer>
                 <header>
                     <SearchInput />
@@ -96,6 +108,7 @@ export default function MyPosts() {
                     <Trending className='trending' />
                 </div>
             </PageContainer>
+            <Header />
         </>
     );
 }

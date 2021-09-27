@@ -5,13 +5,14 @@ import Post from '../../components/Post';
 import Header from '../../components/Header';
 import Trending from "../../components/Trending";
 import Alert from "../../components/Alert";
+import LoadingPosts from "../../components/LoadingPosts";
 import { PageContainer } from "../../components/PageContainer"
 import SearchInput from "../../components/SearchInput";
 import InfiniteScroll from "react-infinite-scroller";
 import loading from '../../Assets/loading.gif';
 
 export default function HashtagPosts() {
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState(null);
     const [err, setErr] = useState(null);
     const { hashtag } = useParams();
     const [hasMore, setHasMore] = useState(true);
@@ -21,7 +22,7 @@ export default function HashtagPosts() {
     const getPosts = () => {
         getHashtagPosts({ token: userInfo.token, hashtag, postId })
             .then(res => {
-                setPosts([...posts, ...res.data.posts]);
+                (!posts) ? setPosts([...res.data.posts]) : setPosts([...posts, ...res.data.posts]);
                 if (res.data.posts.length === 0) {
                     setHasMore(false);
                 }
@@ -61,9 +62,20 @@ export default function HashtagPosts() {
         return <Alert message={'Não foi possível carregar os posts, por favor recarregue a página'} />
     }
 
+    if (!posts) return (
+        <>
+            <PageContainer>
+                <header>
+                    <h2>#</h2>
+                </header>
+                <LoadingPosts />
+            </PageContainer>
+            <Header />
+        </>
+    )
+
     return (
         <>
-            <Header />
             <PageContainer>
                 <header>
                     <SearchInput />
@@ -92,6 +104,7 @@ export default function HashtagPosts() {
                     <Trending className='trending' />
                 </div>
             </PageContainer>
+            <Header />
         </>
     );
 }

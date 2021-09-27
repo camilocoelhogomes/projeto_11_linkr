@@ -5,12 +5,13 @@ import Header from '../../components/Header';
 import Trending from "../../components/Trending";
 import Alert from "../../components/Alert";
 import { PageContainer } from "../../components/PageContainer";
+import LoadingPosts from "../../components/LoadingPosts";
 import InfiniteScroll from "react-infinite-scroller";
 import loading from '../../Assets/loading.gif';
 import SearchInput from "../../components/SearchInput";
 
 export default function LikedPosts() {
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState(null);
     const [err, setErr] = useState(null);
     const [hasMore, setHasMore] = useState(true);
     const [postId, setPostId] = useState("");
@@ -19,7 +20,7 @@ export default function LikedPosts() {
     const getPosts = () => {
         getLikedPosts({ token: userInfo.token, postId })
             .then(res => {
-                setPosts([...posts, ...res.data.posts]);
+                (!posts) ? setPosts([...res.data.posts]) : setPosts([...posts, ...res.data.posts]);
                 if (res.data.posts.length === 0) {
                     setHasMore(false);
                 }
@@ -50,9 +51,20 @@ export default function LikedPosts() {
         return <Alert message={'Não foi possível carregar os posts, por favor recarregue a página'} />
     }
 
+    if (!posts) return (
+        <>
+            <PageContainer>
+                <header>
+                    <h2>my likes</h2>
+                </header>
+                <LoadingPosts />
+            </PageContainer>
+            <Header />
+        </>
+    )
+
     return (
         <>
-            <Header />
             <PageContainer>
                 <header>
                     <SearchInput />
@@ -81,6 +93,7 @@ export default function LikedPosts() {
                     <Trending className='trending' />
                 </div>
             </PageContainer>
+            <Header />
         </>
     )
 }

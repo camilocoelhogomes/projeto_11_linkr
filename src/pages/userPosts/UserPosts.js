@@ -8,12 +8,13 @@ import Alert from '../../components/Alert';
 import SmallAlert from "../../components/SmallAlert";
 import { PageContainer } from "../../components/PageContainer";
 import styled from "styled-components";
+import LoadingPosts from "../../components/LoadingPosts";
 import InfiniteScroll from "react-infinite-scroller";
 import loading from '../../Assets/loading.gif';
 import SearchInput from "../../components/SearchInput";
 
 export default function UserPosts() {
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState(null);
     const [username, setUsername] = useState("");
     const [err, setErr] = useState(null);
     const [followErr, setFollowErr] = useState(null);
@@ -29,7 +30,7 @@ export default function UserPosts() {
     const getPosts = () => {
         getUserPosts({ token: userInfo.token, id, postId })
             .then(res => {
-                setPosts([...posts, ...res.data.posts]);
+                (!posts) ? setPosts([...res.data.posts]) : setPosts([...posts, ...res.data.posts]);
                 if (res.data.posts.length === 0) {
                     setHasMore(false);
                 }
@@ -123,9 +124,20 @@ export default function UserPosts() {
         return <Alert message={'Não foi possível saber se você segue ou não o usuário, por favor recarregue a página'} />
     }
 
+    if (!posts) return (
+        <>
+            <PageContainer>
+                <header>
+                    <h2>'s posts</h2>
+                </header>
+                <LoadingPosts />
+            </PageContainer>
+            <Header />
+        </>
+    )
+
     return (
         <>
-            <Header />
             <PageContainer>
                 <header>
                     <SearchInput />
@@ -172,6 +184,7 @@ export default function UserPosts() {
                     <Trending className='trending' />
                 </div>
             </PageContainer>
+            <Header />
         </>
     );
 }
@@ -187,7 +200,7 @@ const StyledFollowButton = styled.button`
     font-weight: bold;
     border-radius: 5px;
 `
-const LoadingButton = styled.div`
+const LoadingButton = styled.button`
     width: 112px;
     height: 31px;
     background-color: gray;
@@ -199,4 +212,5 @@ const LoadingButton = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    border: none;
 `

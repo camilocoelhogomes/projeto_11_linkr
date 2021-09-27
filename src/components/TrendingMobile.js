@@ -1,9 +1,9 @@
 import { useHistory } from "react-router-dom";
 import { getTrendingHashtags } from "../services/API";
 import React, { useEffect, useState } from "react";
-import { TrendingContainer, TitleBox, Hashtags, HashtagLink, StyledTrendingInput, StyledHashtagPlaceholder } from "./StyledTrending";
+import { Hashtags, HashtagLink, StyledTrendingInput, StyledHashtagPlaceholder, Details } from "./StyledTrending";
 
-export default function Trending() {
+export default function TrendingMobile () {
 
     const [hashtagsList, setHashtagsList] = useState(null);
     const [searchBoxHashtag, setSearchBoxHashtag] = useState("");
@@ -20,8 +20,7 @@ export default function Trending() {
 
     const search = (event) => {
         if(event.key === 'Enter' && searchBoxHashtag.replace(/\s/g,'').length) {
-            history.push(`/hashtag/${searchBoxHashtag}`);   
-            window.scrollTo(0, 0);    
+            history.push(`/hashtag/${searchBoxHashtag}`);       
         }
     }
 
@@ -33,21 +32,17 @@ export default function Trending() {
     }
 
     return (
-        <TrendingContainer>
-            <TitleBox>
-                <h3>
-                    trending
-                </h3>
-            </TitleBox>
+        <Details>
+            <summary>trending</summary>
             <Hashtags>
                 {hashtagsList.map((hashtag, i) =>
-                    <HashtagLink to={`/hashtag/${hashtag.name}`} id={hashtag.id} key={i} onClick={() => window.scrollTo(0,0)}>
+                    <HashtagLink to={`/hashtag/${hashtag.name}`} id={hashtag.id} key={i}>
                         <li># {hashtag.name}</li>
                     </HashtagLink>
                 )}
             </Hashtags>
             <StyledTrendingInput placeholder="type a hashtag" type="search" value={searchBoxHashtag} onChange={e => setSearchBoxHashtag(e.target.value)} onKeyUp={e => search(e)}/>
             <StyledHashtagPlaceholder>#</StyledHashtagPlaceholder>
-        </TrendingContainer>
+        </Details>
     )
 }
