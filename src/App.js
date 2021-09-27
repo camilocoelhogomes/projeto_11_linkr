@@ -1,7 +1,7 @@
 import GlobalStyle from "./components/GlobalStyle";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import SignUp from "./pages/home/sign-up/index";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import LogIn from "./pages/home/sign-in/index";
 import TimeLine from './pages/timeLine/TimeLine';
 import MyPosts from './pages/myPosts/MyPosts';
@@ -19,10 +19,13 @@ function App() {
   const [showIframe, setShowIframe] = useState(false);
   const [location, setLocation] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => { window.scrollTo(0, scrollY); }, [location, showIframe]);
 
   return (
     <div className={(showIframe || location) ? 'overflow-y' : ''}>
-      <LinkContext.Provider value={{ previewHref, setPreviewHref, showIframe, setShowIframe, location, setLocation, userLocation, setUserLocation }}>
+      <LinkContext.Provider value={{ previewHref, setPreviewHref, showIframe, setShowIframe, location, setLocation, userLocation, setUserLocation, scrollY, setScrollY }}>
         <Router>
           <GlobalStyle />
           {

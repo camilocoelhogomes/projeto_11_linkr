@@ -27,6 +27,7 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
         setPreviewHref,
         setUserLocation,
         setLocation,
+        setScrollY,
     } = useContext(LinkContext);
     const {
         id,
@@ -146,7 +147,8 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
 
     const locationHandler = () => {
         setLocation(geolocation);
-        setUserLocation(user.username)
+        setUserLocation(user.username);
+        setScrollY(window.scrollY);
     }
 
     useEffect(isPostAlreadyLiked, [likes.length])
@@ -261,7 +263,7 @@ export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
                                 <a href={link} target="_blank" rel="noreferrer">{link}</a>
                             </>
                             :
-                            <div onClick={() => { setPreviewHref(link); setShowIframe(true) }} className='link-card'>
+                            <div onClick={() => { setPreviewHref(link); setShowIframe(true); setScrollY(window.scrollY); }} className='link-card'>
                                 <div className='link-text-info'>
                                     <div className='paragraph'>
                                         <p className='link-title'>{linkTitle}</p>
