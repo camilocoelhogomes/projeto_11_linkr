@@ -36,6 +36,19 @@ const PageContainer = styled.div`
         position: relative;
     }
 
+    .loader {
+        text-align: center;
+        color: #6D6D6D;
+        font-size: 22px;
+        margin-bottom: 50px;
+
+        img {
+            width: 100px;
+            display: block;
+            margin: 0 auto;
+        }
+    }
+
     @media(max-width: 900px){
         .posts{
             width: 100%;

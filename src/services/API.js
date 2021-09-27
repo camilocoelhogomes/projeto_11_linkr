@@ -8,9 +8,9 @@ const createHeaders = (token) => {
 
 const deletePost = ({ token, postId }) => axios.delete(`${API_URL}/posts/${postId}`, createHeaders(token));
 const searchUsers = ({ token, username }) => axios.get(`${API_URL}/users/search?username=${username}`, createHeaders(token));
-const getUserPosts = ({ token, id }) => axios.get(`${API_URL}/users/${id}/posts`, createHeaders(token));
-const getLikedPosts = ({ token }) => axios.get(`${API_URL}/posts/liked`, createHeaders(token));
-const getHashtagPosts = ({ token, hashtag }) => axios.get(`${API_URL}/hashtags/${hashtag}/posts`, createHeaders(token));
+const getUserPosts = ({ token, id, postId }) => axios.get(`${API_URL}/users/${id}/posts?olderThan=${postId}`, createHeaders(token));
+const getLikedPosts = ({ token, postId }) => axios.get(`${API_URL}/posts/liked?olderThan=${postId}`, createHeaders(token));
+const getHashtagPosts = ({ token, hashtag, postId }) => axios.get(`${API_URL}/hashtags/${hashtag}/posts?olderThan=${postId}`, createHeaders(token));
 const signIn = (body) => axios.post(API_URL + "/sign-in", body);
 const signUp = (body) => axios.post(API_URL + "/sign-up", body);
 const getTrendingHashtags = (token) => axios.get(`${API_URL}/hashtags/trending`, createHeaders(token));
@@ -22,7 +22,7 @@ const getFollowedUsers = (token) => axios.get(`${API_URL}/users/follows`, create
 const followUser = (userId, token) => axios.post(`${API_URL}/users/${userId}/follow`, {}, createHeaders(token));
 const unfollowUser = (userId, token) => axios.post(`${API_URL}/users/${userId}/unfollow`, {}, createHeaders(token));
 const sharePost = ({ token, postId }) => axios.post(`${API_URL}/posts/${postId}/share`, {}, createHeaders(token));
-const getFollowedUsersPosts = (token) => axios.get(`${API_URL}/following/posts`, createHeaders(token));
+const getFollowedUsersPosts = (token, postId) => axios.get(`${API_URL}/following/posts${postId}`, createHeaders(token));
 const getComments = ({ token, postId }) => axios.get(`${API_URL}/posts/${postId}/comments`, createHeaders(token));
 const postComment = ({ token, body, postId }) => axios.post(`${API_URL}/posts/${postId}/comment`, body , createHeaders(token));
 const getUserInfo = ({ token, id }) => axios.get(`${API_URL}/users/${id}`, createHeaders(token));

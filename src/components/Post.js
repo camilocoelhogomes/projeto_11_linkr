@@ -19,7 +19,7 @@ import SmallAlert from "./SmallAlert";
 import { TiLocation } from "react-icons/ti";
 import LocationPreview from './LocationPreview';
 
-export default function Post({ post, userInfo, getPosts }) {
+export default function Post({ post, userInfo, posts, setPosts, getNewPosts }) {
     const textRef = useRef();
     const history = useHistory();
     const {
@@ -58,7 +58,15 @@ export default function Post({ post, userInfo, getPosts }) {
         const actualLikesNumber = numberOfLikes;
         setNumberOfLikes(numberOfLikes + 1);
         sendLike(postId, userInfo.token).then(ans => {
-            getPosts();
+            const newPosts = posts.map(post => {
+                if(post.id === id) {
+                    post.likes.push({"userId": userInfo.user.id});
+                    return post;
+                } else {
+                    return post;
+                }
+            })
+            setPosts([...newPosts]);
         }).catch(err => {
             setLiked(false);
             setNumberOfLikes(actualLikesNumber);
@@ -76,6 +84,15 @@ export default function Post({ post, userInfo, getPosts }) {
                 id: id,
                 data: data,
             }).then(res => {
+                const newPosts = posts.map(post => {
+                    if(post.id === id) {
+                        post.text = data.text;
+                        return post;
+                    } else {
+                        return post;
+                    }
+                })
+                setPosts([...newPosts]);
                 setDisableEditPost(false);
                 setIsEditPost(false);
             }).catch(() => {
@@ -99,7 +116,16 @@ export default function Post({ post, userInfo, getPosts }) {
         const actualLikesNumber = numberOfLikes;
         setNumberOfLikes(numberOfLikes - 1);
         sendDislike(postId, userInfo.token).then(ans => {
-            getPosts();
+            const newPosts = posts.map(post => {
+                if (post.likes.length > 0 && postId === post.id) {
+                    console.log(post.likes);
+                    post.likes = post.likes.filter(like => like.userId !== userInfo.user.id);
+                    console.log(post.likes)
+                    return post;
+                }
+                return post;  
+            })
+            setPosts([...newPosts]);
         }).catch(err => {
             setLiked(true);
             setNumberOfLikes(actualLikesNumber);
@@ -112,6 +138,8 @@ export default function Post({ post, userInfo, getPosts }) {
     const isPostAlreadyLiked = () => {
         if (likes.find(like => like.userId === userInfo.user.id) !== undefined) {
             setLiked(true);
+        } else {
+            setLiked(false);
         }
     }
 
@@ -119,7 +147,7 @@ export default function Post({ post, userInfo, getPosts }) {
         setLocation(geolocation);
     }
 
-    useEffect(isPostAlreadyLiked, [])
+    useEffect(isPostAlreadyLiked, [likes.length])
     useEffect(() => {
         if (isEditPost) {
             textRef.current.focus()
@@ -164,7 +192,7 @@ export default function Post({ post, userInfo, getPosts }) {
                                                 : (`Curtido por você e ${likes[1]["user.username"]}`))
                                                 : (likes[likes.length - 1].userId === userInfo.user.id ? (`Curtido por você, ${likes[likes.length - 2]["user.username"]} e outras ${likes.length - 2} pessoa(s)`)
                                                     : (`Curtido por você, ${likes[likes.length - 1]["user.username"]} e outras ${likes.length - 2} pessoa(s)`))))}>
-                                    {numberOfLikes} likes
+                                    {likes.length} likes
                                 </LikesNumber>
                             </>
                         ) : (
@@ -176,13 +204,12 @@ export default function Post({ post, userInfo, getPosts }) {
                                             : (likes.length === 2 ? (`Curtido por ${likes[0]["user.username"]} e ${likes[1]["user.username"]}`)
                                                 : (`Curtido por ${likes[likes.length - 1]["user.username"]}, ${likes[likes.length - 2]["user.username"]} e outras ${likes.length - 2} pessoa(s)`)))
                                 }>
-                                    {numberOfLikes} likes
+                                    {likes.length} likes
                                 </LikesNumber>
                             </>
                         )}
                     </LikesBox>
                     <StyledRepostBox>
-                        <FaRetweet className="repost" onClick={() => setRepostModal(true)} />
                         <AiOutlineComment className="icon" onClick={() => setIsCommentSelected(!isCommentSelected)} />
                         <p>{commentCount} comments</p>
                         <FaRetweet className="icon" onClick={() => setRepostModal(true)} />
@@ -206,7 +233,7 @@ export default function Post({ post, userInfo, getPosts }) {
                             <div className='paragraph'>
                                 <p>
                                     <ReactHashtag onHashtagClick={hashTag => history.push(`/hashtag/${hashTag.replace(/#/g, "")}`)}>
-                                        {postText}
+                                        {text != postText ? text : postText}
                                         <LocationPreview user={user} location={location} />       </ReactHashtag>
                                 </p>
                             </div>
@@ -258,11 +285,11 @@ export default function Post({ post, userInfo, getPosts }) {
                         :
                         ""
                 }
-                <DeletePostModal state={{ modalIsOpen, setModalIsOpen }} postId={id} getPosts={getPosts} />
-                <RepostModal state={{ repostModal, setRepostModal }} postId={id} getPosts={getPosts} />
+                <DeletePostModal state={{ modalIsOpen, setModalIsOpen }} postId={id} posts={posts} setPosts={setPosts} />
+                <RepostModal state={{ repostModal, setRepostModal }} postId={id} getNewPosts={getNewPosts} posts={posts} setPosts={setPosts} />
                 {!!location ? <LocationPreview user={user.username} setLocation={setLocation} location={location} /> : ''}
             </StyledPost>
-            {isCommentSelected ? <Comments userInfo={userInfo} postId={id} authorId={user.id} getPosts={getPosts} /> : ""}
+            {isCommentSelected ? <Comments userInfo={userInfo} postId={id} authorId={user.id} posts={posts} setPosts={setPosts} /> : ""}
         </>
     )
 }
