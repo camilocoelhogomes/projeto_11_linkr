@@ -53,7 +53,7 @@ const StyledInput = styled.input`
     width: 330px;
     height: 55px;
     border:none;
-    background: #FFFFFF;
+    background: ${props => props.error ? "#ffdddd" : "#ffffff"};
     border-radius: 6px;
     font-family: 'Oswald', sans-serif;
     font-weight: bold;
