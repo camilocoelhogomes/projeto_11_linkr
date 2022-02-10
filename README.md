@@ -67,4 +67,4 @@ npm run build
 ```
 10. Finally access http://localhost:3000 on your favorite browser (unless it is Internet Explorer. In this case, review your life decisions :eyes:)
 
-**Note:** This application uses a third-part private API created specially for it
+**Note:** This application uses a third-party private API created specially for it
