@@ -5,7 +5,7 @@ Linker is a link sharing social network! Enjoy and share awesome content about y
 This project was developed by Camilo Gomes, Pedro Mafra, Anderson Aquino and Leonardo Otero.
 </br>
 You can check the deployed app here: 
-https://github.com/camilocoelhogomes/projeto_11_linkr
+https://projeto-11-linkr-pink.vercel.app/
 </br>
 </br>
 
