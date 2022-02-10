@@ -1,4 +1,4 @@
-# Bookland
+# Linker
 
 Linker is a link sharing social network! Enjoy and share awesome content about your interests!
 </br></br>
@@ -51,7 +51,7 @@ mkdir Linker
 ```
 2. Clone the repo
 ```
-git clone https://github.com/andrezzasouza/BookLand_Front-end.git
+git clone https://github.com/camilocoelhogomes/projeto_11_linkr.git
 ```
 3. Install NPM packages
 ```
@@ -66,3 +66,5 @@ npm start
 npm run build
 ```
 10. Finally access http://localhost:3000 on your favorite browser (unless it is Internet Explorer. In this case, review your life decisions :eyes:)
+
+**Note:** This application uses a third-part private API created specially for it
